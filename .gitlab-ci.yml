@@ -5,7 +5,6 @@ stages:
 
 empty_test:
   stage: test
-  tags: [docker]
   image: alpine:latest
   only:
     - merge_requests
