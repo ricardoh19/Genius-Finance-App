@@ -1,10 +1,15 @@
+image: python:latest
+
+stages:
+  - test
+
 empty_test:
   stage: test
   tags: [docker]
   image: alpine:latest
   only:
     - merge_requests
-    - louise/dev
+    # - louise/dev
   before_script: []
   script:
     - env | egrep '^CI_' | sort
