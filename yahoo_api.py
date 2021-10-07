@@ -5,7 +5,7 @@ import sys
 import logging
 
 class YahooAPI():
-    def __init__(self, stocksymbol="AMRN"):
+    def __init__(self):
         self.stockprice = ""
         self.graph_stock = [[], []] #2D list x and y values
         self.newslink = ""
