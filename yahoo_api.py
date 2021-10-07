@@ -79,7 +79,7 @@ class YahooAPI():
         data = res.read()
         result_json = json.loads( data.decode("utf-8")) #dump it in json
         self.newslink = result_json["data"]["contents"][0]["content"]["clickThroughUrl"]["url"]
-        print(self.newslink)
+        logging.info(self.newslink)
 
     def get_stock_summary(self, stocksymbol):
         try:
@@ -121,26 +121,27 @@ class YahooAPI():
         stockinfo ={} #remove old data
         for stocksymbol in stocksymbollist:
             stock_summary = self.get_stock_summary(stocksymbol)
-            stockprice = stock_summary["financialData"]["currentPrice"]["raw"]
-            logging.debug(f"stockprice {stockprice}")
-            current_ratio = stock_summary["financialData"]["currentRatio"]["raw"]
-            logging.debug(f"current ratio: {current_ratio}")
-            debt_to_equity_ratio = stock_summary["financialData"]["debtToEquity"]["raw"]
-            logging.debug(f"D2E {debt_to_equity_ratio}")
-            #Trailing EPS typically refers to a company's earnings per share as a rolling total over the previous four quarters
-            trailing_EPS = stock_summary["defaultKeyStatistics"]["trailingEps"]["raw"]
-            logging.debug(f"Trailing EPS {trailing_EPS}")
-            trailing_PE = stock_summary["summaryDetail"]["trailingPE"]["raw"]
-            logging.debug(f"trailing PE: {trailing_PE}")
-            ["trailingPE"]
-            stockinfo[stocksymbol] = {
-                "currentRatio": current_ratio,
-                "trailingEPS": trailing_EPS,
-                "PERatio":trailing_PE,
-                "DebtToEquityRatio": debt_to_equity_ratio,
-                "stockPrice": stockprice
-            }
-            logging.debug(stockinfo[stocksymbol])
+            if stock_summary!=0:
+                stockprice = stock_summary["financialData"]["currentPrice"]["raw"]
+                logging.debug(f"stockprice {stockprice}")
+                current_ratio = stock_summary["financialData"]["currentRatio"]["raw"]
+                logging.debug(f"current ratio: {current_ratio}")
+                debt_to_equity_ratio = stock_summary["financialData"]["debtToEquity"]["raw"]
+                logging.debug(f"D2E {debt_to_equity_ratio}")
+                #Trailing EPS typically refers to a company's earnings per share as a rolling total over the previous four quarters
+                trailing_EPS = stock_summary["defaultKeyStatistics"]["trailingEps"]["raw"]
+                logging.debug(f"Trailing EPS {trailing_EPS}")
+                trailing_PE = stock_summary["summaryDetail"]["trailingPE"]["raw"]
+                logging.debug(f"trailing PE: {trailing_PE}")
+                ["trailingPE"]
+                stockinfo[stocksymbol] = {
+                    "currentRatio": current_ratio,
+                    "trailingEPS": trailing_EPS,
+                    "PERatio":trailing_PE,
+                    "DebtToEquityRatio": debt_to_equity_ratio,
+                    "stockPrice": stockprice
+                }
+                logging.debug(stockinfo[stocksymbol])
         logging.debug(stockinfo)
         return stockinfo
     
@@ -171,7 +172,7 @@ class YahooAPI():
             logging.warning(f"Status code: {status}")
             #TO-DO: pop up GUI?
             return 0
-
+        
         data = res.read() 
         result_json = json.loads( data.decode("utf-8")) #dump it in json
         timestamp = result_json["chart"]["result"][0]["timestamp"]#returns 40 timestamps as dict in format 0:1633515300 1:1633517100 2:1633518900
@@ -184,6 +185,9 @@ class YahooAPI():
     def get_link(self, stocksymbol="TSLA"):
         """Gets uuid by searching API for specific stock.
         Use that uuid of an article on that stock to ge the link in the get_detail call."""
+        if not self.check_stock_exists(stocksymbol):
+            logging.warning("Stocksymbol doesn't exist")
+            return 0
         uuid = self.get_news_uuid(stocksymbol)
         self.get_details_of_uuid(uuid)
         return self.newslink
@@ -202,12 +206,15 @@ class YahooAPI():
         """This function gets stockprice over the last 24 hours.
         Returns a list of 2 list length 40.
         first list is timestamp and stockprice for the second"""
+        if not self.check_stock_exists(stocksymbol):
+            logging.warning("Stocksymbol doesn't exist")
+            return 0
         self.get_chart(stocksymbol)
         return self.graph_stock #2D list with 2 dict timestamp and stockprice
 
     def check_stock_exists(self, stocksymbol):
         """Checks against API if stock exists"""
-        stockinfo = self.get_stock_summary()
+        stockinfo = self.get_stock_summary(stocksymbol)
         if stockinfo == 0:
             return False
         else:
