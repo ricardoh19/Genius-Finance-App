@@ -1,8 +1,10 @@
 import logging
 from yahoo_api import YahooAPI
+from main import set_env_variables
 
 def test_yahoo_api():
     logging.basicConfig(filename='geniusfinclogs.log', encoding='utf-8', level=logging.DEBUG, force=True)
+    set_env_variables()
     #Test 1 create object
     YahooAPIObject = YahooAPI()
     #Test 2 get watchlist info
