@@ -1,18 +1,13 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct  7 09:54:07 2021
-
-@author: Owner
-"""
-
 
 class WatchlistGUI():
-    def __init__(self, WatchlistControllerObject, StockControllerObject,PopUpGUI,
+    def __init__(self, WatchlistControllerObject, PopUpGUI, StocksTrendingUp,
                  StocksTrendingDown, description, StockPercentageChange):
+        #passed in objects
         self.WatchlistControllerObject =WatchlistControllerObject
-        self.StockControllerObject = StockControllerObject
         self.PopUpGUI = PopUpGUI
+        #passed in data
         self.StocksTrendingDown = StocksTrendingDown
+        self.StocksTrendingUp = StocksTrendingUp
         self.description = description
         self.StockPercentageChange = StockPercentageChange
     def CreateMainFrame():

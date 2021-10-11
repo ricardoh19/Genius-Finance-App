@@ -3,16 +3,17 @@ from dashboard_controller import DashboardControllers
 from database_manager import DB
 from loginGUI import LoginGUI
 
-class LoginLogoutControllers():
+class login_logout_controllers():
     def __init__(self ):
         #initializes and pulls data from DB
         self.DatabaseManagesObject = DB()
-        self.DatabaseUserData = DatabaseUserData
-        self.DatabaseStockData = DatabaseStockData
-        self.current_user_data = current_user_data
-        self.current_user_stocks = current_user_stocks
+        # get this data from DB Manager
+        self.DatabaseUserData = None
+        self.DatabaseStockData = None
+        self.current_user_data = None
+        self.current_user_stocks = None
         #create popupgui object
-        self.PopUpGUIObject = PopupGUI()
+        self.popup_GUI_object = PopupGUI()
 
         self.LoginGUIObject = LoginGUI(self)
     def GetSnapshotOfDatabase():

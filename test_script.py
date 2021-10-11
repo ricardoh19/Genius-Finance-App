@@ -2,8 +2,13 @@ import logging
 from yahoo_api import YahooAPI
 from main import set_env_variables
 
+import unittest # use unittest
+
 def test_yahoo_api():
-    logging.basicConfig(filename='geniusfinclogs.log', encoding='utf-8', level=logging.DEBUG, force=True)
+    try:
+        logging.basicConfig(filename='geniusfinclogs.log', encoding='utf-8', level=logging.DEBUG, force=True)
+    except:
+        logging.error("Please check if you are using python 3.9")
     set_env_variables()
     #Test 1 create object
     YahooAPIObject = YahooAPI()

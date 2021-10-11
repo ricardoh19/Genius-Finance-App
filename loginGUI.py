@@ -7,10 +7,10 @@ Created on Wed Oct  6 20:34:28 2021
 
 
 class LoginGUI():
-    def __init__(self,LoginLogoutControllerObject,PopUpGUIObject,
+    def __init__(self,login_logout_controllerObject,popup_GUI_object,
                  SignUpGUIObject,ForgetPasswordGUIObject):
-        self.LoginLogoutControllerObject=LoginLogoutControllerObject
-        self.PopUpGUIObject=PopUpGUIObject
+        self.login_logout_controllerObject=login_logout_controllerObject
+        self.popup_GUI_object=popup_GUI_object
         self.SignUpGUIObject=SignUpGUIObject
         self.ForgetPasswordGUIObject=ForgetPasswordGUIObject
     def CreateMainFrame():

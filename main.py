@@ -13,6 +13,7 @@ def main():
     #contains what is happening when APP is started
     set_env_variables()
     logging.basicConfig(filename='geniusfinclogs.log', encoding='utf-8', level=logging.DEBUG, force=True)    
+    #create DB manager
     db_manager_object = DB()
 
 

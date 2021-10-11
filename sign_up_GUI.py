@@ -7,10 +7,10 @@ Created on Wed Oct  6 20:43:28 2021
 
 
 class SignUpGUI():
-    def __init__(self, LoginLogout,PopUpGUIObject,username,password,
+    def __init__(self, LoginLogout,popup_GUI_object,username,password,
                  ReenteredPassword,SecurityQuestionAnswer,LoginGUIObject):
         self.LoginLogout = LoginLogout
-        self.PopUpGUIObject = PopUpGUIObject
+        self.popup_GUI_object = popup_GUI_object
         self.username = username
         self.password = password
         self.ReenteredPassword = ReenteredPassword

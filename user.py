@@ -19,3 +19,6 @@ class User():
         to be changed when pushed to DB. Default stock owned is 0. """
         self.current_user_stocks[stockname] = [stockid, stockowned]
     
+    def return_users_stocksymbols(self):
+        return self.current_user_stocks.keys()
+    
