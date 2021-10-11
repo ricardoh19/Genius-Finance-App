@@ -6,16 +6,18 @@ from mysql.connector import errorcode
 
 
 
-# Create and modify the Genius Finance database.
+# This class creates and maintains the Genius Finance database with methods: connect_to_db, createDatabaseManager,create_database, getDatabaseUserData, getDatabaseStockData, insertDatabaseUserData, insertDatabaseStockData.
 class DB():
     def __init__(self):
-        self.createDatabaseManager() 
         #creates db if necessary
+        self.createDatabaseManager() 
+        self.DB_NAME = 'GeniusFinanceDB'
 
     '''
-    Intent: Connects to SQL database, returns cursor to database
+    Intent: Connects to SQL database, returns cursor and cnx (connection) to database.
+    * Cursor interacts with the MySQL server and executes operations on the database.  
     * Preconditions: myuser, mypassword, myhost (and db if given) variables to have valid values for the root 
-    * user of a given MySQL server or a given database
+    * user of a given MySQL server or a given database.
     * Postconditions:
     * Post0. The connection to a database db is established (if db is not None) 
     * Post1. The connection to a MySQL server is established (if db is None)
@@ -38,12 +40,12 @@ class DB():
             return self.cursor, cnx
         
     '''
-    Intent: Creates tables for database.
+    Intent: Creates database and tables in that database.
     * Preconditions: 
     * 
     * Postconditions:
     * Post0. Database GeniusFinanceDB and table/tables are created successfully.
-    * Post1. Table already Exists
+    * Post1. Database is created Table already Exists
     * post2. Failed creating database
     '''
     def createDatabaseManager(self):
@@ -52,17 +54,17 @@ class DB():
         * Preconditions: 
         * DB_name variable is created and set to correct database name.
         * Postconditions:
-        * Post0. Database GeniusFinanceDB is created successfully.
-        * post1. Failed creating database
+        * Post0. Database GeniusFinanceDB is created successfully if no exception is thrown.
+        * post1. if exception (mysql.connector.Error) is thrown, database is not created
         '''
         def create_database(cursor):
             try:
-                cursor.execute(f"CREATE DATABASE {DB_NAME} DEFAULT CHARACTER SET 'utf8'")
+                cursor.execute(f"CREATE DATABASE {self.DB_NAME} DEFAULT CHARACTER SET 'utf8'")
             except mysql.connector.Error as err:
                 print(f"Failed creating database: {err}")
                 sys.exit(1)
 
-        DB_NAME = 'GeniusFinanceDB'
+        #DB_NAME = 'GeniusFinanceDB'
         TABLES = {}
         TABLES['User'] = (
             "CREATE TABLE `User` ("
@@ -87,13 +89,13 @@ class DB():
 
         #check if database name already exists otherwise create it 
         try:
-            cursor.execute(f"USE {DB_NAME}")
+            cursor.execute(f"USE {self.DB_NAME}")
         except mysql.connector.Error as err:
-            print(f"Database {DB_NAME} does not exists.")
+            print(f"Database {self.DB_NAME} does not exists.")
             if err.errno == errorcode.ER_BAD_DB_ERROR:
                 create_database(cursor)
-                print(f"Database {DB_NAME} created successfully.")
-                cnx.database = DB_NAME
+                print(f"Database {self.DB_NAME} created successfully.")
+                cnx.database = self.DB_NAME
             else:
                 print(err)
                 sys.exit(1)
@@ -120,28 +122,32 @@ class DB():
     '''
     Intent: Query User data from database
     * Preconditions: 
-    *cursor is connected to correct database
+    * cursor is connected to correct database (GeniusFinanceDB)
+    * User table already exists.
     * Postconditions:
-    * PostO. selects all data that is stored in the User table
-    * Post1. Displays None
+    * PostO. Selects all data that is stored in the User table if the table contains data.
+    * Post1. Displays None if no data is in the User table
     '''
     def getDatabaseUserData(self):
-        cursor, cnx = self.connect_to_db(db="GeniusFinanceDB")
-        query = (f'SELECT * FROM User')
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
+        query = ("SELECT * FROM User")
         cursor.execute(query)
         
 
     '''
     Intent: Query Stock data from database
     * Preconditions: 
-    * cursor is connected to correct database
+    * cursor is connected to correct database (GeniusFinanceDB)
+    * Stock table already exists.
     * Postconditions:
-    * PostO. selects all data that is stored in the Stock table
-    * Post1. Displays None
+    * Post0. Selects all data that matches with given userId.
+    * Post1. Displays None if no data is in the Stock table.
     '''
     def getDatabaseStockData(self):
-        cursor, cnx = self.connect_to_db(db="GeniusFinanceDB")
-        query = (f'SELECT * FROM Stock')
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
+        query = ("INSERT INTO Stock "
+        "(stockName, SELECT userId FROM User WHERE userId='2', stockOwnedAmount)
+        "VALUES (%s, %s, %s)")
         cursor.execute(query)
         
 
@@ -149,12 +155,13 @@ class DB():
     Intent: Inserts data into User table
     * Preconditions: 
     * cursor is connected to correct database
+    * username, password, and securityQuestionAnswer are verified.
     * Postconditions:
-    * PostO. username, password, securityQuestionAnswer is in the database
-    * Post1. Data is not inserted into the database
+    * PostO. username, password, securityQuestionAnswer is inserted into the database
+    * Post1. Data is not inserted into the database if connection to database fails.
     '''
     def insertDatabaseUserData(self, username, password, securityQuestionAnswer):
-        cursor, cnx = self.connect_to_db(db="GeniusFinanceDB")
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
         query = ("INSERT INTO User "
                     "(username, password, securityQuestionAnswer) "
                     "VALUES (%s, %s, %s)")
@@ -165,13 +172,16 @@ class DB():
     '''
     Intent: Inserts data into Stock table
     * Preconditions: 
-    * cursor is connected to correct database
+    * userId matches with userID that is currently logged in.
+    * DB_Name is equal to 'GeniusFinanceDB'.
+    * Table that is being inserted to is "Stock"
+    * cursor is connected to correct database (GeniusFinanceDB)
     * Postconditions:
-    * PostO. username, password, securityQuestionAnswer is in the database
-    * Post1. Data is not inserted into the database
+    * PostO. stockName and stockOwnedAmount is inserted into the database
+    * Post1. Data is not inserted into the database if connection to database fails.
     '''
     def insertDatabaseStockData(self, stockName,userId,stockOwnedAmount):
-        cursor, cnx = self.connect_to_db(db="GeniusFinanceDB")
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
         query = ("INSERT INTO Stock "
                     "(stockName, SELECT userId FROM User WHERE userId='2', stockOwnedAmount)"
                     "VALUES (%s, %s,%s)")
