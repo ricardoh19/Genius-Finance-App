@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct  7 09:39:40 2021
-
-@author: Owner
-"""
-
 
 class WatchlistControllers():
     def __init__(self, StocksTrendingUp, StocksTrendingDown, StockPercentageChange,

@@ -13,7 +13,6 @@ class YahooAPI():
     It verifies wether a stocksymbol exists.
     It gets information on a stock current_ratio, trailing_EPS, trailing_PE, 
     debt_to_equity_ratio, stockprice given the stocksymbol.
-    
     """
     def __init__(self):
         """Initialize stockprice graph_stock and newslink"""
