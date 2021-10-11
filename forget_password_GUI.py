@@ -7,13 +7,13 @@ Created on Thu Oct  7 09:23:37 2021
 
 
 class ForgetPasswordGUI():
-    def __init__(self, LoginLogoutControllerObject,PopUpGUIObject,LoginGUIObject,
+    def __init__(self, login_logout_controllerObject,popup_GUI_object,LoginGUIObject,
                  username,newPassword,ReenteredPassword,SecurityQuestionAnswer):
-        self.PopUpGUIObject = PopUpGUIObject
+        self.popup_GUI_object = popup_GUI_object
         self.ReenteredPassword = ReenteredPassword
         self.SecurityQuestionAnswer = SecurityQuestionAnswer
         self.LoginGUIObject = LoginGUIObject
-        self.LoginLogoutControllerObject = LoginLogoutControllerObject
+        self.login_logout_controllerObject = login_logout_controllerObject
         self.username = username
         self.newPassword = newPassword
         
