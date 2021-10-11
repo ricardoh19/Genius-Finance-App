@@ -4,6 +4,8 @@ import mysql.connector
 from mysql.connector import errorcode
 
 
+
+
 # Create and modify the Genius Finance database.
 class DB():
     def __init__(self):
@@ -11,9 +13,9 @@ class DB():
         #creates db if necessary
 
     '''
-    Intent: Connects to SQL database
-    * Preconditions: 
-    * myuser, mypassword,myhost are all strings
+    Intent: Connects to SQL database, returns cursor to database
+    * Preconditions: myuser, mypassword, myhost (and db if given) variables to have valid values for the root 
+    * user of a given MySQL server or a given database
     * Postconditions:
     * Post0. The connection to a database db is established (if db is not None) 
     * Post1. The connection to a MySQL server is established (if db is None)
@@ -36,17 +38,23 @@ class DB():
             return self.cursor, cnx
         
     '''
-    Intent: 
+    Intent: Creates tables for database.
     * Preconditions: 
-    * myuser, mypassword, myhost (and db if given) variables to have valid values for the root 
-    * user of a given MySQL server or a given database
+    * 
     * Postconditions:
-    * Post0. Database GeniusFinanceDB created successfully.
-            Creating table OK
+    * Post0. Database GeniusFinanceDB and table/tables are created successfully.
     * Post1. Table already Exists
     * post2. Failed creating database
     '''
     def createDatabaseManager(self):
+        '''
+        Intent: Creates the database 
+        * Preconditions: 
+        * DB_name variable is created
+        * Postconditions:
+        * Post0. Database GeniusFinanceDB is created successfully.
+        * post1. Failed creating database
+        '''
         def create_database(cursor):
             try:
                 cursor.execute(f"CREATE DATABASE {DB_NAME} DEFAULT CHARACTER SET 'utf8'")
@@ -110,26 +118,25 @@ class DB():
         cnx.close()
 
     '''
-    Intent: 
+    Intent: Query User data from database
     * Preconditions: 
-    *
+    *cursor is connected to correct database
     * Postconditions:
-    * PostO. Displays the data that is stoed in the User table
+    * PostO. selects all data that is stored in the User table
     * Post1. Displays None
     '''
     def getDatabaseUserData(self):
         cursor, cnx = self.connect_to_db(db="GeniusFinanceDB")
         query = (f'SELECT * FROM User')
         cursor.execute(query)
-        for i in cursor:
-            print(i)
+        
 
     '''
-    Intent: 
+    Intent: Query Stock data from database
     * Preconditions: 
-    *
+    * cursor is connected to correct database
     * Postconditions:
-    * PostO. Displays the data that is stoed in the User table
+    * PostO. selects all data that is stored in the Stock table
     * Post1. Displays None
     '''
     def getDatabaseStockData(self):
@@ -137,16 +144,14 @@ class DB():
         query = (f'SELECT * FROM Stock')
         cursor.execute(query)
         
-        for i in cursor:
-            print(i)
-        
+
     '''
-    Intent: 
+    Intent: Inserts data into User table
     * Preconditions: 
-    * 
+    * cursor is connected to correct database
     * Postconditions:
-    * PostO. Inserts username, password, securityQuestionAnswer into the database
-    * Post1. Does not insert any value into the database
+    * PostO. username, password, securityQuestionAnswer is in the database
+    * Post1. Data is not inserted into the database
     '''
     def insertDatabaseUserData(self, username, password, securityQuestionAnswer):
         cursor, cnx = self.connect_to_db(db="GeniusFinanceDB")
@@ -158,12 +163,12 @@ class DB():
         cnx.commit()
 
     '''
-    Intent: 
+    Intent: Inserts data into Stock table
     * Preconditions: 
-    *
+    * cursor is connected to correct database
     * Postconditions:
-    * PostO. Inserts username, password, securityQuestionAnswer into the database
-    * Post1. Does not insert any value into the database
+    * PostO. username, password, securityQuestionAnswer is in the database
+    * Post1. Data is not inserted into the database
     '''
     def insertDatabaseStockData(self, stockName,userId,stockOwnedAmount):
         cursor, cnx = self.connect_to_db(db="GeniusFinanceDB")
@@ -175,7 +180,3 @@ class DB():
         cursor.execute(query, data)
         cnx.commit()
         
-        
-        
-
-    
