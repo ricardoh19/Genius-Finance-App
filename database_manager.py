@@ -50,7 +50,7 @@ class DB():
         '''
         Intent: Creates the database 
         * Preconditions: 
-        * DB_name variable is created
+        * DB_name variable is created and set to correct database name.
         * Postconditions:
         * Post0. Database GeniusFinanceDB is created successfully.
         * post1. Failed creating database
