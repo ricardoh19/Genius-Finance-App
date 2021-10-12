@@ -44,9 +44,9 @@ class DB():
     * Preconditions: 
     * 
     * Postconditions:
-    * Post0. Database GeniusFinanceDB and table/tables are created successfully.
-    * Post1. Database is created Table already Exists
-    * post2. Failed creating database
+    * Post0. Database is created successfully if database does not exist already.
+    * Post1. Tables are created successfully if tables do not exist already.
+    * Post1. Failed creating database and error is shown if database can not be created.
     '''
     def createDatabaseManager(self):
         '''
@@ -139,15 +139,14 @@ class DB():
     * Preconditions: 
     * cursor is connected to correct database (GeniusFinanceDB)
     * Stock table already exists.
+    * userId (Int) that is passed as a parameter already exists.
     * Postconditions:
     * Post0. Selects all data that matches with given userId.
-    * Post1. Displays None if no data is in the Stock table.
+    * Post1. Displays None if no data pertaining to userId is in the Stock table.
     '''
-    def getDatabaseStockData(self):
+    def getDatabaseStockData(self, userId):
         cursor, cnx = self.connect_to_db(db=self.DB_NAME)
-        query = ("INSERT INTO Stock "
-        "(stockName, SELECT userId FROM User WHERE userId='2', stockOwnedAmount)
-        "VALUES (%s, %s, %s)")
+        query = ("SELECT * FROM User WHERE userId='userId'")
         cursor.execute(query)
         
 
@@ -156,8 +155,9 @@ class DB():
     * Preconditions: 
     * cursor is connected to correct database
     * username, password, and securityQuestionAnswer are verified.
+    * username, password, and securityQuestionAnswer are strings.
     * Postconditions:
-    * PostO. username, password, securityQuestionAnswer is inserted into the database
+    * PostO. username, password, securityQuestionAnswer is inserted into the database if connection to database is successful.
     * Post1. Data is not inserted into the database if connection to database fails.
     '''
     def insertDatabaseUserData(self, username, password, securityQuestionAnswer):
@@ -174,16 +174,16 @@ class DB():
     * Preconditions: 
     * userId matches with userID that is currently logged in.
     * DB_Name is equal to 'GeniusFinanceDB'.
-    * Table that is being inserted to is "Stock"
+    * Table that is being inserted to is "Stock" and already exists.
     * cursor is connected to correct database (GeniusFinanceDB)
     * Postconditions:
-    * PostO. stockName and stockOwnedAmount is inserted into the database
+    * PostO. stockName and stockOwnedAmount is inserted into the database if connection to database is successful.
     * Post1. Data is not inserted into the database if connection to database fails.
     '''
     def insertDatabaseStockData(self, stockName,userId,stockOwnedAmount):
         cursor, cnx = self.connect_to_db(db=self.DB_NAME)
         query = ("INSERT INTO Stock "
-                    "(stockName, SELECT userId FROM User WHERE userId='2', stockOwnedAmount)"
+                    "(stockName, SELECT userId FROM User WHERE userId='userId', stockOwnedAmount)"
                     "VALUES (%s, %s,%s)")
                     
         data = (stockName,userId,stockOwnedAmount)
