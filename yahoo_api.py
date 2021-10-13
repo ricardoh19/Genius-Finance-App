@@ -41,8 +41,8 @@ class YahooAPI():
         # header contains authentication and host
         headers = {
             'content-type': "text/plain",
-            'x-rapidapi-host': "yh-finance.p.rapidapi.com",
-            'x-rapidapi-key': "9928c7260amshad0766390e03e89p1f4683jsn18824f37a5dc"
+            'x-rapidapi-host': api_host,
+            'x-rapidapi-key': api_key
             }
         #post request with parameter stocksymbol to the API endpoint
         conn.request("POST", f"/news/v2/list?region=US&snippetCount=1&s={stocksymbol}", payload, headers)
