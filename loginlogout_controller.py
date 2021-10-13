@@ -8,33 +8,45 @@ from sign_up_GUI import SignUpGUI
 class LoginLogoutControllers():
     def __init__(self ):
         #initializes and pulls data from DB
-        self.DatabaseManagesObject = DB()
+        self.DatabaseManagerObject = DB()
         # get this data from DB Manager
         self.DatabaseUserData = None #2d list list: #list: id:int, username:str, password:str, securityquestionanswer:str
         self.DatabaseStockData = None#list of dict: key = stockname:str, values: stockid:int. stockowned:int (number of stock owned)
         self.current_user_data = None #list: id:int, username:str, password:str, securityquestionanswer:str
         self.current_user_stocks = None #dict: key = stockname:str, values: stockid:int. stockowned:int (number of stock owned)
         #create popupgui object
-        self.popup_GUI_object = PopupGUI()
+        #self.popup_GUI_object = PopupGUI()
         self.user_object = None
         self.sign_up_gui_object = None
         #Load data from db
-        self.GetSnapshotOfDatabase()
-        self.set_current_user_data()
+        self.getSnapshotOfDatabase()
+        #self.set_current_user_data()
         #create login GUI
-        self.CreateLogin_GUI()
-        
-    def GetSnapshotOfDatabase(self):
-        """Pull all the database data through the database manager. 
-        So now we put what we pulled in self.DatabaseUserData self.DatabaseStockData."""
-        pass
+        #self.CreateLogin_GUI()
 
-    def set_current_user_data(username, password):
+
+    """Pull all the database data through the database manager. 
+    So now we put what we pulled in self.DatabaseUserData self.DatabaseStockData."""
+    # does the userId have to be known first? how will i know what to pull from the database?
+    def getSnapshotOfDatabase(self):
+        
+        # pull user data
+        userData = self.DatabaseManagerObject.getDatabaseUserData(1)
+        # pull stock data pertaining to user
+        stockData = self.DatabaseManagerObject.getDatabaseStockData(1)
+        self.databaseUserData = [userData]
+        self.databaseStockData = [stockData]
+        return self.databaseUserData,self.databaseStockData
+        
+
+    """Now we have the username, password check it against self.DatabaseUserData. 
+    Get userid from that and create self.current_user_data self.current_user_stocks"""
+    def set_current_user_data(self,username, password):
         """Now we have the username, password check it against self.DatabaseUserData. 
         Get userid from that and create self.current_user_data self.current_user_stocks"""
         pass
 
-    def CreateLogin_GUI(self):
+    def createLogin_GUI(self):
         """Creates Login Gui. """
         self.LoginGUIObject = LoginGUI(self)
 
@@ -55,18 +67,27 @@ class LoginLogoutControllers():
         Else error message pop up GUI."""
 
         pass
-    def ValidateUsernamePassword(self):
+    def ValidateUsernamePassword(self,username, passwordEntered):
         """checks against DB.
-        checks len of pw checks everything else to do with it and
+        checks len of pw checks, special characters, atleast one uppercase, everything else to do with it and
         Calls check username taken.
         returns true/false"""
-        pass
-    def CheckUsernameTaken(self):
+        # still need userId
+        if len(passwordEntered) < 10:
+            return False
+        userData = self.DatabaseManagerObject.getDatabaseUserData(1)
+        if (self.checkUsernameTaken(username)):
+            return False
+        else:
+            return True
+        
+
+    def checkUsernameTaken(self, username):
         """If new user check if the username already exist. 
         
         returns true/false"""
         pass
-    def VerifySecurityQuestionAnswerUsername(self, security_question_answer, username):
+    def verifySecurityQuestionAnswerUsername(self, security_question_answer, username):
         """Here we check if the passed in security_question_answer 
         is the same in the username.
         returns true/false"""
@@ -74,19 +95,19 @@ class LoginLogoutControllers():
     def logout_push_changes_to_database(self):
         """Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
         Whatever has to be change it (insert if doesnt exist stockid or user id -1, update else."""
-        #self.DatabaseManagesObject
+        
     
     def create_sign_up_GUI(self):
         self.sign_up_gui_object = SignUpGUI(self)
         
     def CreateDashboardController(self):
         """Creates Dashboard Controller"""
-        DashboardController(self, self.user_object,self.popup_GUI_object) #dont need reference
+        #DashboardController(self, self.user_object,self.popup_GUI_object) #dont need reference
 
     def CreateUserObject(self, current_user_data, current_user_stocks):
         """Creates user object"""
-        self.user_object = User(current_user_data, current_user_stocks)
+        #self.user_object = User(current_user_data, current_user_stocks)
     
     def create_popup_GUI(self, message):
         """creates a pop-up GUI with given error message."""
-        self.popup_GUI_object.create_pop_up(message)
+        #self.popup_GUI_object.create_pop_up(message)

@@ -142,7 +142,7 @@ class DB():
         cursor, cnx = self.connect_to_db(db=self.DB_NAME)
         query = (f"SELECT * FROM User WHERE userId={userId}")
         cursor.execute(query)
-        
+        return [i for i in cursor]
         
 
     '''
@@ -159,7 +159,7 @@ class DB():
         cursor, cnx = self.connect_to_db(db=self.DB_NAME)
         query = (f"SELECT * FROM Stock WHERE userId={userId}")
         cursor.execute(query)
-        
+        return [i for i in cursor]
 
     '''
     Intent: Inserts data into User table
