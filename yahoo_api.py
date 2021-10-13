@@ -9,10 +9,10 @@ class YahooAPI():
     Connection to Yahoo finc is established using http.client
     >> https://docs.python.org/3/library/http.client.html
     This class retrieves a graph for stockprice over the past 24 h for a given stock.
-    It retrieves the newslink to a story about a company given the stocksymbol.
-    It verifies wether a stocksymbol exists.
+    It retrieves the newslink to a story about a company given the stock_symbol.
+    It verifies wether a stock_symbol exists.
     It gets information on a stock current_ratio, trailing_EPS, trailing_PE, 
-    debt_to_equity_ratio, stockprice given the stocksymbol.
+    debt_to_equity_ratio, stockprice given the stock_symbol.
     """
     def __init__(self):
         """Initialize stockprice graph_stock and newslink"""
@@ -20,9 +20,9 @@ class YahooAPI():
         self.graph_stock = [[], []] #2D list list1: 40 float x values and list2: 40 float y values #x values are float timestamps and y values are float stockprices"
         self.newslink = "" #string holding newslink
 
-    def get_news_uuid(self, stocksymbol):
-        """This function is helper function of get_link(self, stocksymbol="TSLA")
-        It posts stocksymbol to Yahoo API endpoint to retrieve uuid of a newsstory.
+    def get_news_uuid(self, stock_symbol):
+        """This function is helper function of get_link(self, stock_symbol="TSLA")
+        It posts stock_symbol to Yahoo API endpoint to retrieve uuid of a newsstory.
         UUID is used in get_details_of_uuid() 
         to get the newslink of that story associated with the uuid that we find in this function."""
         #get keys from environment
@@ -44,8 +44,8 @@ class YahooAPI():
             'x-rapidapi-host': api_host,
             'x-rapidapi-key': api_key
             }
-        #post request with parameter stocksymbol to the API endpoint
-        conn.request("POST", f"/news/v2/list?region=US&snippetCount=1&s={stocksymbol}", payload, headers)
+        #post request with parameter stock_symbol to the API endpoint
+        conn.request("POST", f"/news/v2/list?region=US&snippetCount=1&s={stock_symbol}", payload, headers)
         #get response
         res = conn.getresponse()
         #get status code of the response
@@ -54,7 +54,7 @@ class YahooAPI():
         if status != 200:
             # TO-DO:
             # add check for different errors and throw exceptions
-            logging.warning(f"Stock {stocksymbol} not found. Status code: {status}")
+            logging.warning(f"Stock {stock_symbol} not found. Status code: {status}")
             #TO-DO: pop up GUI?
             return 0
 
@@ -65,7 +65,7 @@ class YahooAPI():
         return uuid
 
     def get_details_of_uuid(self, uuid):
-        """This function is helper function of get_link(self, stocksymbol="TSLA")
+        """This function is helper function of get_link(self, stock_symbol="TSLA")
         It passes uuid of a newsstory to Yahoo API endpoint to retrieve the newslink associated with it."""
         #get keys from environment
         try:
@@ -104,9 +104,9 @@ class YahooAPI():
         self.newslink = result_json["data"]["contents"][0]["content"]["clickThroughUrl"]["url"]
         logging.info(self.newslink)
 
-    def get_stock_summary(self, stocksymbol):
+    def get_stock_summary(self, stock_symbol):
         """Function gets information all stock info including stock current_ratio, trailing_EPS, trailing_PE, 
-        debt_to_equity_ratio, stockprice given the stocksymbol from API endpoint. Returns API complete stock summary"""
+        debt_to_equity_ratio, stockprice given the stock_symbol from API endpoint. Returns API complete stock summary"""
         #get keys from environment
         try:
             api_host = str(os.getenv('X_RapidAPI_Host'))
@@ -126,8 +126,8 @@ class YahooAPI():
         'X-RapidAPI-Host': api_host,
         'X-RapidAPI-Key': api_key
         }
-        #post request with parameter stocksymbol to the API endpoint
-        conn.request("GET", f"/stock/v2/get-summary?symbol={stocksymbol}&region=US", payload, headers)
+        #post request with parameter stock_symbol to the API endpoint
+        conn.request("GET", f"/stock/v2/get-summary?symbol={stock_symbol}&region=US", payload, headers)
         res = conn.getresponse()
         #get status code of the response
         status = res.status # 200 for is found #302 not found
@@ -135,7 +135,7 @@ class YahooAPI():
         if status != 200:
             # TO-DO:
             # add check for different errors and throw exceptions
-            logging.warning(f"Stock {stocksymbol} not found. Status code: {status}")
+            logging.warning(f"Stock {stock_symbol} not found. Status code: {status}")
             #TO-DO: pop up GUI?
             return 0
         
@@ -147,12 +147,12 @@ class YahooAPI():
         # logging.debug(result_json)
         return result_json
 
-    def get_stocks_info(self, stocksymbollist=[]):
+    def get_stocks_info(self, stock_symbollist=[]):
         """Function gets information on each stock's current_ratio, trailing_EPS, trailing_PE, 
-        debt_to_equity_ratio, stockprice given the stocksymbol from get_stock_summary function"""
+        debt_to_equity_ratio, stockprice given the stock_symbol from get_stock_summary function"""
         stockinfo ={} #remove old data
-        for stocksymbol in stocksymbollist:
-            stock_summary = self.get_stock_summary(stocksymbol)
+        for stock_symbol in stock_symbollist:
+            stock_summary = self.get_stock_summary(stock_symbol)
             if stock_summary!=0:
                 #extract stock's current_ratio, trailing_EPS, trailing_PE, debt_to_equity_ratio, stockprice from json response
                 stockprice = stock_summary["financialData"]["currentPrice"]["raw"]
@@ -168,18 +168,18 @@ class YahooAPI():
                 logging.debug(f"trailing PE: {trailing_PE}")
                 ["trailingPE"]
                 #put extracted data in dictionary
-                stockinfo[stocksymbol] = {
+                stockinfo[stock_symbol] = {
                     "currentRatio": current_ratio,
                     "trailingEPS": trailing_EPS,
                     "PERatio":trailing_PE,
                     "DebtToEquityRatio": debt_to_equity_ratio,
                     "stockPrice": stockprice
                 }
-                logging.debug(stockinfo[stocksymbol])
+                logging.debug(stockinfo[stock_symbol])
         logging.debug(stockinfo)
-        return stockinfo # return dict with stocksymbol as keys and data as value stored in dict
+        return stockinfo # return dict with stock_symbol as keys and data as value stored in dict
     
-    def get_chart(self, stocksymbol):
+    def get_chart(self, stock_symbol):
         """This function retrieves a graph for stockprice over the past 24 h for a given stock from API endpoint.
         x values are float timestamps and y values are float stockprices"""
         #get keys from environment
@@ -201,8 +201,8 @@ class YahooAPI():
         'X-RapidAPI-Host': api_host,
         'X-RapidAPI-Key': api_key
         }
-        #post request with parameter stocksymbol to the API endpoint
-        conn.request("GET", f"/stock/v2/get-chart?interval=15m&symbol={stocksymbol}&range=1d&region=US", headers=headers)
+        #post request with parameter stock_symbol to the API endpoint
+        conn.request("GET", f"/stock/v2/get-chart?interval=15m&symbol={stock_symbol}&range=1d&region=US", headers=headers)
         res = conn.getresponse()
         #get status code of the response
         status = res.status # 200 for is found #302 not found
@@ -225,40 +225,40 @@ class YahooAPI():
         self.graph_stock[0] = timestamp #list of float
         self.graph_stock[1] = open_stockprice #list of float
 
-    def get_link(self, stocksymbol="TSLA"):
+    def get_link(self, stock_symbol="TSLA"):
         """Gets newslink associated with a given stock. 
         Gets uuid by searching API for specific stock.
         Use that uuid of an article on that stock to ge the link in the get_detail call."""
-        if not self.check_stock_exists(stocksymbol):
-            logging.warning("Stocksymbol doesn't exist")
+        if not self.check_stock_exists(stock_symbol):
+            logging.warning("stock_symbol doesn't exist")
             return 0
-        uuid = self.get_news_uuid(stocksymbol)
+        uuid = self.get_news_uuid(stock_symbol)
         self.get_details_of_uuid(uuid)
         return self.newslink
 
-    def get_watchlist_info(self, stocksymbollist= ["TSLA", "APPL"]):
-        """This function takes a list with stocksymbols,
-        it returns a dictionary with stocksymbol as keys and all ratios and info as values."""
-        return self.get_stocks_info(stocksymbollist)
+    def get_watchlist_info(self, stock_symbollist= ["TSLA", "APPL"]):
+        """This function takes a list with stock_symbols,
+        it returns a dictionary with stock_symbol as keys and all ratios and info as values."""
+        return self.get_stocks_info(stock_symbollist)
 
-    def get_specific_stock_info(self, stocksymbol="APPL"):
-        """This function takes a stocksymbol,
-        it returns a dictionary with stocksymbol as key and all ratios and info as values."""
-        return self.get_stocks_info([stocksymbol])
+    def get_specific_stock_info(self, stock_symbol="APPL"):
+        """This function takes a stock_symbol,
+        it returns a dictionary with stock_symbol as key and all ratios and info as values."""
+        return self.get_stocks_info([stock_symbol])
 
-    def get_stock_graph(self, stocksymbol = "TESLA"):
+    def get_stock_graph_values(self, stock_symbol = "TESLA"):
         """This function gets stockprice over the last 24 hours.
         Returns a list of 2 list length 40.
         first list is timestamp and stockprice for the second"""
-        if not self.check_stock_exists(stocksymbol):
-            logging.warning("Stocksymbol doesn't exist")
+        if not self.check_stock_exists(stock_symbol):
+            logging.warning("stock_symbol doesn't exist")
             return 0
-        self.get_chart(stocksymbol)
+        self.get_chart(stock_symbol)
         return self.graph_stock #2D list with 2 dict timestamp and stockprice
 
-    def check_stock_exists(self, stocksymbol):
+    def check_stock_exists(self, stock_symbol):
         """Checks against API if stock exists"""
-        stockinfo = self.get_stock_summary(stocksymbol)
+        stockinfo = self.get_stock_summary(stock_symbol)
         if stockinfo == 0:
             return False
         else:

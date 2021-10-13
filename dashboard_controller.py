@@ -27,11 +27,11 @@ class DashboardController():
         Login logout controller function is called which pushes the changes to the database"""
         self.login_logout_controller.logout_push_changes_to_database(self.user_object)
 
-    def create_stock_controller(self, stocksymbol):
+    def create_stock_controller(self, stock_symbol):
         """if stock controller object does not exist creates it.
         Function calls Stock Controller Object function: create stock gui"""
         if self.stock_controller_object == None:
-            self.stock_controller_object = StockController(stocksymbol, self.user_object, self, self.popup_GUI_object)
+            self.stock_controller_object = StockController(stock_symbol, self.user_object, self, self.popup_GUI_object)
         self.stock_controller_object.create_stock_GUI()
 
     def create_watchlist_controller(self):
@@ -41,6 +41,7 @@ class DashboardController():
             self.watchlist_object = WatchlistController(self.user_object, self.yahoo_api_object,
                  self.popup_GUI_object,self)
         #call watchlist GUI in Watchlist controller
+        
     def create_portfolio_controller(self):
         """if portfolio controller object does not exist create it.
         calls method in Portfolio Controller to create Portfolio GUI."""
@@ -52,16 +53,16 @@ class DashboardController():
         """This function creates the Dashboard GUI Object"""
         self.DashboardGUIObject = DashboardGUI(self,self.popup_GUI_object)
 
-    def handle_search_bar_event(self, stocksymbol):
-        """Checks if the stocksymbol given in the search bar actually exists.
+    def handle_search_bar_event(self, stock_symbol):
+        """Checks if the stock_symbol given in the search bar actually exists.
         If it exists turns over control to Stock controller.
         If it doesn't exist create a pop-up GUI with error message."""
         #check if stock exists
-        if self.yahoo_api_object.check_stock_exists(stocksymbol):
+        if self.yahoo_api_object.check_stock_exists(stock_symbol):
             #stock exists hence create stock_controller
-            self.create_stock_controller(stocksymbol)
+            self.create_stock_controller(stock_symbol)
         else:
-            #could not find stocksymbol
+            #could not find stock_symbol
             message = "Could not find stock entered in search bar."
             self.create_popup_GUI(message)
 

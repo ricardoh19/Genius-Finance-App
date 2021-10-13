@@ -1,1 +1,6 @@
+Louise:
 where is user created
+stocknumber changed in stock gui change stock number in user class
+can you delete stock in stock class?
+
+Wrap all calls to Yahoo finc in try and except statements.

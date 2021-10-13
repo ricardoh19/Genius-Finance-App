@@ -7,17 +7,17 @@ class PortfolioController():
         self.DashboardControllerObject = DashboardControllerObject
         self.YahooAPIObject = YahooAPIObject
         self.StockController=StockController
-        #stock price dictionary key = stocksymbol value = price
+        #stock price dictionary key = stock_symbol value = price
         self.StockPriceDict = {}
 
-    def CallUserToRemoveStock(self):
+    def call_user_object_to_remove_stock(self):
         pass
     def Createstock_controller_object(self):
         pass
     def get_stock_price_yahoo_api_object(self):
         """Get stockinfo dict from Yahoo API."""
-        stocksymbol_list = self.user_object.return_users_stocksymbols()
-        stockinfo = self.YahooAPIObject.get_stock_price_yahoo_api_object(stocksymbol_list)
+        stock_symbol_list = self.user_object.return_users_stock_symbols()
+        stockinfo = self.YahooAPIObject.get_stock_price_yahoo_api_object(stock_symbol_list)
         #extract just the stockprice associated with the stock
         for key in stockinfo:
             self.StockPriceDict[key] = stockinfo[key]["stockPrice"] 
