@@ -3,6 +3,7 @@ class PopupGUI():
     displays when calling create pop up function"""
     def __init__(self, message):
         self.message = message
+        #hi heres james
     
     def create_pop_up(message):
         """This function creates a tkinter pop up window 
