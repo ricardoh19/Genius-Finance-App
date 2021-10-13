@@ -6,19 +6,19 @@ class User():
         self.current_user_data=current_user_data
         #list: id:int, username:str, password:str, securityquestionanswer:str
         self.current_user_stocks=current_user_stocks
-        #dict: key = stockname:str, values: stockid:int. stockowned:int (number of stock owned)
-    def DeleteStock(self, stockname):
+        #dict: key = stocksymbol:str, values: stockid:int. stockowned:int (number of stock owned)
+    def delete_stock(self, stockname):
         """Function deletes specified stockname from current user stoccks"""
         try:
             del self.current_user_stocks[stockname]
         except KeyError:
             logging.error(f"Unable to remove {stockname} from User because it does not exist as a key in the dictionary.")
 
-    def AppendStock(self, stockname, stockid = -1, stockowned = 0):
+    def append_stock(self, stocksymbol, stockid = -1, stockowned = 0):
         """Appends a stock to the users collection of stocks. If not specified the stockid is -1
         to be changed when pushed to DB. Default stock owned is 0. """
-        self.current_user_stocks[stockname] = [stockid, stockowned]
+        self.current_user_stocks[stocksymbol] = [stockid, stockowned]
     
-    def return_users_stocksymbols(self):
+    def return_users_stock_symbols(self):
         return self.current_user_stocks.keys()
     

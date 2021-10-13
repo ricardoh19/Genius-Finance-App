@@ -11,11 +11,11 @@ class DashboardGUI():
         #TO:DO frame destroyed
 
     def handle_searchbar_event(self):
-        """Gets stocksymbol selected and passes it on 
+        """Gets stock_symbol selected and passes it on 
         to dashboard controller for processing."""
-        stocksymbol = "" #ToDo
-        #call Dashboard controller function to process search bar stocksymbol
-        self.DashboardControllerObject.handle_search_bar_event(stocksymbol)
+        stock_symbol = "" #ToDo
+        #call Dashboard controller function to process search bar stock_symbol
+        self.DashboardControllerObject.handle_search_bar_event(stock_symbol)
     
     def handle_watchlist_event():
 

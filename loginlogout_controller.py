@@ -11,9 +11,9 @@ class LoginLogoutControllers():
         self.DatabaseManagesObject = DB()
         # get this data from DB Manager
         self.DatabaseUserData = None #2d list list: #list: id:int, username:str, password:str, securityquestionanswer:str
-        self.DatabaseStockData = None#list of dict: key = stockname:str, values: stockid:int. stockowned:int (number of stock owned)
+        self.DatabaseStockData = None#list of dict: key = stocksymbol :str, values: stockid:int. stockowned:int (number of stock owned)
         self.current_user_data = None #list: id:int, username:str, password:str, securityquestionanswer:str
-        self.current_user_stocks = None #dict: key = stockname:str, values: stockid:int. stockowned:int (number of stock owned)
+        self.current_user_stocks = None #dict: key = stocksymbol:str, values: stockid:int. stockowned:int (number of stock owned)
         #create popupgui object
         self.popup_GUI_object = PopupGUI()
         self.user_object = None
