@@ -6,7 +6,9 @@ from mysql.connector import errorcode
 
 
 
-# This class creates and maintains the Genius Finance database with methods: connect_to_db, createDatabaseManager,create_database, getDatabaseUserData, getDatabaseStockData, insertDatabaseUserData, insertDatabaseStockData.
+# This class creates and maintains the Genius Finance database with methods: 
+# connect_to_db, createDatabaseManager,create_database, getDatabaseUserData, 
+# getDatabaseStockData, insertDatabaseUserData, insertDatabaseStockData.
 class DB():
     def __init__(self):
         #creates db if necessary
@@ -86,16 +88,17 @@ class DB():
             
         #connect to mysql server as root user
         cursor, cnx = self.connect_to_db()
+        DB_NAME = ' GeniusFinanceDB'
 
         #check if database name already exists otherwise create it 
         try:
-            cursor.execute(f"USE {self.DB_NAME}")
+            cursor.execute(f"USE {DB_NAME}")
         except mysql.connector.Error as err:
-            print(f"Database {self.DB_NAME} does not exists.")
+            print(f"Database {DB_NAME} does not exists.")
             if err.errno == errorcode.ER_BAD_DB_ERROR:
                 create_database(cursor)
-                print(f"Database {self.DB_NAME} created successfully.")
-                cnx.database = self.DB_NAME
+                print(f"Database {DB_NAME} created successfully.")
+                cnx.database = DB_NAME
             else:
                 print(err)
                 sys.exit(1)
@@ -124,13 +127,14 @@ class DB():
     * Preconditions: 
     * cursor is connected to correct database (GeniusFinanceDB)
     * User table already exists.
+    * userId (Int) that is passed as a parameter already exists.
     * Postconditions:
-    * PostO. Selects all data that is stored in the User table if the table contains data.
-    * Post1. Displays None if no data is in the User table
+    * PostO. Selects all data that is stored in the User table pertaining to userId if the table contains data.
+    * Post1. Displays None if no data pertaining to userId is in the User table
     '''
-    def getDatabaseUserData(self):
+    def getDatabaseUserData(self, userId):
         cursor, cnx = self.connect_to_db(db=self.DB_NAME)
-        query = ("SELECT * FROM User")
+        query = (f"SELECT * FROM User WHERE userId={userId}")
         cursor.execute(query)
         
 
@@ -141,12 +145,12 @@ class DB():
     * Stock table already exists.
     * userId (Int) that is passed as a parameter already exists.
     * Postconditions:
-    * Post0. Selects all data that matches with given userId.
+    * Post0. Selects all data that matches with given userId if the table contains data.
     * Post1. Displays None if no data pertaining to userId is in the Stock table.
     '''
     def getDatabaseStockData(self, userId):
         cursor, cnx = self.connect_to_db(db=self.DB_NAME)
-        query = ("SELECT * FROM User WHERE userId='userId'")
+        query = (f"SELECT * FROM Stock WHERE userId={userId}")
         cursor.execute(query)
         
 
@@ -189,4 +193,50 @@ class DB():
         data = (stockName,userId,stockOwnedAmount)
         cursor.execute(query, data)
         cnx.commit()
+
+    '''
+    Intent: Updates data into User table
+    * Preconditions: 
+    * userId matches with userID that is currently logged in.
+    * DB_Name is equal to 'GeniusFinanceDB'.
+    * Table that is being updated to is "Stock" and already exists.
+    * cursor is connected to correct database (GeniusFinanceDB)
+    * usernameOrPassword is a string that is either "username" or "password"
+    * newValue is a validated username or password
+
+    * Postconditions:
+    * PostO. username is updated in the database if connection to database is successful.
+    * Post1. password is updated in the database if connection to database is successful.
+    * Post2. Data is not updated in the database if connection to database fails.
+    * post3. Data is not updated in the database if username or password input type is not a string
+    '''
+    def updateDatabaseUserData(self, userId,usernameOrPassword, newValue):
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
+        if usernameOrPassword == "username":
+            query = (f"UPDATE User SET username = '{newValue}' WHERE userId = {userId}")
+        elif usernameOrPassword == "password":
+            query = (f"UPDATE User SET password = '{newValue}' WHERE userId = {userId}")
+        cursor.execute(query)
+        cnx.commit()
+
+    '''
+    Intent: Updates data into Stock table
+    * Preconditions: 
+    * userId matches with userID that is currently logged in.
+    * DB_Name is equal to 'GeniusFinanceDB'.
+    * Table that is being updated to is "Stock" and already exists.
+    * cursor is connected to correct database (GeniusFinanceDB)
+    * stockOwnedAmount is an integer
+    * Postconditions:
+    * PostO. stockOwnedAmount is updated in the database if connection to database is successful.
+    * Post1. Data is not updated in the database if connection to database fails.
+    * post2. Data is not updated in the database if stockOwnedAmount input type is not an integer
+    '''
+    def updateDatabaseStockData(self, userId,stockOwnedAmount):
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
+        query = (f"UPDATE Stock SET stockOwnedAmount = {stockOwnedAmount} WHERE userId = {userId}")
+        cursor.execute(query)
+        cnx.commit()
         
+    def handleStockPushData(self):
+        pass
