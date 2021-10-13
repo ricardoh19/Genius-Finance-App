@@ -28,3 +28,7 @@ class PortfolioController():
 
     def CreateWatchListController(self):
         pass
+
+    def create_popup_GUI(self, message):
+        """creates a pop-up GUI with given error message."""
+        self.popup_GUI_object.create_pop_up(message)

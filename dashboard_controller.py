@@ -4,7 +4,7 @@ from dashboardGUI import DashboardGUI
 from portfolio_controller import PortfolioController
 from watchlist_controller import WatchlistController
 
-class DashboardControllers():
+class DashboardController():
     """This class is the intersection of APP traffic after login. """
     def __init__(self, login_logout_controller, user_object,popup_GUI_object):
         #passed in objects

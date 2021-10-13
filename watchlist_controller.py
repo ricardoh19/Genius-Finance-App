@@ -31,3 +31,6 @@ class WatchlistController():
         return WatchlistGUI(self, self.popup_GUI_object, self.StockTrendingUp,
                  self.StocksTrendingDown, self.description, self.StockPercentageChange)
     
+    def create_popup_GUI(self, message):
+        """creates a pop-up GUI with given error message."""
+        self.popup_GUI_object.create_pop_up(message)

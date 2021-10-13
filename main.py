@@ -7,6 +7,7 @@ def set_env_variables():
     #export variables to environment for yahoo finance
     os.environ["X_RapidAPI_Host"]= "yh-finance.p.rapidapi.com"
     os.environ["X_RapidAPI_Key"]= "9928c7260amshad0766390e03e89p1f4683jsn18824f37a5dc"
+    os.environ["GENIUS_FINC_DB_NAME"]= "GeniusFinanceDB"
 
 
 def main():
