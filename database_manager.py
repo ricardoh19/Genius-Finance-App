@@ -128,33 +128,17 @@ class DB():
         cursor.close()
         cnx.close()
 
+   
     '''
-    Intent: Query User data from database, return a list of User data from database
-    * Preconditions: 
-    * cursor is connected to correct database (GeniusFinanceDB)
-    * User table already exists.
-    * userId (Int) that is passed as a parameter already exists.
-    * Postconditions:
-    * PostO. Selects all data that is stored in the User table pertaining to userId if the table contains data.
-    * Post1. Displays None if no data pertaining to userId is in the User table
-    '''
-    def getDatabaseUserData(self, userId):
-        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
-        query = (f"SELECT * FROM User WHERE userId={userId}")
-        cursor.execute(query)
-        return [i for i in cursor]
-        
-
-    '''
-    Intent: Query User data from database,return a list of all User data from database
+    Intent: Query User data from database. Return a list of all User data from database
     * Preconditions: 
     * cursor is connected to correct database (GeniusFinanceDB)
     * User table already exists.
     * Postconditions:
-    * Post0. Selects all data in User table if the table contains data.
-    * Post1. Displays None if no data  is in the User table.
+     * Post0. Selects all data from the User table if connection to database if successful.
+    * Post1. Displays None if connection to database is not successful.
     '''
-    def getAllDatabaseUserData(self):
+    def getDatabaseUserData(self):
         cursor, cnx = self.connect_to_db(db=self.DB_NAME)
         query = (f"SELECT * FROM User")
         cursor.execute(query)
@@ -163,32 +147,15 @@ class DB():
 
 
     '''
-    Intent: Query Stock data from database, return a list of all Stock data from database
+    Intent: Query all Stock data from database,return a list of all Stock data from database. 
     * Preconditions: 
     * cursor is connected to correct database (GeniusFinanceDB)
     * Stock table already exists.
     * Postconditions:
-    * Post0. Selects all data in Stock table if the table contains data.
-    * Post1. Displays None if no data is in the Stock table.
+    * Post0. Selects all data from the Stock table if connection to database if successful.
+    * Post1. Displays None if connection to database is not successful.
     '''
-    def getDatabaseStockData(self, userId):
-        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
-        query = (f"SELECT * FROM Stock WHERE userId={userId}")
-        cursor.execute(query)
-        return [i for i in cursor]
-
-
-    '''
-    Intent: Query all Stock data from database,return a list of all Stock data from database
-    * Preconditions: 
-    * cursor is connected to correct database (GeniusFinanceDB)
-    * Stock table already exists.
-    * userId (Int) that is passed as a parameter already exists.
-    * Postconditions:
-    * Post0. Selects all data that matches with given userId if the table contains data.
-    * Post1. Displays None if no data pertaining to userId is in the Stock table.
-    '''
-    def getAllDatabaseStockData(self):
+    def getDatabaseStockData(self):
             cursor, cnx = self.connect_to_db(db=self.DB_NAME)
             query = (f"SELECT * FROM Stock")
             cursor.execute(query)
