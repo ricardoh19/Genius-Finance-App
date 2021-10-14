@@ -129,7 +129,7 @@ class DB():
         cnx.close()
 
     '''
-    Intent: Query User data from database
+    Intent: Query User data from database, return a list of User data from database
     * Preconditions: 
     * cursor is connected to correct database (GeniusFinanceDB)
     * User table already exists.
@@ -146,7 +146,40 @@ class DB():
         
 
     '''
-    Intent: Query Stock data from database
+    Intent: Query User data from database,return a list of all User data from database
+    * Preconditions: 
+    * cursor is connected to correct database (GeniusFinanceDB)
+    * User table already exists.
+    * Postconditions:
+    * Post0. Selects all data in User table if the table contains data.
+    * Post1. Displays None if no data  is in the User table.
+    '''
+    def getAllDatabaseUserData(self):
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
+        query = (f"SELECT * FROM User")
+        cursor.execute(query)
+        return [i for i in cursor]
+        
+
+
+    '''
+    Intent: Query Stock data from database, return a list of all Stock data from database
+    * Preconditions: 
+    * cursor is connected to correct database (GeniusFinanceDB)
+    * Stock table already exists.
+    * Postconditions:
+    * Post0. Selects all data in Stock table if the table contains data.
+    * Post1. Displays None if no data is in the Stock table.
+    '''
+    def getDatabaseStockData(self, userId):
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
+        query = (f"SELECT * FROM Stock WHERE userId={userId}")
+        cursor.execute(query)
+        return [i for i in cursor]
+
+
+    '''
+    Intent: Query all Stock data from database,return a list of all Stock data from database
     * Preconditions: 
     * cursor is connected to correct database (GeniusFinanceDB)
     * Stock table already exists.
@@ -155,11 +188,12 @@ class DB():
     * Post0. Selects all data that matches with given userId if the table contains data.
     * Post1. Displays None if no data pertaining to userId is in the Stock table.
     '''
-    def getDatabaseStockData(self, userId):
-        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
-        query = (f"SELECT * FROM Stock WHERE userId={userId}")
-        cursor.execute(query)
-        return [i for i in cursor]
+    def getAllDatabaseStockData(self):
+            cursor, cnx = self.connect_to_db(db=self.DB_NAME)
+            query = (f"SELECT * FROM Stock")
+            cursor.execute(query)
+            return [i for i in cursor]
+
 
     '''
     Intent: Inserts data into User table
