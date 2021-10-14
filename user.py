@@ -12,7 +12,7 @@ class User():
         try:
             del self.current_user_stocks[stockname]
         except KeyError:
-            logging.error(f"Unable to remove {stockname} from User because it does not exist as a key in the dictionary.")
+            print(f"Unable to remove {stockname} from User because it does not exist as a key in the dictionary.")
 
     def append_stock(self, stocksymbol, stockid = -1, stockowned = 0):
         """Appends a stock to the users collection of stocks. If not specified the stockid is -1

@@ -1,5 +1,16 @@
 ## Genius-Finance App
 
+## New in week 2:
+Louise:
++ dashboard controller
++ stock controller
++ user
++ login/logout with ricardo
++ begin portfolio
++ begin watchlist
++ all of the above need to be tested in week 3, they're interconected which makes it a bit hard to test just one without having the others.
+
+
 ## Test code: 
 + To test our code make sure that all of the code is in the same folder. 
 + run the test_script.py
