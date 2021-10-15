@@ -7,11 +7,24 @@ Created on Wed Oct  6 20:43:28 2021
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
+'''
 
+            STAND ALONE PROGRAM AT THE MOMENT
+'''
+
+''' Intent: Connects to database, creates user an account.
+    * Preconditions: username has to unique, password has to be acceptable (will say what is required), 
+    enter a security question answer
+    * Postconditions:
+    * Post0. Data entered in GUI is put in database
+    * Exception 1: Username is taken already
+    * Exception 2: Password does not fit the requirements or passwords do not match
+    '''
 
 
 class SignUpGUI():
     def __init__(self, master):
+        ''' will add db'''
         # will update new methods and attribute in class diagram
         self.master = master
         self.master.title("Sign Up:")
@@ -43,7 +56,9 @@ class SignUpGUI():
         ''' will eventually fix and call this method to close out of program'''
         self.master.destroy()
 
-   
+    def usernameTaken():
+        # if username is already in db throw exception
+        pass
 
         
 root = Tk()
