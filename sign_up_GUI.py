@@ -4,26 +4,51 @@ Created on Wed Oct  6 20:43:28 2021
 
 @author: Owner
 """
+from tkinter import *
+import tkinter as tk
+from tkinter import ttk
+
 
 
 class SignUpGUI():
-    def __init__(self, LoginLogout,popup_GUI_object,username,password,
-                 ReenteredPassword,SecurityQuestionAnswer,LoginGUIObject):
-        self.LoginLogout = LoginLogout
-        self.popup_GUI_object = popup_GUI_object
-        self.username = username
-        self.password = password
-        self.ReenteredPassword = ReenteredPassword
-        self.SecurityQuestionAnswer = SecurityQuestionAnswer
-        self.LoginGUIObject = LoginGUIObject
+    def __init__(self, master):
+        # will update new methods and attribute in class diagram
+        self.master = master
+        self.master.title("Sign Up:")
+        self.isClicked = False
         
-    def HandleSignUpEvent():
-        pass
-    def HandleCloseEvent():
-        pass
-    def CreateMainFrame():
-        pass
-    def CreateUsernamePasswordFrame():
-        pass
-    def CreateSecurityQuestionFrame():
-        pass
+        # logo on top left side
+        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=1, pady=5, padx=5, sticky="w")
+        
+        # top credentials frame
+        self.credentials = Frame(self.master, width = 450, height = 170,borderwidth=2, relief="sunken").grid(row = 1,column=1)
+        self.usernameLabel = Label( self.credentials, text="Enter a Username",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="nw")
+        self.passwordLabel = Label( self.credentials, text="Enter a Password",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row=1, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="w")
+        self.reenterPasswordLabel = Label( self.credentials, text="Reenter the Password",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row=1, column=1,padx=25,pady=25, ipadx=3,ipady=5,sticky="sw")
+        self.usernameEntry = Entry(self.credentials).grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="ne")
+        self.passwordEntry = Entry(self.credentials).grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="e")
+        self.reenterPasswordEntry = Entry(self.credentials).grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="se")
+        
+        # security question frame
+        self.buttons= Frame(self.master, width = 450, height = 150, borderwidth=2, relief="sunken").grid(row = 2,column=1,pady=6)
+        self.securityQuestionLabel = Label( self.credentials, text="Security Question: What is your  favorite food?",font='Helvetica 13 bold',borderwidth=3, relief="ridge").grid(row=2, column=1,padx=15,pady=15, ipadx=1,ipady=1,stick="n")
+        self.securityQuestionEntry = Entry(self.credentials).grid(row = 2,column=1,padx=8,pady=15,ipadx=2,ipady=2)
+        
+        #exit and sign up button
+        self.exitButton = Button(self.master,text="Close").grid(row = 4,column=1,sticky="se")
+        self.SignUpButton = Button(self.master,text="Sign Up").grid(row = 4,column=1)
+
+        
+    def closeWindow(self):
+        ''' will eventually fix and call this method to close out of program'''
+        self.master.destroy()
+
+   
+
+        
+root = Tk()
+root.geometry("600x500")
+
+my_gui = SignUpGUI(root)
+
+root.mainloop()
