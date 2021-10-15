@@ -7,6 +7,7 @@ Created on Wed Oct  6 20:43:28 2021
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
+import tkinter.messagebox
 '''
 
             STAND ALONE PROGRAM AT THE MOMENT
@@ -48,17 +49,24 @@ class SignUpGUI():
         self.securityQuestionEntry = Entry(self.credentials).grid(row = 2,column=1,padx=8,pady=15,ipadx=2,ipady=2)
         
         #exit and sign up button
-        self.exitButton = Button(self.master,text="Close").grid(row = 4,column=1,sticky="se")
-        self.SignUpButton = Button(self.master,text="Sign Up").grid(row = 4,column=1)
+        self.exitButton = Button(self.master,text="Close",command=SignUpGUI.closeWindow).grid(row = 4,column=1,sticky="se")
+        self.SignUpButton = Button(self.master,text="Sign Up",command=SignUpGUI.SignUpClick).grid(row = 4,column=1)
 
         
-    def closeWindow(self):
-        ''' will eventually fix and call this method to close out of program'''
-        self.master.destroy()
+    def closeWindow():
+        root.destroy()
 
-    def usernameTaken():
+    def checkUsername():
         # if username is already in db throw exception
         pass
+    def SignUpClick():
+        #from popupGUI import PopUpGUI
+        #will make the computer autoclick a button in popup to display a pop up message depending on the button clicked in gui
+         try:
+            tkinter.messagebox.showinfo("Sign up.",  "Signed up successfully")
+         except:
+            tkinter.messagebox.showinfo("Sign up.",  "Signed up failed")
+            
 
         
 root = Tk()
