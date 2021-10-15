@@ -2,7 +2,6 @@ import http.client
 import json
 import os
 import sys 
-import logging
 
 class YahooAPI():
     """This class gets information from an API endpoint.
@@ -13,6 +12,10 @@ class YahooAPI():
     It verifies wether a stock_symbol exists.
     It gets information on a stock current_ratio, trailing_EPS, trailing_PE, 
     debt_to_equity_ratio, stockprice given the stock_symbol.
+
+    Note:
+    API call functions are first.
+    Methods called from outside are below, they use the API call functions as helper functions.
     """
     def __init__(self):
         """Initialize stockprice graph_stock and newslink"""
@@ -30,9 +33,9 @@ class YahooAPI():
             api_host = str(os.getenv('X_RapidAPI_Host'))
             api_key = str(os.getenv('X_RapidAPI_Key')) #This key is limited to 500 calls.
         except Exception as e:
-            logging.error("Check that API key and host is provided in the bash script run-main.sh.")
-            logging.error("Oops!", sys.exc_info()[0], "occurred.")
-            logging.error("Exception: ", e)
+            print("Check that API key and host is provided in the bash script run-main.sh.")
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("Exception: ", e)
             sys.exit(1) #crash
         #establish connection to API host
         conn = http.client.HTTPSConnection("yh-finance.p.rapidapi.com")
@@ -50,18 +53,18 @@ class YahooAPI():
         res = conn.getresponse()
         #get status code of the response
         status = res.status # 200 for is found #302 not found
-        logging.info(status)
+        print(f"status: {status}")
         if status != 200:
             # TO-DO:
             # add check for different errors and throw exceptions
-            logging.warning(f"Stock {stock_symbol} not found. Status code: {status}")
+            print(f"Stock {stock_symbol} not found. Status code: {status}")
             #TO-DO: pop up GUI?
             return 0
 
         data = res.read()
         result_json = json.loads( data.decode("utf-8")) #dump it in json # convert result to json/dict#dump it in json # convert result to json/dict
         uuid = result_json["data"]["main"]["stream"][0]["id"] #get uuid from result
-        logging.info(f"uuid: {uuid}")
+        # print(f"uuid: {uuid}")
         return uuid
 
     def get_details_of_uuid(self, uuid):
@@ -73,9 +76,9 @@ class YahooAPI():
             api_key = str(os.getenv('X_RapidAPI_Key')) #This key is limited to 500 calls.
 
         except Exception as e:
-            logging.error("Check that API key and host is provided in the bash script run-main.sh.")
-            logging.error("Oops!", sys.exc_info()[0], "occurred.")
-            logging.error("Exception: ", e)
+            print("Check that API key and host is provided in the bash script run-main.sh.")
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("Exception: ", e)
             sys.exit(1) #crash
 
         #establish connection to API host
@@ -91,18 +94,21 @@ class YahooAPI():
         res = conn.getresponse()
         #get status code of the response
         status = res.status # 200 for is found #302 not found
-        logging.info(status)
+        print(f"status: {status}")
         if status != 200:
             # TO-DO:
             # add check for different errors and throw exceptions
-            logging.warning(f"Status code: {status}")
+            print(f"Status code: {status}")
             #TO-DO: pop up GUI?
             return 0
 
         data = res.read()
         result_json = json.loads( data.decode("utf-8")) #dump it in json # convert result to json/dict#dump it in json
-        self.newslink = result_json["data"]["contents"][0]["content"]["clickThroughUrl"]["url"]
-        logging.info(self.newslink)
+        try:
+            self.newslink = result_json["data"]["contents"][0]["content"]["clickThroughUrl"]["url"]
+        except Exception as e:
+            print("Error could not retrieve a newslink.")
+            self.newslink = "Error could not retrieve a newslink."
 
     def get_stock_summary(self, stock_symbol):
         """Function gets information all stock info including stock current_ratio, trailing_EPS, trailing_PE, 
@@ -113,9 +119,9 @@ class YahooAPI():
             api_key = str(os.getenv('X_RapidAPI_Key')) #This key is limited to 500 calls.
 
         except Exception as e:
-            logging.error("Check that API key and host is provided in the bash script run-main.sh.")
-            logging.error("Oops!", sys.exc_info()[0], "occurred.")
-            logging.error("Exception: ", e)
+            print("Check that API key and host is provided in the bash script run-main.sh.")
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("Exception: ", e)
             sys.exit(1) #crash
 
         #establish connection to API host
@@ -131,20 +137,20 @@ class YahooAPI():
         res = conn.getresponse()
         #get status code of the response
         status = res.status # 200 for is found #302 not found
-        logging.info(status)
+        print(f"status: {status}")
         if status != 200:
             # TO-DO:
             # add check for different errors and throw exceptions
-            logging.warning(f"Stock {stock_symbol} not found. Status code: {status}")
+            print(f"Stock {stock_symbol} not found. Status code: {status}")
             #TO-DO: pop up GUI?
             return 0
         
         # print(res) #<http.client.HTTPResponse object at 0x102d00a60>
         data = res.read()
         # print(data)
-        # logging.debug(data.decode("utf-8"))
+        # print(data.decode("utf-8"))
         result_json = json.loads( data.decode("utf-8"))
-        # logging.debug(result_json)
+        # print(result_json)
         return result_json
 
     def get_stocks_info(self, stock_symbollist=[]):
@@ -156,17 +162,16 @@ class YahooAPI():
             if stock_summary!=0:
                 #extract stock's current_ratio, trailing_EPS, trailing_PE, debt_to_equity_ratio, stockprice from json response
                 stockprice = stock_summary["financialData"]["currentPrice"]["raw"]
-                logging.debug(f"stockprice {stockprice}")
+                # print(f"stockprice {stockprice}")
                 current_ratio = stock_summary["financialData"]["currentRatio"]["raw"]
-                logging.debug(f"current ratio: {current_ratio}")
+                # print(f"current ratio: {current_ratio}")
                 debt_to_equity_ratio = stock_summary["financialData"]["debtToEquity"]["raw"]
-                logging.debug(f"D2E {debt_to_equity_ratio}")
+                # print(f"D2E {debt_to_equity_ratio}")
                 #Trailing EPS typically refers to a company's earnings per share as a rolling total over the previous four quarters
                 trailing_EPS = stock_summary["defaultKeyStatistics"]["trailingEps"]["raw"]
-                logging.debug(f"Trailing EPS {trailing_EPS}")
+                # print(f"Trailing EPS {trailing_EPS}")
                 trailing_PE = stock_summary["summaryDetail"]["trailingPE"]["raw"]
-                logging.debug(f"trailing PE: {trailing_PE}")
-                ["trailingPE"]
+                # print(f"trailing PE: {trailing_PE}")
                 #put extracted data in dictionary
                 stockinfo[stock_symbol] = {
                     "currentRatio": current_ratio,
@@ -175,8 +180,8 @@ class YahooAPI():
                     "DebtToEquityRatio": debt_to_equity_ratio,
                     "stockPrice": stockprice
                 }
-                logging.debug(stockinfo[stock_symbol])
-        logging.debug(stockinfo)
+                # print(stockinfo[stock_symbol])
+        # print(stockinfo)
         return stockinfo # return dict with stock_symbol as keys and data as value stored in dict
     
     def get_chart(self, stock_symbol):
@@ -188,9 +193,9 @@ class YahooAPI():
             api_key = str(os.getenv('X_RapidAPI_Key')) #This key is limited to 500 calls.
 
         except Exception as e:
-            logging.error("Check that API key and host is provided in the bash script run-main.sh.")
-            logging.error("Oops!", sys.exc_info()[0], "occurred.")
-            logging.error("Exception: ", e)
+            print("Check that API key and host is provided in the bash script run-main.sh.")
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("Exception: ", e)
             sys.exit(1) #crash
 
         #establish connection to API host
@@ -206,11 +211,12 @@ class YahooAPI():
         res = conn.getresponse()
         #get status code of the response
         status = res.status # 200 for is found #302 not found
-        logging.info(status)
+        print(f"status: {status}")
         if status != 200:
             # TO-DO:
             # add check for different errors and throw exceptions
-            logging.warning(f"Status code: {status}")
+            print(f"Something went wrong status code: {status}")
+            print("Note: Yahoo API function is returning 0.")
             #TO-DO: pop up GUI?
             return 0
         
@@ -218,10 +224,10 @@ class YahooAPI():
         result_json = json.loads( data.decode("utf-8")) #dump it in json # convert result to json/dict#dump it in json
         #x-values:
         timestamp = result_json["chart"]["result"][0]["timestamp"]#returns 40 timestamps as list in format [1633515300, 1633517100, 1633518900, ...]
-        logging.info(f"timestamp {timestamp}")
+        print(f"timestamp {timestamp}")
         # y-values:
         open_stockprice = result_json["chart"]["result"][0]["indicators"]["quote"][0]["open"] #extract past 24 h stockprice values 
-        logging.info(f"stockprice {open_stockprice}")
+        print(f"stockprice {open_stockprice}\n")
         self.graph_stock[0] = timestamp #list of float
         self.graph_stock[1] = open_stockprice #list of float
 
@@ -230,36 +236,51 @@ class YahooAPI():
         Gets uuid by searching API for specific stock.
         Use that uuid of an article on that stock to ge the link in the get_detail call."""
         if not self.check_stock_exists(stock_symbol):
-            logging.warning("stock_symbol doesn't exist")
             return 0
+        print(f"Getting uuid which is news id refering to {stock_symbol}")
         uuid = self.get_news_uuid(stock_symbol)
+        print(f"uuid: {uuid}")
         self.get_details_of_uuid(uuid)
+        print(f"newslink: {self.newslink}\n")
         return self.newslink
 
     def get_watchlist_info(self, stock_symbollist= ["TSLA", "APPL"]):
         """This function takes a list with stock_symbols,
         it returns a dictionary with stock_symbol as keys and all ratios and info as values."""
-        return self.get_stocks_info(stock_symbollist)
+        print("Retrieving all data needed for watchlist:")
+        stocks_data = self.get_stocks_info(stock_symbollist)
+        print(f"Data for Watchlist: {stocks_data}\n")
+        return stocks_data 
 
     def get_specific_stock_info(self, stock_symbol="APPL"):
         """This function takes a stock_symbol,
         it returns a dictionary with stock_symbol as key and all ratios and info as values."""
-        return self.get_stocks_info([stock_symbol])
+        print(f"Getting stock infos on {stock_symbol}")
+        info = self.get_stocks_info([stock_symbol])
+        print(f"Stock info: {info}\n")
+        return info
 
     def get_stock_graph_values(self, stock_symbol = "TESLA"):
         """This function gets stockprice over the last 24 hours.
         Returns a list of 2 list length 40.
         first list is timestamp and stockprice for the second"""
+        print("Getting stock price over past 24h for graphing purposes.")
         if not self.check_stock_exists(stock_symbol):
-            logging.warning("stock_symbol doesn't exist")
             return 0
         self.get_chart(stock_symbol)
+        print(f"Graphing data of {stock_symbol}:")
+        print(f">>> timeseries {self.graph_stock[0]}\n")
+        print(f">>> stockprice {self.graph_stock[1]}\n")
         return self.graph_stock #2D list with 2 dict timestamp and stockprice
 
     def check_stock_exists(self, stock_symbol):
         """Checks against API if stock exists"""
+        print(f"Checking wether {stock_symbol} exists")
         stockinfo = self.get_stock_summary(stock_symbol)
+
         if stockinfo == 0:
+            print(f"Error: Stocksymbol {stock_symbol} does not exist.\n")
             return False
         else:
+            print(f"Stocksymbol {stock_symbol} exists.\n")
             return True
