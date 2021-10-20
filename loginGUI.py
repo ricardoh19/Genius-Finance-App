@@ -17,7 +17,8 @@ class LoginGUI():
 
     '''
     Intent: creates the main frame for the login GUI
-    * Preconditions: master is connected to TKinter.
+    * Preconditions: master is connected to TKinter. 
+    * createUsernamePasswordFrame and createLoginSignUpForgetPasswordFrame have the appropriate GUI code to be called in this method.
     * Postconditions:
     * Post0. main frame for login is created
     '''
