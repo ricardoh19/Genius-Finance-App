@@ -1,30 +1,38 @@
-from popupGUI import PopupGUI
-from dashboard_controller import DashboardController
-from database_manager import DB
-from loginGUI import LoginGUI
-from user import User
-from sign_up_GUI import SignUpGUI
 
-# ...
+from popupGUI import PopUpGUI
+from tkinter import *
+import dashboard_controller 
+from database_manager import DB
+from user import User
+import loginGUI
+import dashboardGUI
+import sign_up_GUI
+
+
+
+# this class controls the logic of loginGUI, signUpGUI, and forgetPassword. 
+# It is the coordinator between these classes the its GUI classes. The methods in this class are createLoginGUI, 
+# getSnapshotOfDatabase, setCurrentUserData, setCurrentStockData, verifySecurityQuestionAnswerUsername,
+# validateUsernamePassword, checkUsernameTaken, createUserObject, loginUser, createDashboardController, createDashboardGUI,
+# createPopupGUI, createSignUpGUI, signUpUserProcessing, logout_push_changes_to_database, forgotPasswordProcessing
 class LoginLogoutControllers():
-    def __init__(self ):
+    def __init__(self):
         #initializes and pulls data from DB
         self.databaseManagerObject = DB()
         # get this data from DB Manager
         self.DatabaseUserData = None #2d list list: #list: id:int, username:str, password:str, securityquestionanswer:str
         self.DatabaseStockData = None#list of dict: key = stocksymbol :str, values: stockid:int. stockowned:int (number of stock owned)
-        self.current_user_data = None #list: id:int, username:str, password:str, securityquestionanswer:str
-        self.current_user_stocks = None #dict: key = stocksymbol:str, values: stockid:int. stockowned:int (number of stock owned)
-        #create popupgui object
-        #self.popup_GUI_object = PopupGUI()
+        self.currentUserData = None #list: id:int, username:str, password:str, securityquestionanswer:str
+        self.currentUserStocks = None #dict: key = stocksymbol:str, values: stockid:int. stockowned:int (number of stock owned)
         self.userObject = None
         self.sign_up_gui_object = None
+        self.LoginGUIObject = None
         #Load data from db
-        self.getSnapshotOfDatabase() 
+        self.getSnapshotOfDatabase()
         #self.setCurrentUserData()# needs username as parameter
 
-        #create login GUI
-        self.createLogin_GUI()
+        
+       
 
     '''
     Intent: creates the GUI frame to log-in user.
@@ -32,10 +40,14 @@ class LoginLogoutControllers():
     * Postconditions:
     * Post0. LogIn GUI class is created and called.
     '''
-    def createLogin_GUI(self):
-        self.LoginGUIObject = LoginGUI(self)
-
+    def createLoginGUI(self):
+        root = Tk()
+        root.geometry("515x490")
+        self.LoginGUIObject = loginGUI.LoginGUI(root)
+        root.mainloop()
+        
     
+
     '''
     Intent: Pulls all data from database and stores it in user and stock lists. Returns the lists.
     * Preconditions: self.databaseManagerObject is created and initializeded to class DB.
@@ -132,9 +144,7 @@ class LoginLogoutControllers():
     def validateUsernamePassword(self, username, passwordEntered):
         if username == None or passwordEntered == None:
             return False
-        if self.checkUsernameTaken(username):
-            return False
-        
+
         if len(passwordEntered) < 10:
             return False
         
@@ -152,8 +162,7 @@ class LoginLogoutControllers():
             return False
         return True
        
-        
-        
+      
 
     
     '''
@@ -189,18 +198,26 @@ class LoginLogoutControllers():
     * Post1. does not create the user object. Shows popup GUI with error message.
     '''
     def loginUser(self, username, password):
-        if self.validateUsernamePassword(username,password):
+        if not self.checkUsernameTaken(username):
+            popupGUI = PopUpGUI("Username not found")
+            popupGUI.createPopUp()
+        elif self.validateUsernamePassword(username,password):
+            popupGUI = PopUpGUI("Logged In Successfully")
+            popupGUI.createPopUp()
+            self.currentUserData = self.setCurrentUserData(username)
+            self.currentUserStocks = self.setCurrentStockData(username)
             self.createUserObject(self.currentUserData, self.currentUserStocks)
-            self.createDashboardController()
+            self.createDashboardGUI()
             
         else:
-            self.createPopupGUI("Error")
+            popupGUI = PopUpGUI("Username or password is incorrect")
+            popupGUI.createPopUp()
             
-
     
     '''
     Intent: Creates User object by passing currentUserData and currentUserStocks as parameters. Returns user object
     * Preconditions: 
+    * currentUserData and currentUserStocks are initialised.
     * Postconditions:
     * Post0. User object created and returned.
     * Post1. User object is returned as None.
@@ -209,44 +226,116 @@ class LoginLogoutControllers():
         self.userObject = User(currentUserData, currentUserStocks)
         return self.userObject
 
+
+    '''
+    Intent: Creates Dashboard Controller.
+    * Preconditions: 
+    * dashboardController() exists
+    * Postconditions:
+    * Post0. dashboard controller class is created.
+    '''
+    def createDashboardController(self):
+        dashboardController = dashboard_controller.DashboardController() 
+
+
     
+    '''
+    Intent: Creates Dashboard GUI.
+    * Preconditions: 
+    * Tkinter is imported and working
+    * dashboardGUI exists
+    * Postconditions:
+    * Post0. dashboard GUI is created
+    * Post1. dashboard GUI is not created because of an error finding dashboardGUI()
+    '''
+    def createDashboardGUI(self):
+        root = Tk()
+        root.geometry("675x600")
+        dashboardGUIObject = dashboardGUI.DashboardGUI(root)
+        root.mainloop()
+       
+    
+    
+    '''
+    Intent: creates a pop-up GUI with given error message."
+    * Preconditions: 
+    * popupGuiObject is an instance of PopUpGUI class.
+    * message is a string
+    * Postconditions:
+    * Post0. pop up message is created
+    '''
+    def createPopupGUI(self, message):
+        popUpGUIObj = PopUpGUI(message)
+        popUpGUIObj.createPopUp()
         
 
-
-
+   
+    '''
+    Intent: creates sign-up GUI
+    * Preconditions: 
+    * Tkinter is imported and working
+    * signUpGUI exists
+    * Postconditions:
+    * Post0. signUpGUI is created
+    '''
+    def createSignUpGUI(self):
+        root = Tk()
+        root.geometry("600x500")
+        self.sign_up_gui_object = sign_up_GUI.SignUpGUI(root)
+        root.mainloop()
 
 
     
+    '''
+    Intent: logic for signing user up. Displays appropriate message to user.
+    * Preconditions: 
+    * PopUpGUI exists
+    * Postconditions:
+    * Post0. shows user appropriate message based on sign-up status
+    '''
+    def signUpUserProcessing(self, username, password, secondPassword):
+        if self.checkUsernameTaken(username):
+            popupGUI = PopUpGUI("Username is taken.")
+            popupGUI.createPopUp()
+        elif password != secondPassword:
+            popupGUI = PopUpGUI("Passwords do not match.")
+            popupGUI.createPopUp()
+        elif self.validateUsernamePassword(username,password):
+            popupGUI = PopUpGUI("Signed in Successfully")
+            popupGUI.createPopUp()
+            self.createUserObject(self.currentUserData, self.currentUserStocks)
+            self.createDashboardGUI() 
+        else:
+            popupGUI = PopUpGUI("Username or password is incorrect")
+            popupGUI.createPopUp()
 
-    
-    def createDashboardController(self):
-        """Creates Dashboard Controller"""
-        #DashboardController(self, self.user_object,self.popup_GUI_object) #dont need reference
-        pass
-    
-    def createPopupGUI(self, message):
-        """creates a pop-up GUI with given error message."""
-        #self.popup_GUI_object.create_pop_up(message)
-        pass
 
 
+
+
+    '''
+    Intent: Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
+    * Preconditions: 
+    * 
+    * Postconditions:
+    * Post0.
+    '''
     def logout_push_changes_to_database(self):
         """Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
         Whatever has to be change it (insert if doesnt exist stockid or user id -1, update else."""
         pass
-    def signUpUserProcessing(self, username, password):
-        """Called by Sign up GUI passes in username password. 
-        Calls validate username password.
-        If valid calls Login GUI. else popup"""
-        pass
-
-    def create_sign_up_GUI(self):
-        self.sign_up_gui_object = SignUpGUI(self)
-        
-
+    
+    '''
+    Intent: verifies user information when using forgot Password feature.
+    * Preconditions: 
+    * 
+    * Postconditions:
+    * Post0. 
+    '''
     def forgetPasswordProcessing(self, security_question_answer, newpassword, username):
         """Call VerifySecurityQuestionAnswerUsername if its correct reset password for user in DB.
         then creates login gui.
         Else error message pop up GUI."""
         pass
     
+
