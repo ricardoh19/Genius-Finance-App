@@ -1,3 +1,5 @@
+from tkinter import *
+from loginGUI import LoginGUI
 import logging
 from database_manager import DB
 from dashboard_controller import DashboardController
@@ -16,7 +18,11 @@ def main():
     #logging.basicConfig(filename='geniusfinclogs.log', encoding='utf-8', level=print, force=True)    
     #create DB manager
     #db_manager_object = DB()
-
+    
+    root = Tk()
+    root.geometry("515x490")
+    loginGUIObject = LoginGUI(root)
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
