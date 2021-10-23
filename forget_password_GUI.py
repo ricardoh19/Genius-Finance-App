@@ -103,3 +103,4 @@ class ForgetPasswordGUI():
         self.loginlogoutControllerObject.forgetPasswordProcessing()
 
 
+    
