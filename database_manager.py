@@ -12,8 +12,9 @@ from mysql.connector import errorcode
 class DB():
     def __init__(self):
         #creates db if necessary
-        self.createDatabaseManager() 
         self.DB_NAME = 'GeniusFinanceDB'
+        self.createDatabaseManager() 
+        
 
     '''
     Intent: Connects to SQL database, returns cursor and cnx (connection) to database.
@@ -62,9 +63,9 @@ class DB():
         * post1. if exception (mysql.connector.Error) is thrown, database can not created
         '''
         def create_database(cursor):
-            DB_NAME = "GeniusFinanceDB"
+            
             try:
-                cursor.execute(f"CREATE DATABASE {DB_NAME} DEFAULT CHARACTER SET 'utf8'")
+                cursor.execute(f"CREATE DATABASE {self.DB_NAME} DEFAULT CHARACTER SET 'utf8'")
             except mysql.connector.Error as err:
                 print(f"Failed creating database: {err}")
                 sys.exit(1)
@@ -91,18 +92,18 @@ class DB():
             
         #connect to mysql server as root user
         cursor, cnx = self.connect_to_db()
-        DB_NAME = 'GeniusFinanceDB'
+       
 
         #check if database name already exists otherwise create it 
         try:
-            cursor.execute(f"USE {DB_NAME}")
+            cursor.execute(f"USE {self.DB_NAME}")
             
         except mysql.connector.Error as err:
-            print(f"Database {DB_NAME} does not exists.")
+            print(f"Database { self.DB_NAME} does not exists.")
             if err.errno == errorcode.ER_BAD_DB_ERROR:
                 create_database(cursor)
-                print(f"Database {DB_NAME} created successfully.")
-                cnx.database = DB_NAME
+                print(f"Database { self.DB_NAME} created successfully.")
+                cnx.database =  self.DB_NAME
                 
             else:
                 print(err)
