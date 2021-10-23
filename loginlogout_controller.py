@@ -219,7 +219,7 @@ class LoginLogoutControllers():
         if not self.checkUsernameTaken(username):
             popupGUI = PopUpGUI("Username not found")
             popupGUI.createPopUp()
-        elif self.validateUsernamePassword(username,password) and self.checkPasswordCorrect(password):
+        elif self.validateUsernamePassword(username,password) and self.checkPasswordCorrect(username, password):
             popupGUI = PopUpGUI("Logged In Successfully")
             popupGUI.createPopUp()
             self.currentUserData = self.setCurrentUserData(username)
