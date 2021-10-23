@@ -33,7 +33,7 @@ class SignUpGUI():
         self.SignUpButton = Button(self.signUpMaster,text="Sign Up",command=lambda: self.handleSignUpEvent()).grid(row = 4,column=1)
 
     '''
-    Intent: creates frame with  SignUp, Username, and Password entries for the sign up GUI
+    Intent: creates frame with SignUp, Username, and Password entries for the sign up GUI
     * Preconditions: master is connected to TKinter. 
     * Postconditions:
     * Post0. frame with SignUp, Username, and Password entries is implemented for sign up 
