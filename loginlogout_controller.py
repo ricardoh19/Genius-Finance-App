@@ -220,8 +220,7 @@ class LoginLogoutControllers():
             popupGUI = PopUpGUI("Username not found")
             popupGUI.createPopUp()
         elif self.validateUsernamePassword(username,password) and self.checkPasswordCorrect(username, password):
-            popupGUI = PopUpGUI("Logged In Successfully")
-            popupGUI.createPopUp()
+            
             self.currentUserData = self.setCurrentUserData(username)
             self.currentUserStocks = self.setCurrentStockData(username)
             self.createUserObject(self.currentUserData, self.currentUserStocks)
@@ -325,8 +324,6 @@ class LoginLogoutControllers():
             # add user information to database
             self.databaseManagerObject.insertDatabaseUserData(username, password, securityQuestion)
             self.createUserObject(self.currentUserData, self.currentUserStocks)
-            popupGUI = PopUpGUI("Signed in Successfully")
-            popupGUI.createPopUp()
             self.createDashboardGUI()
             return True
         else:
