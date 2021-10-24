@@ -1,7 +1,7 @@
 import logging
 from yahoo_api import YahooAPI
 from main import set_env_variables
-
+from user import User
 
 def test_yahoo_api():
     #Test py version 3.9
@@ -15,7 +15,6 @@ def test_yahoo_api():
     test_suite_yahoo_api("AAAA")  #incorrect stocksymbol  
     test_suite_yahoo_api("AMRN") #correct stocksymbol
     
-
 def test_suite_yahoo_api(stocksymbol1= "TSLA"):
     #Test 1 create object
     YahooAPIObject = YahooAPI()
@@ -31,7 +30,6 @@ def test_suite_yahoo_api(stocksymbol1= "TSLA"):
     print(YahooAPIObject.check_stock_exists(stocksymbol1))
     #Test 6 Get specific stock info
     print(YahooAPIObject.get_specific_stock_info(stocksymbol1))
-
 
 
 if __name__ == "__main__":

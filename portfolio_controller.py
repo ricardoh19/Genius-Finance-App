@@ -10,8 +10,9 @@ class PortfolioController():
         self.DashboardControllerObject = DashboardControllerObject
         self.YahooAPIObject = YahooAPIObject
         self.StockController=StockController
-        self.WatchlistControllerObject = None
         self.PopUpGUIObject = PopUpGUIObject
+        #to be created objects
+        self.WatchlistControllerObject = None
         self.portfolioGUI = None
         #stock price dictionary 
         self.stocksymbol_price_change_dict = {} 
@@ -56,14 +57,15 @@ class PortfolioController():
         #extract just the stockprice associated with the stock and get percentage change on stock over past 24h
         for key in stockinfo:
             percentage_change = self.calculate_percentage_change(stockinfo[key]) #retrieves percentage change over past 24h
-            self.StockPriceDict[key] = {"stockprice":stockinfo[key]["stockPrice"], } #updates self.StockPriceDict
+            stockprice = stockinfo[key]["stockPrice"]
+            self.stocksymbol_price_change_dict[key] = \
+                {"stockprice":stockprice, "percentage_change": percentage_change} #updates self.StockPriceDict
         
-
     def create_portfolio_GUI_object(self):
         """Creates Portfolio GUI with """
         #get updated stockprice for each stock that will be displayed in GUI
         self.get_stock_price_yahoo_api_object()
-        self.self.portfolioGUI = PortfolioGUI(self, self.stocksymbol_price_change_dict, self.portfolio_value)
+        self.portfolioGUI = PortfolioGUI(self, self.stocksymbol_price_change_dict, self.portfolio_value)
 
 
     def CreateWatchListController(self):
