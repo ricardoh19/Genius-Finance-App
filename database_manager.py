@@ -3,7 +3,7 @@ import sys
 import mysql.connector
 from mysql.connector import errorcode
 
-
+import os
 
 
 # This class creates and maintains the Genius Finance database with methods: 
@@ -25,7 +25,7 @@ class DB():
     * Post0. The connection to a database db is established (if db is not None) 
     * Post1. The connection to a MySQL server is established (if db is None)
     '''
-    def connect_to_db(self, myuser='root', mypassword='Rhern_19',myhost= "localhost", db = None):
+    def connect_to_db(self, myuser='root', mypassword='Veritas!10',myhost= "localhost", db = None):
         if db:
             cnx = mysql.connector.connect(
             user=myuser, 
