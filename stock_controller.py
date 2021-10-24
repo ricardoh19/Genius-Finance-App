@@ -21,14 +21,14 @@ class StockController():
         
         #finally create stock GUI
         self.StockGUIObject = self.create_stock_GUI()
-        
+        self.shares_owned = 0
     
     def handle_search_bar_event(self, stock_symbol):
         #check if stock exists
         if self.yahoo_api_object.check_stock_exists(stock_symbol):
             #stock exists hence create stock_controller
             #get info on this stock from yahoo api
-            self.StockName=stock_symbol
+            self.stock_symbol=stock_symbol
             self.StockData = self.get_stock_data_API()
             self.stock_graph_values = self.get_stock_graph_values_from_yahoo_finance #2D list with 2 dict timestamp and stockprice
             self.newslink = self.get_newslink_Yahoo_API()
@@ -63,6 +63,17 @@ class StockController():
         """Adds stock in user class by default the stock id is set to -1, and stockowned is 0.
         This stock is now part of the users portfolio stocks."""
         self.user_object.append_stock(self.stock_symbol, stockid, stockowned)
+
+    def get_stock_owned_from_user_class(self):
+        self.user_object.get_stockowned(self.stock_symbol)
+
+    def update_stock_owned(self):
+        self.user_object.update_stock_owned(self.stock_symbol, stockowned =30)
+
+    def delete_stock(self):
+        success = self.user_object.delete_stock(self.stock_symbol)
+        if not success: #if code correct this should never execute
+            self.create_popup_GUI("Oh no, we could not delete this stock.")
 
     def create_popup_GUI(self, message):
         """creates a pop-up GUI with given error message."""
