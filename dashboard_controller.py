@@ -7,6 +7,7 @@ from watchlist_controller import WatchlistController
 from dashboardGUI import DashboardGUI
 import user
 import popupGUI
+from dashboardGUI import DashboardGUI
 
 class DashboardController():
     """This class is the intersection of APP traffic after login. """
@@ -53,8 +54,9 @@ class DashboardController():
            self.portfolio_object =  PortfolioController(self.user_object,self,self.yahoo_api_object, self.stock_controller_object, self.yahoo_api_object) 
         self.portfolio_object.create_portfolio_GUI_object()
         
-    """This function creates the Dashboard GUI Object"""
+    
     def createDashboardGUI(self):
+        """This function creates the Dashboard GUI Object"""
         #self.DashboardGUIObject.create
         root = Tk()
         root.geometry("675x600")

@@ -58,7 +58,7 @@ class LoginGUI():
         self.buttons= Frame(self.master, width = 350, height = 150, borderwidth=2, relief="sunken").grid(row = 2,column=1,pady=6)
         self.logInButton = Button(self.buttons, text="Log In", command=lambda: self.handleLoginEvent()).grid(row = 2,column=1,padx=30,pady=25,ipadx=2,ipady=2, sticky="nw")
         self.RegisterButton = Button(self.buttons, text="Register",command=lambda: self.createSignUpGUI()).grid(row = 2,column=1,padx=30,pady=25,ipadx=2,ipady=2, sticky="ne")
-        self.ForgotButton = Button(self.buttons, text="Forgot Password").grid(row = 2,column=1,padx=30,pady=25,ipadx=2,ipady=2, sticky="s")
+        self.ForgotButton = Button(self.buttons, text="Forgot Password",command=lambda: self.createForgetPassword()).grid(row = 2,column=1,padx=30,pady=25,ipadx=2,ipady=2, sticky="s")
     
 
     '''
@@ -98,7 +98,8 @@ class LoginGUI():
     * Post0. forget password GUI is created and displayed
     '''
     def createForgetPassword(self):
-        pass
+        self.closeWindow()
+        self.loginlogout_ControllerObject.createForgottenPasswordGUI()
     
 
 

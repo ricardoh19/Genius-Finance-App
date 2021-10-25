@@ -33,7 +33,7 @@ class SignUpGUI():
         self.SignUpButton = Button(self.signUpMaster,text="Sign Up",command=lambda: self.handleSignUpEvent()).grid(row = 4,column=1)
 
     '''
-    Intent: creates frame with  SignUp, Username, and Password entries for the sign up GUI
+    Intent: creates frame with SignUp, Username, and Password entries for the sign up GUI
     * Preconditions: master is connected to TKinter. 
     * Postconditions:
     * Post0. frame with SignUp, Username, and Password entries is implemented for sign up 
@@ -61,7 +61,8 @@ class SignUpGUI():
         # security question frame
         self.buttons= Frame(self.signUpMaster, width = 450, height = 150, borderwidth=2, relief="sunken").grid(row = 2,column=1,padx=20)
         self.securityQuestionLabel = Label( self.signUpcredentials, text="Security Question: What is your  favorite food?",font='Helvetica 13 bold',borderwidth=3, relief="ridge").grid(row=2, column=1,padx=15,pady=15, ipadx=1,ipady=1,stick="n")
-        self.securityQuestionEntry = Entry(self.signUpcredentials).grid(row = 2,column=1,padx=8,pady=15,ipadx=2,ipady=2)
+        self.securityQuestionEntry = Entry(self.signUpcredentials)
+        self.securityQuestionEntry.grid(row = 2,column=1,padx=8,pady=15,ipadx=2,ipady=2)
         
         
     '''
@@ -77,6 +78,15 @@ class SignUpGUI():
         self.loginlogoutControllerObject.createLoginGUI()
 
     '''
+    Intent: close the sign up window .
+    * Preconditions: master is connected to TKinter.
+    * Postconditions:
+    * Post0. closes the sign up window
+    '''
+    def closeWindow(self):
+        self.signUpMaster.destroy()
+
+    '''
     Intent: handles the sign up event for sign up GUI
     * Preconditions:    
     * loginlogoutController is an instance of the class. 
@@ -84,8 +94,10 @@ class SignUpGUI():
     * Post0. signUpUserProcessing() is called by loginlogoutController
     '''
     def handleSignUpEvent(self):
-        self.loginlogoutControllerObject.signUpUserProcessing(self.usernameEntry.get(),self.passwordEntry.get(),self.reenterPasswordEntry.get() )
-
+        self.loginlogoutControllerObject.signUpUserProcessing(self.usernameEntry.get(),self.passwordEntry.get(),self.reenterPasswordEntry.get(),self.securityQuestionEntry.get())
+        
+            
+       
         
             
 
