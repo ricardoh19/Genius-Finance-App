@@ -7,6 +7,7 @@ from user import User
 import loginGUI
 import dashboardGUI
 import sign_up_GUI
+import forget_password_GUI
 
 
 
@@ -117,7 +118,7 @@ class LoginLogoutControllers():
     Intent: Compares securityQuestionAnswer to data in the database pertaining to specific username. 
     * Returns True if securityQuestionAnswer matches with username's securityQuestionAnswer. Returns False otherwise.
     * Preconditions: if self.setCurrentUserData() == None, return True
-    * This method would only be called when User forgets password or signs up.
+    * This method would only be called when User forgets password.
     * Postconditions: 
     * Post0. securityQuestionAnswer is validated.
     * Post1. securityQuestionAnswer is not validated if self.setCurrentUserData(username) equal to None. 
@@ -163,8 +164,6 @@ class LoginLogoutControllers():
         return True
        
       
-
-    
     '''
     Intent: Checks if username already in database if new user. Returns True if username exists, False otherwise.
     * Preconditions: 
@@ -181,6 +180,25 @@ class LoginLogoutControllers():
             for objectData in data: 
                 if objectData[1] == username:
                     return True
+        return False
+
+    '''
+    Intent: Checks if password entered matches with the password connected to the specific username 
+    * Preconditions: 
+    * self.databaseUserData is created.
+    * password entered != None
+    * Postconditions:
+    * Post0. password is compared to password of username entered in database.
+    * Post1. password is not compared if equal to None.
+    '''
+    def checkPasswordCorrect(self, username, password):
+        if password == None:
+            return False
+        for data in self.databaseUserData:
+            for objectData in data: 
+                if objectData[1] == username:
+                    if objectData[2] == password:
+                        return True
         return False
         
 
@@ -201,9 +219,8 @@ class LoginLogoutControllers():
         if not self.checkUsernameTaken(username):
             popupGUI = PopUpGUI("Username not found")
             popupGUI.createPopUp()
-        elif self.validateUsernamePassword(username,password):
-            popupGUI = PopUpGUI("Logged In Successfully")
-            popupGUI.createPopUp()
+        elif self.validateUsernamePassword(username,password) and self.checkPasswordCorrect(username, password):
+            
             self.currentUserData = self.setCurrentUserData(username)
             self.currentUserStocks = self.setCurrentStockData(username)
             self.createUserObject(self.currentUserData, self.currentUserStocks)
@@ -283,7 +300,8 @@ class LoginLogoutControllers():
         root.geometry("600x500")
         self.sign_up_gui_object = sign_up_GUI.SignUpGUI(root)
         root.mainloop()
-
+       
+        
 
     
     '''
@@ -293,38 +311,42 @@ class LoginLogoutControllers():
     * Postconditions:
     * Post0. shows user appropriate message based on sign-up status
     '''
-    def signUpUserProcessing(self, username, password, secondPassword):
+    def signUpUserProcessing(self, username, password, secondPassword,securityQuestion):
         if self.checkUsernameTaken(username):
             popupGUI = PopUpGUI("Username is taken.")
             popupGUI.createPopUp()
+            return False
         elif password != secondPassword:
             popupGUI = PopUpGUI("Passwords do not match.")
             popupGUI.createPopUp()
+            return False
         elif self.validateUsernamePassword(username,password):
-            popupGUI = PopUpGUI("Signed in Successfully")
-            popupGUI.createPopUp()
+            # add user information to database
+            self.databaseManagerObject.insertDatabaseUserData(username, password, securityQuestion)
             self.createUserObject(self.currentUserData, self.currentUserStocks)
-            self.createDashboardGUI() 
+            self.createDashboardGUI()
+            return True
         else:
             popupGUI = PopUpGUI("Username or password is incorrect")
             popupGUI.createPopUp()
+            return False
 
 
-
-
-
-    '''
-    Intent: Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
-    * Preconditions: 
-    * 
-    * Postconditions:
-    * Post0.
-    '''
-    def logout_push_changes_to_database(self):
-        """Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
-        Whatever has to be change it (insert if doesnt exist stockid or user id -1, update else."""
-        pass
     
+    '''
+    Intent: creates forgot password GUI
+    * Preconditions: 
+    * Tkinter is imported and working
+    * signUpGUI exists
+    * Postconditions:
+    * Post0. forgot password GUI is created
+    '''
+    def createForgottenPasswordGUI(self):
+        root = Tk()
+        root.geometry("600x500")
+        forgetPasswordObject = forget_password_GUI.ForgetPasswordGUI(root)
+        root.mainloop()
+
     '''
     Intent: verifies user information when using forgot Password feature.
     * Preconditions: 
@@ -338,4 +360,15 @@ class LoginLogoutControllers():
         Else error message pop up GUI."""
         pass
     
-
+    '''
+    Intent: Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
+    * Preconditions: 
+    * 
+    * Postconditions:
+    * Post0.
+    '''
+    def logout_push_changes_to_database(self):
+        """Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
+        Whatever has to be change it (insert if doesnt exist stockid or user id -1, update else."""
+        pass
+    
