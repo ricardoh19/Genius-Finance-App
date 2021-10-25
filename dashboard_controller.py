@@ -4,6 +4,7 @@ from tkinter import *
 import loginlogout_controller
 from portfolio_controller import PortfolioController
 from watchlist_controller import WatchlistController
+from dashboardGUI import DashboardGUI
 import user
 import popupGUI
 
@@ -57,7 +58,7 @@ class DashboardController():
         #self.DashboardGUIObject.create
         root = Tk()
         root.geometry("675x600")
-        self.dashboardGUIObject = dashboard_controller.dashboardGUI(root)
+        self.dashboardGUIObject = DashboardGUI(root)
         root.mainloop()
 
     def handle_search_bar_event(self, stock_symbol):
