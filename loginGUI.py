@@ -44,7 +44,7 @@ class LoginGUI():
         self.requirement2 = Label(self.master, text="have one uppercase letter, and one special symbol(!, #, $, ^, *)", font='Helvetica 9 bold').grid(row = 0,column=1,sticky='s')
         self.usernameEntry = Entry(self.credentials)
         self.usernameEntry.grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="ne")
-        self.passwordEntry = Entry(self.credentials)
+        self.passwordEntry = Entry(self.credentials,show="*")
         self.passwordEntry.grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="se")
     
     '''

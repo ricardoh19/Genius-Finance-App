@@ -46,9 +46,9 @@ class SignUpGUI():
         self.reenterPasswordLabel = Label( self.signUpcredentials, text="Reenter the Password",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row=1, column=1,padx=25,pady=25, ipadx=3,ipady=5,sticky="sw")
         self.usernameEntry = Entry(self.signUpcredentials)
         self.usernameEntry.grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="ne")
-        self.passwordEntry = Entry(self.signUpcredentials)
+        self.passwordEntry = Entry(self.signUpcredentials,show="*")
         self.passwordEntry.grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="e")
-        self.reenterPasswordEntry = Entry(self.signUpcredentials)
+        self.reenterPasswordEntry = Entry(self.signUpcredentials,show="*")
         self.reenterPasswordEntry.grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="se")
         
     '''
