@@ -1,16 +1,17 @@
 ## Genius-Finance App
 
-## New in week 2:
+## New in week 3:
 Louise:
 + dashboard controller
 + stock controller
 + user
-+ login/logout with ricardo
-+ begin portfolio
++ login/logout controller with ricardo
++ begin portfolio GUI  with James
 + begin watchlist
 + all of the above need to be tested in week 3, they're interconected which makes it a bit hard to test just one without having the others.
 + test_script.py improved. Extensive test suite
 + find some of those test cases documented in https://docs.google.com/spreadsheets/d/1vWkEPYWbg6GcFQROqaw18B2FNmORd0MC/edit?usp=sharing&ouid=116420586794783624611&rtpof=true&sd=true
++ test case for forget password, login, and sign up GUI with james
 
 
 ## Test code: 
