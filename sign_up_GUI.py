@@ -94,7 +94,7 @@ class SignUpGUI():
     * Post0. signUpUserProcessing() is called by loginlogoutController
     '''
     def handleSignUpEvent(self):
-        self.loginlogoutControllerObject.signUpUserProcessing(self.usernameEntry.get(),self.passwordEntry.get(),self.reenterPasswordEntry.get(),self.securityQuestionEntry.get())
+        self.loginlogoutControllerObject.signUpUserProcessing(self.usernameEntry.get(),self.passwordEntry.get(),self.reenterPasswordEntry.get(),self.securityQuestionEntry.get(), self.signUpMaster)
         
             
        
