@@ -1,6 +1,8 @@
 
 from popupGUI import PopUpGUI
 from tkinter import *
+import tkinter as tk
+
 import dashboard_controller 
 from database_manager import DB
 from user import User
@@ -219,16 +221,16 @@ class LoginLogoutControllers():
         if not self.checkUsernameTaken(username):
             popupGUI = PopUpGUI("Username not found")
             popupGUI.createPopUp()
-        elif self.validateUsernamePassword(username,password) and self.checkPasswordCorrect(username, password):
             
+        elif self.validateUsernamePassword(username,password) and self.checkPasswordCorrect(username, password):
             self.currentUserData = self.setCurrentUserData(username)
             self.currentUserStocks = self.setCurrentStockData(username)
             self.createUserObject(self.currentUserData, self.currentUserStocks)
             self.createDashboardGUI()
-            
         else:
             popupGUI = PopUpGUI("Username or password is incorrect")
             popupGUI.createPopUp()
+           
             
     
     '''
@@ -270,6 +272,8 @@ class LoginLogoutControllers():
         root.geometry("675x600")
         dashboardGUIObject = dashboardGUI.DashboardGUI(root)
         root.mainloop()
+        
+
        
     
     
@@ -360,6 +364,10 @@ class LoginLogoutControllers():
         Else error message pop up GUI."""
         pass
     
+
+
+
+
     '''
     Intent: Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
     * Preconditions: 
