@@ -7,7 +7,7 @@ import loginlogout_controller
 
 
 # this class controls the graphical user interface of the Sign Up window. Its methods include createMainFrame, 
-# createSignUpUsernamePasswordFrame, createSecurityQuestionFrame, handleLoginEvent, handleSignUpEvent, 
+# createSignUpUsernamePasswordFrame, createSecurityQuestionFrame, handleSignUpEvent, 
 # handleCloseEvent.
 class SignUpGUI():
     def __init__(self, master):
