@@ -68,7 +68,9 @@ class LoginGUI():
     * Post0. loginlogoutController calls loginUser().
     '''
     def handleLoginEvent(self):
-        self.loginlogout_ControllerObject.loginUser(self.usernameEntry.get(),self.passwordEntry.get())
+        self.loginlogout_ControllerObject.loginUser(self.usernameEntry.get(),self.passwordEntry.get(),self.master)
+        
+        
         
     
     '''
@@ -90,6 +92,7 @@ class LoginGUI():
     def closeWindow(self):
         self.master.destroy()
 
+    
     
     '''
     Intent: creates the forget password GUI
