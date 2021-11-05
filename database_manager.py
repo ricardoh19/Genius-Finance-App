@@ -223,12 +223,12 @@ class DB():
     * Post3. Data is not updated in the database if username or password input type is not a string
     * Post4. Data is not updated in the database if username or password is equal to None.
     '''
-    def updateDatabaseUserData(self, userId,usernameOrPassword, newValue):
+    def updateDatabaseUserData(self, username, usernameOrPassword, newValue):
         cursor, cnx = self.connect_to_db(db=self.DB_NAME)
         if usernameOrPassword == "username":
-            query = (f"UPDATE User SET username = '{newValue}' WHERE userId = {userId}")
+            query = (f"UPDATE User SET username = '{newValue}' WHERE username = '{username}'")
         elif usernameOrPassword == "password":
-            query = (f"UPDATE User SET password = '{newValue}' WHERE userId = {userId}")
+            query = (f"UPDATE User SET password = '{newValue}' WHERE username = '{username}'")
         cursor.execute(query)
         cnx.commit()
 
@@ -245,9 +245,9 @@ class DB():
     * Post1. Data is not updated in the database if connection to database fails.
     * post2. Data is not updated in the database if stockOwnedAmount input type is not an integer
     '''
-    def updateDatabaseStockData(self, userId,stockOwnedAmount):
+    def updateDatabaseStockData(self, username,stockOwnedAmount):
         cursor, cnx = self.connect_to_db(db=self.DB_NAME)
-        query = (f"UPDATE Stock SET stockOwnedAmount = {stockOwnedAmount} WHERE userId = {userId}")
+        query = (f"UPDATE Stock SET stockOwnedAmount = {stockOwnedAmount} WHERE username = '{username}'")
         cursor.execute(query)
         cnx.commit()
         
