@@ -24,7 +24,7 @@ class PortfolioController():
 
     def create_portfolio_GUI_object(self):
         #get updated stockprice for each stock that will be displayed in GUI
-        self.get_stock_price_yahoo_api_object()
+        pass
 
     def CreateWatchListController(self):
         pass
