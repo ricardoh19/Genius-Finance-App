@@ -4,6 +4,7 @@ from tkinter import *
 import loginlogout_controller,dashboardGUI
 from portfolio_controller import PortfolioController
 from watchlist_controller import WatchlistController
+from dashboardGUI import DashboardGUI
 import user
 from popupGUI import PopUpGUI
 
@@ -53,13 +54,20 @@ class DashboardController():
                  self.popup_GUI_object,self)
         #call watchlist GUI in Watchlist controller
         
-
-
-    """This function creates the Dashboard GUI Object"""
+    def create_portfolio_controller(self):
+        """if portfolio controller object does not exist create it.
+        calls method in Portfolio Controller to create Portfolio GUI."""
+        if self.portfolio_object == None:
+           self.portfolio_object =  PortfolioController(self.user_object,self,self.yahoo_api_object, self.stock_controller_object, self.yahoo_api_object) 
+        self.portfolio_object.create_portfolio_GUI_object()
+        
+    
     def createDashboardGUI(self):
+        """This function creates the Dashboard GUI Object"""
+        #self.DashboardGUIObject.create
         root = Tk()
-        root.geometry("600x450")
-        self.dashboardGUIObject = dashboardGUI.DashboardGUI(root)
+        root.geometry("675x600")
+        self.dashboardGUIObject = DashboardGUI(root)
         root.mainloop()
 
     def searchStockSymbol(self, stock_symbol):
