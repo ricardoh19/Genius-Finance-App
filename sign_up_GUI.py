@@ -26,7 +26,7 @@ class SignUpGUI():
     '''
     def createMainFrame(self): 
         # logo on top left side
-        self.logo = Label(self.signUpMaster, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=1, pady=5, padx=5, sticky="w")
+        self.logo = Label(self.signUpMaster, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
         self.createSignUpUsernamePasswordFrame()
         self.createSecurityQuestionFrame()
         self.exitButton = Button(self.signUpMaster,text="Close",command=lambda: self.handleCloseEvent()).grid(row = 4,column=1,sticky="se")
@@ -45,11 +45,11 @@ class SignUpGUI():
         self.passwordLabel = Label( self.signUpcredentials, text="Enter a Password",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row=1, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="w")
         self.reenterPasswordLabel = Label( self.signUpcredentials, text="Reenter the Password",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row=1, column=1,padx=25,pady=25, ipadx=3,ipady=5,sticky="sw")
         self.usernameEntry = Entry(self.signUpcredentials)
-        self.usernameEntry.grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="ne")
+        self.usernameEntry.grid(row = 1,column=1,padx=25,pady=15,ipadx=2,ipady=2, sticky="ne")
         self.passwordEntry = Entry(self.signUpcredentials,show="*")
-        self.passwordEntry.grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="e")
+        self.passwordEntry.grid(row = 1,column=1,padx=25,pady=15,ipadx=2,ipady=2, sticky="e")
         self.reenterPasswordEntry = Entry(self.signUpcredentials,show="*")
-        self.reenterPasswordEntry.grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="se")
+        self.reenterPasswordEntry.grid(row = 1,column=1,padx=25,pady=15,ipadx=2,ipady=2, sticky="se")
         
     '''
     Intent: creates the frame with the security question for the sign up GUI
