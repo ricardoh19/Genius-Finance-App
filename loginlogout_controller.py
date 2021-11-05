@@ -1,6 +1,6 @@
-
 from popupGUI import PopUpGUI
 from tkinter import *
+import tkinter as tk
 import dashboard_controller 
 from database_manager import DB
 from user import User
@@ -215,12 +215,13 @@ class LoginLogoutControllers():
     * Post0. creates user object if username and password validated by the method validateUsernamePassword(username,password)
     * Post1. does not create the user object. Shows popup GUI with error message.
     '''
-    def loginUser(self, username, password):
+    def loginUser(self, username, password, loginGUI):
         if not self.checkUsernameTaken(username):
             popupGUI = PopUpGUI("Username not found")
             popupGUI.createPopUp()
-        elif self.validateUsernamePassword(username,password) and self.checkPasswordCorrect(username, password):
             
+        elif self.validateUsernamePassword(username,password) and self.checkPasswordCorrect(username, password):
+            loginGUI.destroy()
             self.currentUserData = self.setCurrentUserData(username)
             self.currentUserStocks = self.setCurrentStockData(username)
             self.createUserObject(self.currentUserData, self.currentUserStocks)
@@ -230,6 +231,7 @@ class LoginLogoutControllers():
             popupGUI = PopUpGUI("Username or password is incorrect")
             popupGUI.createPopUp()
             
+           
     
     '''
     Intent: Creates User object by passing currentUserData and currentUserStocks as parameters. Returns user object
@@ -270,7 +272,7 @@ class LoginLogoutControllers():
         root.geometry("675x600")
         dashboardGUIObject = dashboardGUI.DashboardGUI(root)
         root.mainloop()
-       
+        
     
     
     '''
@@ -297,12 +299,11 @@ class LoginLogoutControllers():
     '''
     def createSignUpGUI(self):
         root = Tk()
-        root.geometry("600x500")
+        root.geometry("650x500")
         self.sign_up_gui_object = sign_up_GUI.SignUpGUI(root)
         root.mainloop()
        
-        
-
+    
     
     '''
     Intent: logic for signing user up. Displays appropriate message to user.
@@ -311,26 +312,58 @@ class LoginLogoutControllers():
     * Postconditions:
     * Post0. shows user appropriate message based on sign-up status
     '''
-    def signUpUserProcessing(self, username, password, secondPassword,securityQuestion):
+    def signUpUserProcessing(self, username, password, secondPassword,securityQuestion, signUpGUI):
         if self.checkUsernameTaken(username):
             popupGUI = PopUpGUI("Username is taken.")
             popupGUI.createPopUp()
-            return False
+            
         elif password != secondPassword:
             popupGUI = PopUpGUI("Passwords do not match.")
             popupGUI.createPopUp()
-            return False
+
         elif self.validateUsernamePassword(username,password):
+            signUpGUI.destroy()
             # add user information to database
             self.databaseManagerObject.insertDatabaseUserData(username, password, securityQuestion)
             self.createUserObject(self.currentUserData, self.currentUserStocks)
             self.createDashboardGUI()
-            return True
+            
         else:
             popupGUI = PopUpGUI("Username or password is incorrect")
             popupGUI.createPopUp()
-            return False
+            
+    '''
+    Intent: verifies user information when using forgot Password feature.
+    * Preconditions: 
+    * PopUpGUI exists
+    * Postconditions:
+    * Post0. user's password is changed successfully.
+    * Post1. user's password is not changed. Shows popup GUI with error message.
+    '''
+    def forgetPasswordProcessing(self, username, newPassword, newPassword2, security_question_answer, forgetPasswordGUI):
+        """Call VerifySecurityQuestionAnswerUsername if its correct reset password for user in DB.
+        then creates login gui.
+        Else error message pop up GUI."""
+        if not self.checkUsernameTaken(username):
+            popupGUI = PopUpGUI("Username not found")
+            popupGUI.createPopUp()
+        elif newPassword != newPassword2:
+            popupGUI = PopUpGUI("New passwords do not match.")
+            popupGUI.createPopUp()
 
+        # check security question answer
+        elif not self.verifySecurityQuestionAnswerUsername(security_question_answer, username):
+            popupGUI = PopUpGUI("Security Question is wrong")
+            popupGUI.createPopUp()
+
+        elif self.validateUsernamePassword(username,newPassword):
+            forgetPasswordGUI.destroy()
+            # update user information in database
+            self.databaseManagerObject.updateDatabaseUserData(username, "password", newPassword)
+            self.createLoginGUI()
+        else:
+            popupGUI = PopUpGUI("information entered is incorrect")
+            popupGUI.createPopUp()
 
     
     '''
@@ -343,23 +376,12 @@ class LoginLogoutControllers():
     '''
     def createForgottenPasswordGUI(self):
         root = Tk()
-        root.geometry("600x500")
+        root.geometry("650x500")
         forgetPasswordObject = forget_password_GUI.ForgetPasswordGUI(root)
         root.mainloop()
 
-    '''
-    Intent: verifies user information when using forgot Password feature.
-    * Preconditions: 
-    * 
-    * Postconditions:
-    * Post0. 
-    '''
-    def forgetPasswordProcessing(self, security_question_answer, newpassword, username):
-        """Call VerifySecurityQuestionAnswerUsername if its correct reset password for user in DB.
-        then creates login gui.
-        Else error message pop up GUI."""
-        pass
-    
+
+
     '''
     Intent: Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
     * Preconditions: 
