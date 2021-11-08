@@ -10,16 +10,16 @@ from popupGUI import PopUpGUI
 
 class DashboardController():
     """This class is the intersection of App traffic after login. """
-    def __init__(self):
+    def __init__(self,userObject):
         self.loginlogout_controller = loginlogout_controller.LoginLogoutControllers()
-        #self.user_object = user.User()
+        self.userObject = userObject
+
         #created in this class objects
         self.watchlist_object = None 
         self.stock_controller_object= None #replaced by stock object
         self.portfolio_object = None
         #created during initialization object
         self.yahoo_api_object = YahooAPI() # is created
-    
     
     def logOutPushChanges(self):
         """In Dashboard GUI logout button is pressed.
@@ -30,9 +30,16 @@ class DashboardController():
     def create_portfolio_controller(self):
         """if portfolio controller object does not exist create it.
         calls method in Portfolio Controller to create Portfolio GUI."""
+        
+        
+        dashboardControllerObject = None
+        yahooAPIObject = None
+        stockController = None
+        popUpGUIObject = None
+
         if self.portfolio_object == None:
-           self.portfolio_object =  PortfolioController(self.user_object,self,self.yahoo_api_object, self.stock_controller_object, self.yahoo_api_object) 
-        self.portfolio_object.create_portfolio_GUI_object()
+           self.portfolio_object =  PortfolioController(self.userObject,dashboardControllerObject,yahooAPIObject, stockController,popUpGUIObject) 
+        self.portfolio_object.create_portfolio_GUI()
         
 
 
@@ -54,20 +61,14 @@ class DashboardController():
                  self.popup_GUI_object,self)
         #call watchlist GUI in Watchlist controller
         
-    def create_portfolio_controller(self):
-        """if portfolio controller object does not exist create it.
-        calls method in Portfolio Controller to create Portfolio GUI."""
-        if self.portfolio_object == None:
-           self.portfolio_object =  PortfolioController(self.user_object,self,self.yahoo_api_object, self.stock_controller_object, self.yahoo_api_object) 
-        self.portfolio_object.create_portfolio_GUI_object()
+    
         
     
     def createDashboardGUI(self):
         """This function creates the Dashboard GUI Object"""
-        #self.DashboardGUIObject.create
         root = Tk()
         root.geometry("675x600")
-        self.dashboardGUIObject = DashboardGUI(root)
+        self.dashboardGUIObject = DashboardGUI(root, self.userObject)
         root.mainloop()
 
     def searchStockSymbol(self, stock_symbol):

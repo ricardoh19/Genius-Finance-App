@@ -3,13 +3,14 @@ import tkinter as tk
 from tkinter import ttk
 import dashboard_controller
 import loginlogout_controller
+import portfolio_controller
 
 #  this class controls the graphical user interface of the dashboard window. Its methods include 
 # createSearchbarFrame, createWatchlistPortfolioFrame,
 # handleWatchlistEvent, handlePortfolioEvent, handleSearchbarEvent, closeWindow.
 class DashboardGUI():
-    def __init__(self, master):
-        self.dashboardControllerObject = dashboard_controller.DashboardController()
+    def __init__(self, master,userObject):
+        self.dashboardControllerObject = dashboard_controller.DashboardController(userObject)
         self.loginlogout_ControllerObject = loginlogout_controller.LoginLogoutControllers()
         self.master = master
         self.master.title("Dashboard")
@@ -48,8 +49,11 @@ class DashboardGUI():
     '''
     def createWatchlistPortfolioFrame(self):
         self.watchListPortfolioFrame = Frame(self.master, width = 450, height = 200,borderwidth=2, relief="sunken").grid(row = 2,column=1)
-        self.watchlistLabel = Button( self.watchListPortfolioFrame, text="Watchlist",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 2,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="w")
-        self.portoflioLabel = Button( self.watchListPortfolioFrame, text="Portoflio",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row=2, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="e")
+        self.watchlistLabel = Button( self.watchListPortfolioFrame, text="Watchlist",font='Helvetica 13 bold',borderwidth=1, relief="ridge")
+        self.watchlistLabel.grid(row = 2,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="w")
+        self.portoflioLabel = Button( self.watchListPortfolioFrame, text="Portoflio", command=lambda:self.handlePortfolioEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge")
+        self.portoflioLabel.grid(row=2, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="e")
+
 
     '''
     Intent: handles the logic for the user clicking the watchlist button.
@@ -68,7 +72,7 @@ class DashboardGUI():
     '''
     def handlePortfolioEvent(self):
         """Calls Dashboard Controller to create portfolio"""
-        self.DashboardControllerObject.create_portfolio_controller()
+        self.dashboardControllerObject.create_portfolio_controller()
 
 
     '''
