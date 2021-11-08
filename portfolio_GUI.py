@@ -1,14 +1,16 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
-import portfolio_controller
+
 
 class PortfolioGUI():
-    def __init__(self,master):
+    def __init__(self,master, stocksymbol_price_change_dict, portfolio_value):
         self.master = master
         self.master.title("Portfolio")
         self.createMainFrame()
-        self.portfolio_controllerObject = portfolio_controller.PortfolioController()
+        #self.portfolio_controllerObject = portfolio_controller.PortfolioController()
+        self.stocksymbol_price_change_dict = stocksymbol_price_change_dict
+        self.portfolio_value = portfolio_value
 
     '''
     Intent: creates the main frame for the Portfolio GUI
@@ -69,7 +71,7 @@ class PortfolioGUI():
     * Postconditions:
     * Post0. allows user to go to watchlist gui from portfolio window
     '''  
-    def openWatchlist():
+    def openWatchlist(self):
         pass
     
         

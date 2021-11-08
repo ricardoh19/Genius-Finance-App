@@ -69,7 +69,7 @@ class PortfolioController():
         #self.get_stock_price_yahoo_api_object()
         root = Tk()
         root.geometry("675x600")
-        self.portfolioGUI = portfolio_GUI.PortfolioGUI(root)
+        self.portfolioGUI = portfolio_GUI.PortfolioGUI(root,self.stocksymbol_price_change_dict, self.portfolio_value)
         root.mainloop()
 
 
