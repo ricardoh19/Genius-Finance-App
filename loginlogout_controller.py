@@ -222,11 +222,7 @@ class LoginLogoutControllers():
             
         elif self.validateUsernamePassword(username,password) and self.checkPasswordCorrect(username, password):
             loginGUI.destroy()
-            self.currentUserData = self.setCurrentUserData(username)
-            self.currentUserStocks = self.setCurrentStockData(username)
-            self.createUserObject(self.currentUserData, self.currentUserStocks)
-            self.createDashboardGUI()
-            
+            self.createDashboardController(username)
         else:
             popupGUI = PopUpGUI("Username or password is incorrect")
             popupGUI.createPopUp()
@@ -234,28 +230,32 @@ class LoginLogoutControllers():
            
     
     '''
-    Intent: Creates User object by passing currentUserData and currentUserStocks as parameters. Returns user object
+    Intent: Creates User object by passing username parameter. Returns user object
     * Preconditions: 
-    * currentUserData and currentUserStocks are initialised.
     * Postconditions:
     * Post0. User object created and returned.
     * Post1. User object is returned as None.
     '''
-    def createUserObject(self, currentUserData, currentUserStocks):
-        self.userObject = User(currentUserData, currentUserStocks)
+    def createUserObject(self,username):
+        self.currentUserData = self.setCurrentUserData(username)
+        self.currentUserStocks = self.setCurrentStockData(username)
+        self.userObject = User(self.currentUserData, self.currentUserStocks)
         return self.userObject
 
 
     '''
-    Intent: Creates Dashboard Controller.
+    Intent: Creates Dashboard Controller and calls functions to creat user object and dashboard GUI.
     * Preconditions: 
     * dashboardController() exists
     * Postconditions:
     * Post0. dashboard controller class is created.
     '''
-    def createDashboardController(self):
-        dashboardController = dashboard_controller.DashboardController() 
-
+    def createDashboardController(self,username):
+        userObject = self.createUserObject(username)
+        dashboardController = dashboard_controller.DashboardController(userObject)
+        print(userObject)
+        dashboardController.createDashboardGUI()
+        
 
     
     '''
@@ -267,12 +267,15 @@ class LoginLogoutControllers():
     * Post0. dashboard GUI is created
     * Post1. dashboard GUI is not created because of an error finding dashboardGUI()
     '''
-    def createDashboardGUI(self):
+    '''
+    def createDashboardGUI(self,username):
+        userObject = self.createUserObject(username)
         root = Tk()
         root.geometry("675x600")
-        dashboardGUIObject = dashboardGUI.DashboardGUI(root)
+        dashboardGUIObject = dashboardGUI.DashboardGUI(root,userObject)
         root.mainloop()
         
+    '''
     
     
     '''
@@ -325,8 +328,7 @@ class LoginLogoutControllers():
             signUpGUI.destroy()
             # add user information to database
             self.databaseManagerObject.insertDatabaseUserData(username, password, securityQuestion)
-            self.createUserObject(self.currentUserData, self.currentUserStocks)
-            self.createDashboardGUI()
+            self.createDashboardController(username)
             
         else:
             popupGUI = PopUpGUI("Username or password is incorrect")
