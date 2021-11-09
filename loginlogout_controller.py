@@ -85,8 +85,9 @@ class LoginLogoutControllers():
             for objectData in data:   
                 if objectData[1] == username:
                     self.currentUserData = objectData
-                else:
-                    self.currentUserData = (-1, '', '', '')
+                
+        if self.currentUserData == None:
+            self.currentUserData = (-1, '', '', '')
         return self.currentUserData
 
 
@@ -252,8 +253,8 @@ class LoginLogoutControllers():
     '''
     def createDashboardController(self,username):
         userObject = self.createUserObject(username)
-        dashboardController = dashboard_controller.DashboardController(userObject)
         print(userObject)
+        dashboardController = dashboard_controller.DashboardController(userObject)
         dashboardController.createDashboardGUI()
         
 
