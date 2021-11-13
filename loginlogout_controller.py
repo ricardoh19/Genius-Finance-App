@@ -107,10 +107,11 @@ class LoginLogoutControllers():
         userData = self.setCurrentUserData(username)
         userId = userData[0]
         
+        self.currentUserStocks = []
         for data in self.databaseStockData:
-            for StockObject in data:                   
-                if StockObject[2] == userId:
-                    self.currentUserStocks = StockObject
+            for stockObject in data:                   
+                if stockObject[2] == userId:
+                    self.currentUserStocks.append(stockObject)
         return self.currentUserStocks
             
 
@@ -253,7 +254,7 @@ class LoginLogoutControllers():
     '''
     def createDashboardController(self,username):
         userObject = self.createUserObject(username)
-        print(userObject)
+
         dashboardController = dashboard_controller.DashboardController(userObject)
         dashboardController.createDashboardGUI()
         
