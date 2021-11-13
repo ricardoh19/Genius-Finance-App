@@ -39,7 +39,7 @@ class DashboardController():
 
         if self.portfolio_object == None:
            self.portfolio_object =  PortfolioController(self.userObject,dashboardControllerObject,yahooAPIObject, stockController,popUpGUIObject) 
-        self.portfolio_object.create_portfolio_GUI()
+        self.portfolio_object.create_portfolio_GUI(self.userObject)
         
 
 
@@ -50,7 +50,7 @@ class DashboardController():
         """if stock controller object does not exist creates it.
         Function calls Stock Controller Object function: create stock gui"""
         if self.stock_controller_object == None:
-            self.stock_controller_object = StockController(stock_symbol, self.userObject, self, self.popup_GUI_object,self.yahoo_api_object)
+            self.stock_controller_object = StockController(stock_symbol, self.userObject)
         self.stock_controller_object.handle_search_bar_event(stock_symbol)
         
 
@@ -81,7 +81,7 @@ class DashboardController():
             #stock exists hence create stock_controller
             #self.create_stock_controller(stock_symbol)
             dashboardGUI.destroy()
-            self.stock_controller_object = StockController(stock_symbol, self.userObject, self, self.popup_GUI_object,self.yahoo_api_object)
+            self.stock_controller_object = StockController(stock_symbol, self.userObject)
             self.stock_controller_object.handle_search_bar_event(stock_symbol)
         else:
             #could not find stock_symbol
