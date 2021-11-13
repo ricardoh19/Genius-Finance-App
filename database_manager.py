@@ -25,7 +25,7 @@ class DB():
     * Post0. The connection to a database db is established (if db is not None) 
     * Post1. The connection to a MySQL server is established (if db is None)
     '''
-    def connect_to_db(self, myuser='root', mypassword='Veritas!10',myhost= "localhost", db = None):
+    def connect_to_db(self, myuser='root', mypassword='Rhern_19',myhost= "localhost", db = None):
         if db:
             cnx = mysql.connector.connect(
             user=myuser, 
@@ -141,7 +141,7 @@ class DB():
     '''
     def getDatabaseUserData(self):
         cursor, cnx = self.connect_to_db(db=self.DB_NAME)
-        query = (f"SELECT * FROM User")
+        query = ("SELECT * FROM User")
         cursor.execute(query)
         return [i for i in cursor]
         
@@ -157,10 +157,10 @@ class DB():
     * Post1. Displays None if connection to database is not successful.
     '''
     def getDatabaseStockData(self):
-            cursor, cnx = self.connect_to_db(db=self.DB_NAME)
-            query = (f"SELECT * FROM Stock")
-            cursor.execute(query)
-            return [i for i in cursor]
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
+        query = ("SELECT * FROM Stock")
+        cursor.execute(query)
+        return [i for i in cursor]
 
 
     '''
