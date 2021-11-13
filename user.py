@@ -1,8 +1,10 @@
 import logging 
+import database_manager
 from utils import convert_to_type
 class User():
     """User class holds login details of user as well as stock associated with the user."""
     def __init__(self, current_user_data, current_user_stocks= None):
+        self.databaseManager = database_manager.DB()
         self.current_user_data=current_user_data
         self.check_current_user_data() #checks current user data input is correct type
         #list: id:int, username:str, password:str, securityquestionanswer:str
@@ -55,11 +57,13 @@ class User():
             return False
         return True
 
-    def append_stock(self, stocksymbol, stockid = -1, stockowned = 0):
+    def append_stock(self, stocksymbol, userId, stockid = -1, stockOwnedDef = 0):
         """Appends a stock to the users collection of stocks. If not specified the stockid is -1
         to be changed when pushed to DB. Default stock owned is 0. """
-        stock = {"stockid": stockid, "stockowned": stockowned}
+        stock = {"stockid": stockid, "stockowned": stockOwnedDef}
         self.current_user_stocks[stocksymbol]= stock
+        stockOwned = stockOwnedDef
+        self.databaseManager.insertDatabaseStockData(stocksymbol,userId,stockOwned)
 
     def update_stock_owned(self, stocksymbol, stockowned = 0):
         """Changes the amount of a certain stock that the user owns."""
