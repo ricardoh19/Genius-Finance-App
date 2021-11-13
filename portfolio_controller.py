@@ -63,13 +63,13 @@ class PortfolioController():
             self.stocksymbol_price_change_dict[key] = \
                 {"stockprice":stockprice, "percentage_change": percentage_change} #updates self.StockPriceDict
         
-    def create_portfolio_GUI(self):
+    def create_portfolio_GUI(self,userObject):
         """Creates Portfolio GUI """
         #get updated stockprice for each stock that will be displayed in GUI
         #self.get_stock_price_yahoo_api_object()
         root = Tk()
         root.geometry("675x600")
-        self.portfolioGUI = portfolio_GUI.PortfolioGUI(root,self.stocksymbol_price_change_dict, self.portfolio_value)
+        self.portfolioGUI = portfolio_GUI.PortfolioGUI(root,self.stocksymbol_price_change_dict, self.portfolio_value, self.user_object)
         root.mainloop()
 
 
