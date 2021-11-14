@@ -48,8 +48,7 @@ class PortfolioGUI():
     
         for i in userObject.current_user_stocks:
             self.portfolio.insert(END,i)
-            stockPrice = self.yahoo_api_object.get_specific_stock_info()
-            print(stockPrice)
+            
         #self.listBox.bind("<<ListboxSelect>>",lambda event,i=i: self.detailsPage(i))
         
        
