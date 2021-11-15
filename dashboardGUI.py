@@ -37,8 +37,11 @@ class DashboardGUI():
     * Post0. search bar label and entry box is created.
     '''
     def createSearchbarFrame(self):
-        self.logo = Label(self.master, text="Search for stock (SYMBOL): ",font='Helvetica 12').grid(row = 0,column=1,sticky="n",pady=50)
-        self.inputtxt = Text(self.master, height = 2, width = 25, bg = "light yellow").grid(row = 0,column=1,sticky="e")
+        self.searchLabel = Label(self.master, text="Search for stock (SYMBOL): ",font='Helvetica 12').grid(row = 0,column=1,sticky="w")
+        self.inputtxt = Entry(self.master)
+        self.inputtxt.grid(row = 0,column=1,sticky="e")
+        self.enter = Button(self.master,text="Enter", command=lambda:self.handleSearchbarEvent(self.inputtxt.get()))
+        self.enter.grid(row = 0,column=1,sticky="e")
 
 
     '''
@@ -81,12 +84,12 @@ class DashboardGUI():
     * Postconditions:
     * Post0. 
     '''
-    def handleSearchbarEvent(self):
+    def handleSearchbarEvent(self, stockSymbol):
         """Gets stock_symbol selected and passes it on 
         to dashboard controller for processing."""
         stock_symbol = "" #ToDo
         #call Dashboard controller function to process search bar stock_symbol
-        self.DashboardControllerObject.handle_search_bar_event(stock_symbol)
+        self.dashboardControllerObject.searchStockSymbol(stockSymbol, self.master)
 
 
     '''
