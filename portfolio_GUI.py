@@ -2,18 +2,20 @@ from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 import yahoo_api
+import stock_controller
 
 
 class PortfolioGUI():
-    def __init__(self,master, stocksymbol_price_change_dict, portfolio_value, userObject):
+    def __init__(self, master, stocksymbol_price_change_dict, portfolio_value, userObject):
         self.master = master
         self.master.title("Portfolio")
-        self.createMainFrame(userObject)
+        self.userObject = userObject
+        self.createMainFrame(self.userObject)
         #self.portfolio_controllerObject = portfolio_controller.PortfolioController()
         self.stocksymbol_price_change_dict = stocksymbol_price_change_dict
         self.portfolio_value = portfolio_value
-        self.userObject = userObject
         self.yahoo_api_object = yahoo_api.YahooAPI()
+        
 
     '''
     Intent: creates the main frame for the Portfolio GUI
@@ -30,7 +32,8 @@ class PortfolioGUI():
         
         self.createMyStocksFrame(userObject)
         self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow()).grid(row = 4,column=1,sticky="se")
-        self.removeButton = Button(self.master,text="Remove", command=lambda:self.removeStock()).grid(row = 4,column=1,sticky="s")
+        
+        self.removeButton = Button(self.master,text="Remove", command=lambda:self.removeStock()).grid(row = 4,column=1,sticky="s",padx=150)
         self.WatchlistButton = Button(self.master,text="Go to Watchlist", command=lambda:self.openWatchlist()).grid(row = 4,column=1,sticky="sw")
     
     
@@ -41,9 +44,6 @@ class PortfolioGUI():
     * Post0. user's stocks frame is created
     '''
     def createMyStocksFrame(self,userObject):
-        self.portfolio = Listbox(self.master,height=20, width=40, borderwidth=2, relief="sunken")
-        #self.portfolio.grid(row = 2,column=1)
-
 
         self.tree = ttk.Treeview(self.master, column=("Stock_Symbol", "Shares_owned","Stock_Price"), show='headings', height=5)
         self.tree.grid(row = 2,column=1)
@@ -53,20 +53,42 @@ class PortfolioGUI():
         self.tree.heading('Shares_owned', text='Shares Owned')
         
         self.yahoo_api_object = yahoo_api.YahooAPI()
-        for i in userObject.current_user_stocks:
-            self.portfolio.insert(END,i)
-            
-            self.tree.insert('', 'end', text=i, values=(i, 'n/a', "n/a"))
-        #self.listBox.bind("<<ListboxSelect>>",lambda event,i=i: self.detailsPage(i))
-        
-       
 
+    
+        self.tree.bind('<ButtonRelease-1>', self.selectItem)
+        curItem = self.tree.focus()
+
+        # get stockSymbol somehow
+        stockSymbol = 'tsla'
+        self.viewInformation = Button(self.master, text="View Information", command=lambda:self.viewInformation(stockSymbol)).grid(row = 4,column=1,sticky="sw",padx=120)
+        self.stockController = stock_controller.StockController(stockSymbol, userObject)
+
+
+        for i in userObject.current_user_stocks:
+            self.stockData = self.stockController.get_stock_data_API(i)
+            try:
+                self.stockPrice = self.stockData[i]['stockPrice']
+                self.tree.insert('', 'end', text=i, values=(i, 'n/a', self.stockPrice))
+            except KeyError:
+                self.tree.insert('', 'end', text=i, values=(i, 'n/a', 'n/a'))
+       
         #scrollbar
         self.scrollbar = Scrollbar(self.master)
         #self.scrollbar.pack(side = RIGHT, fill = BOTH)
 
-
-        
+    def selectItem(self, a):
+        curItem = self.tree.focus()
+        stockSymbol = self.tree.item(curItem)['text']
+        return stockSymbol
+    '''
+    Intent: 
+    * Preconditions: master is connected to TKinter.
+    * Postconditions:
+    * Post0. 
+    '''    
+    def viewInformation(self, stockSymbol):
+        self.stockController = stock_controller.StockController(stockSymbol, self.userObject)
+        self.stockController.handle_search_bar_event(stockSymbol)
     
     '''
     Intent: close the portfolio window .
