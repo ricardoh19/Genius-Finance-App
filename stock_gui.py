@@ -66,9 +66,9 @@ class StockGUI():
     def createStockSummaryFrame(self):
         self.stock = Frame(self.master, width = 400, height = 170,borderwidth=2, relief="sunken").grid(row = 1,column=1)
         self.stock_value = Label( self.stock, text="Stock Price: " + str(self.stockPrice), font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="nw")
-        self.current_ratio = Label( self.stock, text="Current Ratio: " + str(self.currentRatio), font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="w")
+        self.current_ratio = Label( self.stock, text="Current Ratio: " + str(self.currentRatio), font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="ne")
         self.eps_rating = Label( self.stock, text="EPS Rating: " + str(self.epsRating), font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="sw")
-        self.debt_to_equity_ratio = Label( self.stock, text="Debt to Equity Ratio: " + str(self.debtToEquity), font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="e")
+        self.debt_to_equity_ratio = Label( self.stock, text="Debt to Equity Ratio: " + str(self.debtToEquity), font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="se")
 
     def createGraphFrame(self):
         """
