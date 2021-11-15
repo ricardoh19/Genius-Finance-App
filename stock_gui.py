@@ -6,9 +6,7 @@ import stock_controller
 import webbrowser
 from datetime import datetime
 import matplotlib.pyplot as plt
-# this class controls the graphical user interface of the stock window. 
 
-# Why do some controller need popupgui object , other controllers as parameters?
 
 
 # this class controls the graphical user interface of the stock window. 
@@ -60,7 +58,8 @@ class StockGUI():
         self.closeButton = Button(self.master,text="Close", command=lambda:self.closeWindow()).grid(row = 4,column=1,sticky="se")
         self.newsLink = Button(self.master,text="Link to News article/articles", command=lambda:self.handleNewsLink())
         self.newsLink.grid(row = 4,column=1,sticky="s")
-        self.addToPortfolio = Button(self.master,text="Add to Portfolio",command=lambda:self.handleAddToPortfolio()).grid(row = 4,column=1,sticky="sw")
+        self.addToPortfolio = Button(self.master,text="Add to Portfolio",command=lambda:self.handleAddToPortfolio())
+        self.addToPortfolio.grid(row = 4,column=1,sticky="sw")
 
     '''
     Intent: creates the stock frame for the stock GUI
