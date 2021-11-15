@@ -27,6 +27,8 @@ class LoginGUI():
         self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
         self.createUsernamePasswordFrame()
         self.createLoginSignUpForgetPasswordFrame()
+        self.requirements = Label(self.master, text="Password should be atleast 10 characters, ", font='Helvetica 12 bold').grid(row = 0,column=1)
+        self.requirement2 = Label(self.master, text="have one uppercase letter, and one special symbol(!, #, $, ^, *)", font='Helvetica 12 bold').grid(row = 0,column=1,sticky='s')
         self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow()).grid(row = 4,column=1,sticky="se")
 
     '''
@@ -40,8 +42,6 @@ class LoginGUI():
         self.credentials = Frame(self.master, width = 350, height = 170,borderwidth=2, relief="sunken").grid(row = 1,column=1)
         self.usernameLabel = Label( self.credentials, text="Username",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="nw")
         self.passwordLabel = Label( self.credentials, text="Password",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row=1, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="sw")
-        self.requirements = Label(self.master, text="Password should be atleast 10 characters, ", font='Helvetica 9 bold').grid(row = 0,column=1)
-        self.requirement2 = Label(self.master, text="have one uppercase letter, and one special symbol(!, #, $, ^, *)", font='Helvetica 9 bold').grid(row = 0,column=1,sticky='s')
         self.usernameEntry = Entry(self.credentials)
         self.usernameEntry.grid(row = 1,column=1,padx=8,pady=15,ipadx=2,ipady=2, sticky="ne")
         self.passwordEntry = Entry(self.credentials,show="*")
