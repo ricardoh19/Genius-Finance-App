@@ -4,6 +4,8 @@ from tkinter import ttk
 import dashboard_controller
 import stock_controller
 import webbrowser
+from datetime import datetime
+import matplotlib.pyplot as plt
 # this class controls the graphical user interface of the stock window. 
 
 # Why do some controller need popupgui object , other controllers as parameters?
@@ -77,7 +79,7 @@ class StockGUI():
         Just display an error message were the graph should be or something like that.
         """
         self.graph = Frame(self.master, width = 415, height = 170,borderwidth=2, relief="sunken").grid(row = 2,column=1, padx=15, pady=20)
-        #will add graph once we figure out how to convert timeseries and stock price 
+        #TO-DO: put chart image inside of the frame 
     
     '''
     Intent: 
@@ -109,3 +111,34 @@ class StockGUI():
         self.master.destroy()
         self.dashboard_controllerObject.createDashboardGUI()
  
+    def convert_timestamp(self, timestamp_list):
+        """Takes in list of timestamps and converts each timestamp into a datetime object."""
+        dt_objects = []
+        for timestamp in timestamp_list:
+            dt_object = datetime.fromtimestamp(timestamp)
+            # print(dt_object)
+            # print(dt_object.hour)
+            # print(dt_object.minute)
+            # print(dt_object.day)
+            
+            dt_objects.append(dt_object.hour +dt_object.minute/60)
+        print(dt_objects)
+        return dt_objects
+    
+    def create_chart_image(self):
+        """"Turns the given data into an image and saves that image"""
+        hour_list = self.convert_timestamp(self.stock_graph_values[0])
+
+        # Data for plotting
+        x = hour_list # time: list of hours
+        y = self.stock_graph_values[1] #stockprices list
+
+        fig, ax = plt.subplots()
+        ax.plot(x, y)
+        #name axis and set title
+        ax.set(xlabel='time in hours', ylabel='stockprice in USD',
+            title='Stockprice over the past 24 hours.')
+        ax.grid()
+        #save chart as image
+        fig.savefig("stockprice_chart.png")
+        plt.show()
