@@ -25,7 +25,7 @@ class PortfolioGUI():
     def createMainFrame(self,userObject): 
         # logo on top left side
         self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
-        self.portfolioTitle = Label(self.master, text="My Stocks",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid").grid(row=0,column=1, pady=5, padx=5, sticky="s")
+        self.portfolioTitle = Label(self.master, text="My Stocks",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid").grid(row=0,column=1, pady=5, padx=5, sticky="sw")
         self.portoflioValueTitle = Label(self.master, text="Portfolio Value: ",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid").grid(row=0,column=1, pady=5, padx=5, sticky="se")
         
         self.createMyStocksFrame(userObject)

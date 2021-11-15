@@ -54,7 +54,7 @@ class DashboardGUI():
         self.watchListPortfolioFrame = Frame(self.master, width = 450, height = 200,borderwidth=2, relief="sunken").grid(row = 2,column=1)
         self.watchlistLabel = Button( self.watchListPortfolioFrame, text="Watchlist",font='Helvetica 13 bold',borderwidth=1, relief="ridge")
         self.watchlistLabel.grid(row = 2,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="w")
-        self.portoflioLabel = Button( self.watchListPortfolioFrame, text="Portoflio", command=lambda:self.handlePortfolioEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge")
+        self.portoflioLabel = Button( self.watchListPortfolioFrame, text="Portfolio", command=lambda:self.handlePortfolioEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge")
         self.portoflioLabel.grid(row=2, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="e")
 
 
