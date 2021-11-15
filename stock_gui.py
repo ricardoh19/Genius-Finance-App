@@ -4,11 +4,10 @@ from tkinter import ttk
 import dashboard_controller
 import stock_controller
 import webbrowser
+import popupGUI
+
+
 # this class controls the graphical user interface of the stock window. 
-
-# Why do some controller need popupgui object , other controllers as parameters?
-
-
 class StockGUI():
     def __init__(self, master, stock_symbol, stockData, stock_graph_values, newslink, userObject):
         self.stock_controllerObject = stock_controller.StockController(stock_symbol, userObject)
@@ -41,10 +40,13 @@ class StockGUI():
         self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
         self.stockName= Label(self.master, text=self.stockSymbol,font='Helvetica 15',height = 2, width = 15,borderwidth=2, relief="solid").grid(row=0,column=1, pady=5, padx=5,sticky="n")
         
-        self.sharesOwned= Label(self.master, text="Shares Owned:",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid").grid(row=0,column=1, pady=5, padx=5,sticky="sw")
+        self.sharesOwned= Label(self.master, text="Shares Owned:",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid")
+        self.sharesOwned.grid(row=0,column=1, pady=5, padx=5,sticky="sw")
+
         self.shares = Entry(self.master,width=4)
         self.shares.grid(row=0,column=1, pady=5, padx=5,ipady=4, ipadx=2, sticky="s")
-        self.enter = Button(self.master,text="Enter").grid(row = 0,column=1,sticky="se")
+        
+        self.enter = Button(self.master,text="Enter",command=lambda:self.handleUpdateSharesOwned(self.shares.get())).grid(row = 0,column=1,sticky="se")
         
         #middle of GUI
         self.createStockSummaryFrame()
@@ -87,6 +89,12 @@ class StockGUI():
     '''    
     def handleNewsLink(self):
         website = self.stock_controllerObject.get_newslink_Yahoo_API(self.stockSymbol)
+
+        if website == "Error could not retrieve a newslink.":
+            message = f"Could not retrieve a newslink related to {self.stockSymbol}."
+            self.popUpGUIObject = popupGUI.PopUpGUI(message)
+            self.popUpGUIObject.createPopUp()
+        
         webbrowser.open(website)
 
     '''
@@ -97,6 +105,16 @@ class StockGUI():
     '''    
     def handleAddToPortfolio(self):
         self.stock_controllerObject.add_stock_in_user_class()
+
+    '''
+    Intent: 
+    * Preconditions: 
+    * Postconditions:
+    * Post0. 
+    '''    
+    def handleUpdateSharesOwned(self, stockOwned):
+        # use stock owned parameter
+        self.stock_controllerObject.update_stock_owned(stockOwned)
         
 
     '''

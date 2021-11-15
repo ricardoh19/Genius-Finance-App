@@ -52,6 +52,7 @@ class StockController():
     def get_newslink_Yahoo_API(self,stockSymbol):
         """Returns newslink retreieved from Yahoo API Object"""
         return self.yahoo_api_object.get_link(stockSymbol)
+
         
     def open_dashboard(self):
         """Hands controll back to dashboard controller."""
@@ -70,15 +71,17 @@ class StockController():
         This stock is now part of the users portfolio stocks."""
         userId = self.user_object.current_user_data[0]
         self.user_object.append_stock(self.stock_symbol,userId, stockid, stockowned)
-        # show message to user
-        #message = "Stock added!"
-        #self.create_popup_GUI(message)
+        #show message to user
+        message = "Stock added!"
+        self.create_popup_GUI(message)
 
     def get_stock_owned_from_user_class(self):
         self.user_object.get_stockowned(self.stock_symbol)
 
-    def update_stock_owned(self):
-        self.user_object.update_stock_owned(self.stock_symbol, stockowned =30)
+    def update_stock_owned(self, stockOwned):
+        self.user_object.update_stock_owned(self.stock_symbol, stockOwned)
+        message = "Shares Updated!"
+        self.create_popup_GUI(message)
 
     def delete_stock(self):
         success = self.user_object.delete_stock(self.stock_symbol)
