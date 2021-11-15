@@ -25,8 +25,8 @@ class PortfolioGUI():
     def createMainFrame(self,userObject): 
         # logo on top left side
         self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
-        self.portfolioTitle = Label(self.master, text="My Stocks",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid").grid(row=0,column=1, pady=5, padx=5, sticky="s")
-        self.portoflioValueTitle = Label(self.master, text="Portfolio Value: ",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid").grid(row=0,column=1, pady=5, padx=5, sticky="se")
+        self.portfolioTitle = Label(self.master, text="My Stocks",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid").grid(row=1,column=1, pady=5, padx=5, sticky="sw")
+        self.portfolioValueTitle = Label(self.master, text="Portfolio Value: ",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid").grid(row=1,column=1, pady=5, padx=5, sticky="se")
         
         self.createMyStocksFrame(userObject)
         self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow()).grid(row = 4,column=1,sticky="se")
@@ -41,14 +41,22 @@ class PortfolioGUI():
     * Post0. user's stocks frame is created
     '''
     def createMyStocksFrame(self,userObject):
-        stockName = Label(self.master, text="Stock Name",font='Helvetica 12',height = 1, width = 10,borderwidth=2, relief="solid").grid(row=1,column=1, sticky="w")
         self.portfolio = Listbox(self.master,height=20, width=40, borderwidth=2, relief="sunken")
-        self.portfolio.grid(row = 2,column=1)
+        #self.portfolio.grid(row = 2,column=1)
+
+
+        self.tree = ttk.Treeview(self.master, column=("Stock_Symbol", "Shares_owned","Stock_Price"), show='headings', height=5)
+        self.tree.grid(row = 2,column=1)
+
+        self.tree.heading('Stock_Symbol', text='Stock Symbol')
+        self.tree.heading('Stock_Price', text='Stock Price')
+        self.tree.heading('Shares_owned', text='Shares Owned')
+        
         self.yahoo_api_object = yahoo_api.YahooAPI()
-    
         for i in userObject.current_user_stocks:
             self.portfolio.insert(END,i)
             
+            self.tree.insert('', 'end', text=i, values=(i, 'n/a', "n/a"))
         #self.listBox.bind("<<ListboxSelect>>",lambda event,i=i: self.detailsPage(i))
         
        
@@ -87,14 +95,6 @@ class PortfolioGUI():
     def openWatchlist(self):
         pass
     
-'''
-stocksymbol_price_change_dict = None
-portfolio_value = None
-   
-root = Tk()
-root.geometry("515x490")
-loginGUIObject = PortfolioGUI(root, stocksymbol_price_change_dict, portfolio_value)
-root.mainloop()
-'''
+
 
 
