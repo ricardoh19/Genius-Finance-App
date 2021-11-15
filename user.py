@@ -62,8 +62,9 @@ class User():
         to be changed when pushed to DB. Default stock owned is 0. """
         stock = {"stockid": stockid, "stockowned": stockOwnedDef}
         self.current_user_stocks[stocksymbol]= stock
-        stockOwned = stockOwnedDef
-        self.databaseManager.insertDatabaseStockData(stocksymbol,userId,stockOwned)
+
+        #stockOwned = stockOwnedDef
+        #self.databaseManager.insertDatabaseStockData(stocksymbol,userId,stockOwned)
 
     def update_stock_owned(self, stocksymbol, stockowned = 0):
         """Changes the amount of a certain stock that the user owns."""
