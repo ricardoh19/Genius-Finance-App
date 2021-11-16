@@ -33,9 +33,8 @@ class PortfolioGUI():
         self.createMyStocksFrame(userObject)
         self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow()).grid(row = 4,column=1,sticky="se")
         
-        self.removeButton = Button(self.master,text="Remove", command=lambda:self.removeStock()).grid(row = 4,column=1,sticky="s",padx=150)
         self.WatchlistButton = Button(self.master,text="Go to Watchlist", command=lambda:self.openWatchlist()).grid(row = 4,column=1,sticky="sw")
-    
+        
     
     '''
     Intent: creates the users stocks frame for the portfolio GUI
@@ -43,7 +42,7 @@ class PortfolioGUI():
     * Postconditions:
     * Post0. user's stocks frame is created
     '''
-    def createMyStocksFrame(self,userObject):
+    def createMyStocksFrame(self, userObject):
 
         self.tree = ttk.Treeview(self.master, column=("Stock_Symbol", "Shares_owned","Stock_Price"), show='headings', height=5)
         self.tree.grid(row = 2,column=1)
@@ -58,19 +57,21 @@ class PortfolioGUI():
         self.tree.bind('<ButtonRelease-1>', self.selectItem)
         curItem = self.tree.focus()
 
-        # get stockSymbol somehow
-        stockSymbol = 'tsla'
-        self.viewInformation = Button(self.master, text="View Information", command=lambda:self.viewInformation(stockSymbol)).grid(row = 4,column=1,sticky="sw",padx=120)
+
+        stockSymbol = 'example'
         self.stockController = stock_controller.StockController(stockSymbol, userObject)
 
-
+       
+        
         for i in userObject.current_user_stocks:
             self.stockData = self.stockController.get_stock_data_API(i)
             try:
                 self.stockPrice = self.stockData[i]['stockPrice']
-                self.tree.insert('', 'end', text=i, values=(i, 'n/a', self.stockPrice))
+                self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
+                self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, self.stockPrice))
             except KeyError:
-                self.tree.insert('', 'end', text=i, values=(i, 'n/a', 'n/a'))
+                self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
+                self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, 'n/a'))
        
         #scrollbar
         self.scrollbar = Scrollbar(self.master)
@@ -79,7 +80,11 @@ class PortfolioGUI():
     def selectItem(self, a):
         curItem = self.tree.focus()
         stockSymbol = self.tree.item(curItem)['text']
-        return stockSymbol
+        
+        self.viewInformationButton = Button(self.master, text="View Information", command=lambda:self.viewInformation(stockSymbol)).grid(row = 4,column=1,sticky="sw",padx=120)
+        self.removeButton = Button(self.master,text="Remove", command=lambda:self.removeStock(self.userObject, stockSymbol)).grid(row = 4,column=1,sticky="s",padx=150)
+
+
     '''
     Intent: 
     * Preconditions: master is connected to TKinter.
@@ -88,7 +93,7 @@ class PortfolioGUI():
     '''    
     def viewInformation(self, stockSymbol):
         self.stockController = stock_controller.StockController(stockSymbol, self.userObject)
-        self.stockController.handle_search_bar_event(stockSymbol)
+        self.stockController.handle_viewInformation_event(stockSymbol)
     
     '''
     Intent: close the portfolio window .
@@ -105,8 +110,18 @@ class PortfolioGUI():
     * Postconditions:
     * Post0. removes stock from portfolio window
     '''            
-    def removeStock(self):
-        pass
+    def removeStock(self, userObject, stockSymbol):
+        del userObject.current_user_stocks[stockSymbol]
+        self.tree.delete(*self.tree.get_children())
+        for i in userObject.current_user_stocks:
+            self.stockData = self.stockController.get_stock_data_API(i)
+            try:
+                self.stockPrice = self.stockData[i]['stockPrice']
+                self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
+                self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, self.stockPrice))
+            except KeyError:
+                self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
+                self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, 'n/a'))
     
     '''
     Intent: creates a button on the frame that allows user to go to watchlist gui
