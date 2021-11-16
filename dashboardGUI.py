@@ -37,11 +37,11 @@ class DashboardGUI():
     * Post0. search bar label and entry box is created.
     '''
     def createSearchbarFrame(self):
-        self.searchLabel = Label(self.master, text="Search for stock (SYMBOL): ",font='Helvetica 12').grid(row = 0,column=1, sticky='nw')
+        self.searchLabel = Label(self.master, text="Search for stock (SYMBOL): ",font='Helvetica 12').grid(row = 0,column=1, sticky='sw')
         self.inputtxt = Entry(self.master)
-        self.inputtxt.grid(row = 0,column=1,sticky="ne")
+        self.inputtxt.grid(row = 0,column=1,sticky="se")
         self.enter = Button(self.master,text="Enter", command=lambda:self.handleSearchbarEvent(self.inputtxt.get()))
-        self.enter.grid(row = 0,column=1,sticky="ne")
+        self.enter.grid(row = 1,column=1,sticky="ne")
 
 
     '''
