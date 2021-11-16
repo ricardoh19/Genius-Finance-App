@@ -1,9 +1,3 @@
 Louise:
-where is user created
-stocknumber changed in stock gui change stock number in user class
-can you delete stock in stock class?
+try & except statement for get stock ratios API does not always return it
 
-Wrap all calls to Yahoo finc in try and except statements.
-
-
-portfolio controller update GUI init inputs
