@@ -37,6 +37,21 @@ class StockController():
             #could not find stock_symbol
             message = "Could not find stock entered in search bar."
             self.create_popup_GUI(message)
+
+    def handle_viewInformation_event(self, stock_symbol):
+        #check if stock exists
+        if self.yahoo_api_object.check_stock_exists(stock_symbol):
+            #stock exists hence create stock_controller
+            #get info on this stock from yahoo api
+            #self.stock_symbol=stock_symbol
+            self.stockData = self.get_stock_data_API(stock_symbol)
+            self.stock_graph_values = self.get_stock_graph_values_from_yahoo_finance(stock_symbol) #2D list with 2 dict timestamp and stockprice
+            self.newslink = self.get_newslink_Yahoo_API(stock_symbol)
+            self.create_stock_GUI(stock_symbol, self.stockData, self.stock_graph_values, self.newslink, self.user_object)
+        else:
+            #could not find stock_symbol
+            message = "Could not find stock information selected."
+            self.create_popup_GUI(message)
         
     def get_stock_graph_values_from_yahoo_finance(self, stockSymbol):
         """Retrieves values for the stock graph. If call fails opens pop-up gui"""
