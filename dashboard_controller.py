@@ -27,23 +27,14 @@ class DashboardController():
         Login logout controller function is called which pushes the changes to the database"""
         self.loginlogout_controller.logout_push_changes_to_database()
         
-    def create_portfolio_controller(self):
+    def create_portfolio_controller(self, dashboardGUI):
         """if portfolio controller object does not exist create it.
         calls method in Portfolio Controller to create Portfolio GUI."""
-        
-        
-        dashboardControllerObject = None
-        yahooAPIObject = None
-        stockController = None
-        popUpGUIObject = None
-
+        dashboardGUI.destroy()
         if self.portfolio_object == None:
-           self.portfolio_object =  PortfolioController(self.userObject,dashboardControllerObject,yahooAPIObject, stockController,popUpGUIObject) 
+           self.portfolio_object =  PortfolioController(self.userObject) 
         self.portfolio_object.create_portfolio_GUI(self.userObject)
         
-
-
-
 
 
     def create_stock_controller(self, stock_symbol):
@@ -58,19 +49,12 @@ class DashboardController():
         """if portfolio controller object does not exist create it.
         calls method in Portfolio Controller to create Portfolio GUI."""
         if self.watchlist_object == None:
-            self.watchlist_object = WatchlistController(self.user_object, self.yahoo_api_object,
-                 self.popup_GUI_object,self)
+            self.watchlist_object = WatchlistController(self.userObject)
+        self.watchlist_object.create_watchlist_GUI()
         #call watchlist GUI in Watchlist controller
         
     
         
-    
-    def createDashboardGUI(self):
-        """This function creates the Dashboard GUI Object"""
-        root = Tk()
-        root.geometry("675x600")
-        self.dashboardGUIObject = DashboardGUI(root, self.userObject)
-        root.mainloop()
 
     def searchStockSymbol(self, stock_symbol, dashboardGUI):
         """Checks if the stock_symbol given in the search bar actually exists.
@@ -89,5 +73,11 @@ class DashboardController():
             popupGUI.createPopUp()
 
 
+    def createDashboardGUI(self):
+        """This function creates the Dashboard GUI Object"""
+        root = Tk()
+        root.geometry("675x600")
+        self.dashboardGUIObject = DashboardGUI(root, self.userObject)
+        root.mainloop()
 
 
