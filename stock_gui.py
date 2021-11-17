@@ -51,7 +51,7 @@ class StockGUI():
         self.sharesOwned.grid(row=0,column=0, pady=5, padx=5)
         self.shares = Entry(self.owned_frame,width=4)
         self.shares.grid(row=0,column=1, pady=5, padx=5,ipady=4, ipadx=2)
-        self.enter = Button(self.owned_frame,text="Enter", background="lightgreen")
+        self.enter = Button(self.owned_frame,text="Enter",command=lambda:self.handleUpdateSharesOwned(self.shares.get()), background="lightgreen")
         self.enter.grid(row = 0,column=2)
         
         #middle of GUI
