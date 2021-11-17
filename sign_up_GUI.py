@@ -29,6 +29,8 @@ class SignUpGUI():
         self.logo = Label(self.signUpMaster, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
         self.createSignUpUsernamePasswordFrame()
         self.createSecurityQuestionFrame()
+        self.requirements = Label(self.signUpMaster, text="Password should be atleast 10 characters, ", font='Helvetica 12 bold').grid(row = 0,column=1)
+        self.requirement2 = Label(self.signUpMaster, text="have one uppercase letter, and one special symbol(!, #, $, ^, *)", font='Helvetica 12 bold').grid(row = 0,column=1,sticky='s')
         self.exitButton = Button(self.signUpMaster,text="Close",command=lambda: self.handleCloseEvent()).grid(row = 4,column=1,sticky="se")
         self.SignUpButton = Button(self.signUpMaster,text="Sign Up",command=lambda: self.handleSignUpEvent()).grid(row = 4,column=1)
 

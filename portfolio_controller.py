@@ -68,7 +68,7 @@ class PortfolioController():
         #get updated stockprice for each stock that will be displayed in GUI
         #self.get_stock_price_yahoo_api_object()
         root = Tk()
-        root.geometry("675x600")
+        root.geometry("750x600")
         self.portfolioGUI = portfolio_GUI.PortfolioGUI(root,self.stocksymbol_price_change_dict, self.portfolio_value, self.user_object)
         root.mainloop()
 

@@ -25,6 +25,8 @@ class ForgetPasswordGUI():
         self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
         self.createForgotPasswordUsernamePasswordFrame()
         self.createSecurityQuestionFrame()
+        self.requirements = Label(self.master, text="Password should be atleast 10 characters, ", font='Helvetica 12 bold').grid(row = 0,column=1)
+        self.requirement2 = Label(self.master, text="have one uppercase letter, and one special symbol(!, #, $, ^, *)", font='Helvetica 12 bold').grid(row = 0,column=1,sticky='s')
         self.exitButton = Button(self.master,text="Close",command=lambda: self.handleCloseEvent()).grid(row = 4,column=1,sticky="se")
         self.ResetPasswordButton = Button(self.master,text="Reset Password",command=lambda: self.handleForgotPasswordEvent()).grid(row = 4,column=1)
 

@@ -37,11 +37,11 @@ class DashboardGUI():
     * Post0. search bar label and entry box is created.
     '''
     def createSearchbarFrame(self):
-        self.searchLabel = Label(self.master, text="Search for stock (SYMBOL): ",font='Helvetica 12').grid(row = 0,column=1,sticky="w")
+        self.searchLabel = Label(self.master, text="Search for stock (SYMBOL): ",font='Helvetica 12').grid(row = 0,column=1, sticky='sw')
         self.inputtxt = Entry(self.master)
-        self.inputtxt.grid(row = 0,column=1,sticky="e")
+        self.inputtxt.grid(row = 0,column=1,sticky="se")
         self.enter = Button(self.master,text="Enter", command=lambda:self.handleSearchbarEvent(self.inputtxt.get()))
-        self.enter.grid(row = 0,column=1,sticky="e")
+        self.enter.grid(row = 1,column=1,sticky="ne")
 
 
     '''
@@ -54,7 +54,7 @@ class DashboardGUI():
         self.watchListPortfolioFrame = Frame(self.master, width = 450, height = 200,borderwidth=2, relief="sunken").grid(row = 2,column=1)
         self.watchlistLabel = Button( self.watchListPortfolioFrame, text="Watchlist",font='Helvetica 13 bold',borderwidth=1, relief="ridge")
         self.watchlistLabel.grid(row = 2,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="w")
-        self.portoflioLabel = Button( self.watchListPortfolioFrame, text="Portfolio", command=lambda:self.handlePortfolioEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge")
+        self.portoflioLabel = Button( self.watchListPortfolioFrame, text="Portoflio", command=lambda:self.handlePortfolioEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge")
         self.portoflioLabel.grid(row=2, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="e")
 
 
@@ -113,4 +113,6 @@ class DashboardGUI():
     '''
     def closeWindow(self):
         self.master.destroy()
+
+
 

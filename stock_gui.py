@@ -6,11 +6,10 @@ import stock_controller
 import webbrowser
 from datetime import datetime
 import matplotlib.pyplot as plt
+
+
+
 # this class controls the graphical user interface of the stock window. 
-
-# Why do some controller need popupgui object , other controllers as parameters?
-
-
 class StockGUI():
     def __init__(self, master, stock_symbol, stockData, stock_graph_values, newslink, userObject):
         self.stock_controllerObject = stock_controller.StockController(stock_symbol, userObject)
@@ -117,6 +116,12 @@ class StockGUI():
   
     def handleNewsLink(self):
         website = self.stock_controllerObject.get_newslink_Yahoo_API(self.stockSymbol)
+
+        if website == "Error could not retrieve a newslink.":
+            message = f"Could not retrieve a newslink related to {self.stockSymbol}."
+            self.popUpGUIObject = popupGUI.PopUpGUI(message)
+            self.popUpGUIObject.createPopUp()
+        
         webbrowser.open(website)
 
     '''
@@ -127,6 +132,16 @@ class StockGUI():
     '''    
     def handleAddToPortfolio(self):
         self.stock_controllerObject.add_stock_in_user_class()
+
+    '''
+    Intent: 
+    * Preconditions: 
+    * Postconditions:
+    * Post0. 
+    '''    
+    def handleUpdateSharesOwned(self, stockOwned):
+        # use stock owned parameter
+        self.stock_controllerObject.update_stock_owned(stockOwned)
         
 
     '''
