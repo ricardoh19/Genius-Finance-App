@@ -4,7 +4,7 @@ from test_user import create_valid_user_object
 from main import set_env_variables
 set_env_variables()
 root = Tk()
-root.geometry("515x490")
+root.geometry("700x700")
 
 stock_symbol = "TSLA"
 stockData = {'TSLA':{'currentRatio': 1.508, 'trailingEPS': 1.897, 'PERatio': 412.6252, 'DebtToEquityRatio': 42.552, 'stockPrice': 782.75}}

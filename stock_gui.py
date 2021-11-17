@@ -5,6 +5,7 @@ import dashboard_controller
 import stock_controller
 import webbrowser
 from datetime import datetime
+from PIL import ImageTk,Image 
 import matplotlib.pyplot as plt
 
 
@@ -93,26 +94,18 @@ class StockGUI():
         In this case don't display the graph. 
         Just display an error message were the graph should be or something like that.
         """
-        # self.graph = Frame(self.master, width = 415, height = 170,borderwidth=2, relief="sunken")
-        # self.graph.grid(row = 5,column=1, padx=15, pady=20)
         #TO-DO: put chart image inside of the frame 
         print('hi')
         #self.create_chart_image()
-        frame = Frame(self.master, width = 150, height = 150,borderwidth=2, relief="sunken")
-        frame.grid(row = 3,column=1, padx=15, pady=20) 
-
-        canvas = Canvas(frame, width=300, height=200, bg="black")
-        canvas.pack( fill=BOTH, expand=YES)
-        img = PhotoImage(file="stockprice_chart.png")
-        canvas.create_image(50,50, image=img)
-        # frame = Frame(self.master, width = 150, height = 150,borderwidth=2, relief="sunken")
-        # frame.grid(row = 3,column=1, padx=15, pady=20) 
-
-        # img = PhotoImage(file="stockprice_chart.png")
-
-        # picture_label = Label(frame,image=img, )
-        # picture_label.grid(row=3, column=1)
-
+        image = Image.open("stockprice_chart.png")
+        resize_image = image.resize((400, 300))
+        img = ImageTk.PhotoImage(resize_image)
+    
+        panel = Label(self.master, image = img, width=400, height=300)
+        panel.image = img
+        panel.grid(row = 3,column=1)
+        
+    
   
     def handleNewsLink(self):
         website = self.stock_controllerObject.get_newslink_Yahoo_API(self.stockSymbol)
