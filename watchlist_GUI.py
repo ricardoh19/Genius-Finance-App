@@ -52,22 +52,22 @@ class WatchlistGUI():
         self.tree.bind('<ButtonRelease-1>', self.selectItem)
         curItem = self.tree.focus()
 
-        
-       
         # insert stocks trending UP
         for i in self.stocksTrendingUp:
             try:
-                self.tree.insert('', 'end', text=i, values=(i, "n/a", "Stock is trending up."))
+                self.tree.insert('', 'end', text=i, values=(i, f"{round(self.stockInfo[i]['PercentageChange'], 1)}%", "Stock is trending up."),tags = ('up'))
             except KeyError:
-                self.tree.insert('', 'end', text=i, values=(i, "n/a", 'Stock is trending up.'))
+                self.tree.insert('', 'end', text=i, values=(i, f"{round(self.stockInfo[i]['PercentageChange'], 1)}%", 'Stock is trending up.'),tags = ('up'))
 
          # insert stocks trending DOWN
         for i in self.stocksTrendingDown:
             try:
-                self.tree.insert('', 'end', text=i, values=(i, "n/a", "Stock is trending down."))
+                self.tree.insert('', 'end', text=i, values=(i, f"{round(self.stockInfo[i]['PercentageChange'], 1)}%", "Stock is trending down."),tags = ('down'))
             except KeyError:
-                self.tree.insert('', 'end', text=i, values=(i, "n/a", 'Stock is trending down.'))
-       
+                self.tree.insert('', 'end', text=i, values=(i, f"{round(self.stockInfo[i]['PercentageChange'], 1)}%", 'Stock is trending down.'),tags = ('down'))
+
+        self.tree.tag_configure('up', background='green')
+        self.tree.tag_configure('down', background='red')
         #scrollbar
         self.scrollbar = Scrollbar(self.master)
         #self.scrollbar.pack(side = RIGHT, fill = BOTH)
@@ -76,13 +76,12 @@ class WatchlistGUI():
     def selectItem(self, a):
         curItem = self.tree.focus()
         stockSymbol = self.tree.item(curItem)['text']
-        
         self.viewInformationButton = Button(self.master, text="View Information", command=lambda:self.viewInformation(stockSymbol)).grid(row = 4,column=1,sticky="sw",padx=120)
-        self.removeButton = Button(self.master,text="Remove", command=lambda:self.removeStock(self.userObject, stockSymbol)).grid(row = 4,column=1,sticky="s",padx=150)
 
 
-    def viewInformationEvent():
-        pass
+    def viewInformation(self, stockSymbol):
+        self.stockController = stock_controller.StockController(stockSymbol, self.userObject)
+        self.stockController.handle_viewInformation_event(stockSymbol, self.master)
     
     '''
     Intent: close the portfolio window .

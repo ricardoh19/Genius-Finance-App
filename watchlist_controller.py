@@ -9,7 +9,7 @@ class WatchlistController():
         #passed in objects
         self.user_object = user_object
         self.YahooAPIObject = yahoo_api.YahooAPI()
-        self.popup_GUI_object = popupGUI.PopUpGUI("None")
+        
         self.dashboardControllerObject = dashboard_controller.DashboardController(self.user_object)
 
         #to be calculated by calling methods in the class: 
@@ -82,8 +82,9 @@ class WatchlistController():
             self.worst_stocks = [x[0] for x in all_stocks[middle:]]            
         else: # if there are no stocks in portfolio error message
            print("Error no stocks in Portfolio.")
-           self.create_popup_GUI("Error no stocks in Portfolio.")
-                 
+           self.popup_GUI_object = popupGUI.PopUpGUI("Error no stocks in Portfolio.")
+           self.popup_GUI_object.createPopUp()
+
         return self.best_stocks, self.worst_stocks
 
     def create_watchlist_GUI(self):
@@ -93,6 +94,7 @@ class WatchlistController():
         description = None
         print(f"stocks trending up: {stocksTrendingUp}")
         print(f"stocks trending up: {stocksTrendingDown}")
+        print(f"Stock info: {stockInfo}")
         
         root = Tk()
         root.geometry("750x600")
@@ -100,7 +102,4 @@ class WatchlistController():
         stocksTrendingDown, description, stockInfo )
         root.mainloop()
     
-    def create_popup_GUI(self, message):
-        """creates a pop-up GUI with given error message."""
-        self.popup_GUI_object.create_pop_up(message)
 
