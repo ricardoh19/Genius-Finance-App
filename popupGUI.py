@@ -1,18 +1,3 @@
-'''
-class PopupGUI():
-    Pop up GUI takes in a message that it 
-    displays when calling create pop up function
-    def __init__(self, message):
-        self.message = message
-        #hi heres james
-    
-    def create_pop_up(message):
-        This function creates a tkinter pop up window 
-        that displays a given message
-        pass
-'''
-        
-
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
