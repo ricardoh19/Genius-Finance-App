@@ -12,7 +12,15 @@ import os
 class DB():
     def __init__(self):
         #creates db if necessary
-        self.DB_NAME = 'GeniusFinanceDB'
+        #get db name from environment 
+        try:
+            self.DB_NAME = str(os.getenv('DB_NAME'))
+        except Exception as e:
+            print("Check that MySQL database name is provided in main.py .")
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("Exception: ", e)
+            sys.exit(1)
+        
         self.createDatabaseManager() 
         
 
@@ -25,7 +33,15 @@ class DB():
     * Post0. The connection to a database db is established (if db is not None) 
     * Post1. The connection to a MySQL server is established (if db is None)
     '''
-    def connect_to_db(self, myuser='root', mypassword='Rhern_19',myhost= "localhost", db = None):
+    def connect_to_db(self, db = None):
+        try:
+            myuser = str(os.getenv('SQLUser'))
+            mypassword = str(os.getenv('SQLPassword')) 
+            myhost = str(os.getenv('SQLHost'))
+        except Exception as e:
+            print("Check that MySQL database user, password and host are provided in main.py .")
+            print("Oops!", sys.exc_info()[0], "occurred.")
+            print("Exception: ", e)
         if db:
             cnx = mysql.connector.connect(
             user=myuser, 

@@ -163,14 +163,26 @@ class YahooAPI():
                 #extract stock's current_ratio, trailing_EPS, trailing_PE, debt_to_equity_ratio, stockprice from json response
                 stockprice = stock_summary["financialData"]["currentPrice"]["raw"]
                 # print(f"stockprice {stockprice}")
-                current_ratio = stock_summary["financialData"]["currentRatio"]["raw"]
+                try:
+                    current_ratio = stock_summary["financialData"]["currentRatio"]["raw"]
+                except KeyError:
+                    current_ratio = "N/A"
                 # print(f"current ratio: {current_ratio}")
-                debt_to_equity_ratio = stock_summary["financialData"]["debtToEquity"]["raw"]
+                try: 
+                    debt_to_equity_ratio = stock_summary["financialData"]["debtToEquity"]["raw"]
+                except KeyError:
+                    debt_to_equity_ratio = "N/A"
                 # print(f"D2E {debt_to_equity_ratio}")
                 #Trailing EPS typically refers to a company's earnings per share as a rolling total over the previous four quarters
-                trailing_EPS = stock_summary["defaultKeyStatistics"]["trailingEps"]["raw"]
+                try:
+                    trailing_EPS = stock_summary["defaultKeyStatistics"]["trailingEps"]["raw"]
+                except KeyError:
+                    trailing_EPS = "N/A"
                 # print(f"Trailing EPS {trailing_EPS}")
-                trailing_PE = stock_summary["summaryDetail"]["trailingPE"]["raw"]
+                try:
+                    trailing_PE = stock_summary["summaryDetail"]["trailingPE"]["raw"]
+                except KeyError:
+                    trailing_EPS = "N/A"
                 # print(f"trailing PE: {trailing_PE}")
                 #put extracted data in dictionary
                 stockinfo[stock_symbol] = {
