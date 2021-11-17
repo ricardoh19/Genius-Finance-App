@@ -44,7 +44,7 @@ class PortfolioController():
                 stockPrice = 0
             stockowned = self.userObject.get_stockowned(stocksymbol)
             self.portfolio_value += (stockPrice*float(stockowned))
-        return self.portfolio_value
+        return round(self.portfolio_value,2)
 
     def calculate_percentage_change(self, stocksymbol):
         """I messed up and forgot to pull the percentage change from api. 
