@@ -38,9 +38,10 @@ class StockController():
             message = "Could not find stock entered in search bar."
             self.create_popup_GUI(message)
 
-    def handle_viewInformation_event(self, stock_symbol):
+    def handle_viewInformation_event(self, stock_symbol, portfolioGUI):
         #check if stock exists
         if self.yahoo_api_object.check_stock_exists(stock_symbol):
+            portfolioGUI.destroy()
             #stock exists hence create stock_controller
             #get info on this stock from yahoo api
             #self.stock_symbol=stock_symbol
@@ -77,7 +78,7 @@ class StockController():
         """creates the stock GUI"""
         root = Tk()
         root.geometry("675x600")
-        self.dashboardGUIObject = stock_gui.StockGUI(root,stock_symbol, stockData, stock_graph_values, newslink,userObject )
+        self.stockGUIObject = stock_gui.StockGUI(root,stock_symbol, stockData, stock_graph_values, newslink,userObject )
         root.mainloop()
         
 
