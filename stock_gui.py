@@ -16,6 +16,7 @@ class StockGUI():
         self.dashboard_controllerObject = dashboard_controller.DashboardController(userObject)
         self.master = master
         self.master.title("Stock")
+        
         self.userObject = userObject
         self.stockSymbol = stock_symbol
         self.stockData = stockData
@@ -39,27 +40,33 @@ class StockGUI():
     '''
     def createMainFrame(self):
         # logo on top left side
-        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
-        self.stockName= Label(self.master, text=self.stockSymbol,font='Helvetica 15',height = 2, width = 15,borderwidth=2, relief="solid").grid(row=0,column=1, pady=5, padx=5,sticky="n")
+        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid", background='LightBlue1')
+        self.logo.grid(row=0,column=0, pady=5, padx=5)
+        self.stockName= Label(self.master, text=self.stockSymbol,font='Helvetica 15',height = 2, width = 15,borderwidth=2, relief="solid", background= 'LightBlue1')
+        self.stockName.grid(row=0,column=1, pady=5, padx=5,sticky="n")
         
-        self.sharesOwned= Label(self.master, text="Shares Owned:",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid")
-        self.sharesOwned.grid(row=0,column=1, pady=5, padx=5,sticky="sw")
-
-        self.shares = Entry(self.master,width=4)
-        self.shares.grid(row=0,column=1, pady=5, padx=5,ipady=4, ipadx=2, sticky="s")
-        
-        self.enter = Button(self.master,text="Enter",command=lambda:self.handleUpdateSharesOwned(self.shares.get())).grid(row = 0,column=1,sticky="se")
+        self.owned_frame = Frame(self.master, width = 400, height = 170,borderwidth=2, relief="sunken", background='LightBlue1')
+        self.owned_frame.grid(row = 1,column=1)
+        self.sharesOwned= Label(self.owned_frame, text="Shares Owned:",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid", background="white")
+        self.sharesOwned.grid(row=0,column=0, pady=5, padx=5)
+        self.shares = Entry(self.owned_frame,width=4)
+        self.shares.grid(row=0,column=1, pady=5, padx=5,ipady=4, ipadx=2)
+        self.enter = Button(self.owned_frame,text="Enter", background="lightgreen")
+        self.enter.grid(row = 0,column=2)
         
         #middle of GUI
         self.createStockSummaryFrame()
         self.createGraphFrame()
         
         #bottom of GUI
-        self.closeButton = Button(self.master,text="Close", command=lambda:self.closeWindow()).grid(row = 4,column=1,sticky="se")
-        self.newsLink = Button(self.master,text="Link to News article/articles", command=lambda:self.handleNewsLink())
-        self.newsLink.grid(row = 4,column=1,sticky="s")
-        self.addToPortfolio = Button(self.master,text="Add to Portfolio",command=lambda:self.handleAddToPortfolio())
-        self.addToPortfolio.grid(row = 4,column=1,sticky="sw")
+        self.bottom_frame = Frame(self.master, width = 400, height = 170,borderwidth=2, relief="sunken", background='LightBlue1')
+        self.bottom_frame.grid(row = 4,column=1)
+        self.closeButton = Button(self.bottom_frame,text="Close", command=lambda:self.closeWindow(), background="red")
+        self.closeButton.grid(row = 0,column=2,sticky="se")
+        self.newsLink = Button(self.bottom_frame,text="Link to News article/articles", command=lambda:self.handleNewsLink(), background='LightBlue1')
+        self.newsLink.grid(row = 0,column=1,sticky="s")
+        self.addToPortfolio = Button(self.bottom_frame,text="Add to Portfolio",command=lambda:self.handleAddToPortfolio(), background="lightgreen")
+        self.addToPortfolio.grid(row = 0,column=0,sticky="sw")
 
     '''
     Intent: creates the stock frame for the stock GUI
@@ -69,11 +76,16 @@ class StockGUI():
     * Post0. main frame for stock is created
     '''
     def createStockSummaryFrame(self):
-        self.stock = Frame(self.master, width = 400, height = 170,borderwidth=2, relief="sunken").grid(row = 1,column=1)
-        self.stock_value = Label( self.stock, text="Stock Price: " + str(self.stockPrice), font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="nw")
-        self.current_ratio = Label( self.stock, text="Current Ratio: " + str(self.currentRatio), font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="w")
-        self.eps_rating = Label( self.stock, text="EPS Rating: " + str(self.epsRating), font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="sw")
-        self.debt_to_equity_ratio = Label( self.stock, text="Debt to Equity Ratio: " + str(self.debtToEquity), font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="e")
+        self.stock = Frame(self.master, width = 400, height = 170,borderwidth=2, relief="sunken", background='LightBlue1')
+        self.stock.grid(row = 2,column=1)
+        self.stock_value = Label( self.stock, text="Stock Price: " + str(self.stockPrice), font='Helvetica 13 bold',borderwidth=1, relief="ridge", background="white")
+        self.stock_value.grid(row = 0,column=0,padx=30,pady=25,ipadx=5,ipady=5, sticky="nw")
+        self.current_ratio = Label( self.stock, text="Current Ratio: " + str(self.currentRatio), font='Helvetica 13 bold',borderwidth=1, relief="ridge", background="white")
+        self.current_ratio.grid(row = 1,column=0,padx=30,pady=25,ipadx=5,ipady=5, sticky="ne")
+        self.eps_rating = Label( self.stock, text="EPS Rating: " + str(self.epsRating), font='Helvetica 13 bold',borderwidth=1, relief="ridge", background="white")
+        self.eps_rating.grid(row = 0,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="sw")
+        self.debt_to_equity_ratio = Label( self.stock, text="Debt to Equity Ratio: " + str(self.debtToEquity), font='Helvetica 13 bold',borderwidth=1, relief="ridge", background="white")
+        self.debt_to_equity_ratio.grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="se")
 
     def createGraphFrame(self):
         """
@@ -81,15 +93,27 @@ class StockGUI():
         In this case don't display the graph. 
         Just display an error message were the graph should be or something like that.
         """
-        self.graph = Frame(self.master, width = 415, height = 170,borderwidth=2, relief="sunken").grid(row = 2,column=1, padx=15, pady=20)
+        # self.graph = Frame(self.master, width = 415, height = 170,borderwidth=2, relief="sunken")
+        # self.graph.grid(row = 5,column=1, padx=15, pady=20)
         #TO-DO: put chart image inside of the frame 
-    
-    '''
-    Intent: 
-    * Preconditions: 
-    * Postconditions:
-    * Post0. 
-    '''    
+        print('hi')
+        #self.create_chart_image()
+        frame = Frame(self.master, width = 150, height = 150,borderwidth=2, relief="sunken")
+        frame.grid(row = 3,column=1, padx=15, pady=20) 
+
+        canvas = Canvas(frame, width=300, height=200, bg="black")
+        canvas.pack( fill=BOTH, expand=YES)
+        img = PhotoImage(file="stockprice_chart.png")
+        canvas.create_image(50,50, image=img)
+        # frame = Frame(self.master, width = 150, height = 150,borderwidth=2, relief="sunken")
+        # frame.grid(row = 3,column=1, padx=15, pady=20) 
+
+        # img = PhotoImage(file="stockprice_chart.png")
+
+        # picture_label = Label(frame,image=img, )
+        # picture_label.grid(row=3, column=1)
+
+  
     def handleNewsLink(self):
         website = self.stock_controllerObject.get_newslink_Yahoo_API(self.stockSymbol)
 
@@ -160,4 +184,4 @@ class StockGUI():
         ax.grid()
         #save chart as image
         fig.savefig("stockprice_chart.png")
-        plt.show()
+        # plt.show()
