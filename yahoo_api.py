@@ -63,7 +63,10 @@ class YahooAPI():
 
         data = res.read()
         result_json = json.loads( data.decode("utf-8")) #dump it in json # convert result to json/dict#dump it in json # convert result to json/dict
-        uuid = result_json["data"]["main"]["stream"][0]["id"] #get uuid from result
+        try:
+            uuid = result_json["data"]["main"]["stream"][0]["id"] #get uuid from result
+        except IndexError:
+            uuid = -1
         # print(f"uuid: {uuid}")
         return uuid
 
@@ -161,7 +164,10 @@ class YahooAPI():
             stock_summary = self.get_stock_summary(stock_symbol)
             if stock_summary!=0:
                 #extract stock's current_ratio, trailing_EPS, trailing_PE, debt_to_equity_ratio, stockprice from json response
-                stockprice = stock_summary["financialData"]["currentPrice"]["raw"]
+                try:
+                    stockprice = stock_summary["financialData"]["currentPrice"]["raw"]
+                except KeyError:
+                    stockprice = 0.0
                 # print(f"stockprice {stockprice}")
                 try:
                     current_ratio = stock_summary["financialData"]["currentRatio"]["raw"]
@@ -182,7 +188,7 @@ class YahooAPI():
                 try:
                     trailing_PE = stock_summary["summaryDetail"]["trailingPE"]["raw"]
                 except KeyError:
-                    trailing_EPS = "N/A"
+                    trailing_PE = "N/A"
                 # print(f"trailing PE: {trailing_PE}")
                 #put extracted data in dictionary
                 stockinfo[stock_symbol] = {
