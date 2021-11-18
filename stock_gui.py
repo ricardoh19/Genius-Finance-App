@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 
 
 # this class controls the graphical user interface of the stock window. 
+#Its methods include createMainFrame, createStockSummaryFrame, createGraphFrame,
+# handleNewsLink, handleAddToPortfolio, handleUpdateSharesOwned, convert_timestamp, create_chart_image, closeWindow.
+
 class StockGUI():
     def __init__(self, master, stock_symbol, stockData, stock_graph_values, newslink, userObject):
         self.stock_controllerObject = stock_controller.StockController(stock_symbol, userObject)

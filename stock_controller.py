@@ -24,6 +24,7 @@ class StockController():
         self.shares_owned = 0
     
     def handle_search_bar_event(self, stock_symbol):
+        """looks for stock symbol and creates a stock GUI of stock symbol if successful"""
         #check if stock exists
         if self.yahoo_api_object.check_stock_exists(stock_symbol):
             #stock exists hence create stock_controller
@@ -39,6 +40,7 @@ class StockController():
             self.create_popup_GUI(message)
 
     def handle_viewInformation_event(self, stock_symbol, portfolioGUI):
+        """creates a stock GUI of stock symbol that is selected."""
         #check if stock exists
         if self.yahoo_api_object.check_stock_exists(stock_symbol):
             portfolioGUI.destroy()
@@ -71,13 +73,13 @@ class StockController():
 
         
     def open_dashboard(self):
-        """Hands controll back to dashboard controller."""
+        """Hands controller back to dashboard controller."""
         self.DashboardController.create_dashboard_GUI()
 
     def create_stock_GUI(self,stock_symbol, stockData,stock_graph_values, newslink ,userObject):
         """creates the stock GUI"""
         root = Tk()
-        root.geometry("675x600")
+        root.geometry("700x700")
         self.stockGUIObject = stock_gui.StockGUI(root,stock_symbol, stockData, stock_graph_values, newslink,userObject )
         root.mainloop()
         
@@ -92,14 +94,17 @@ class StockController():
         self.create_popup_GUI(message)
 
     def get_stock_owned_from_user_class(self):
+        """gets stock owned from user object with stock symbol"""
         self.user_object.get_stockowned(self.stock_symbol)
 
     def update_stock_owned(self, stockOwned):
+        """updates stock owned of specific user."""
         self.user_object.update_stock_owned(self.stock_symbol, stockOwned)
         message = "Shares Updated!"
         self.create_popup_GUI(message)
 
     def delete_stock(self):
+        """deletes stock from user object if successfull. If not, a popup is displayed."""
         success = self.user_object.delete_stock(self.stock_symbol)
         if not success: #if code correct this should never execute
             self.create_popup_GUI("Oh no, we could not delete this stock.")
@@ -110,6 +115,6 @@ class StockController():
         self.popUpGUIObject.createPopUp()   
 
     def controll_to_dashboard(self):
-        """Return controll back to Dashboard controller.
+        """Return controller back to Dashboard controller.
         Dashboard GUI is displayed."""
         self.DashboardController.create_dashboard_GUI()
