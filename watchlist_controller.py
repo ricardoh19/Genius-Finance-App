@@ -4,6 +4,10 @@ import popupGUI
 import dashboard_controller
 from tkinter import *
 
+# this class controls the controller of the watchlist controller. Its methods include 
+# get_stock_info_yahoo_api_object, calculate_stocks_percentage_change,
+# calculate_percentage_change, , calculate_watchlist_stock_trend, create_watchlist_GUI.
+
 class WatchlistController():
     def __init__(self, user_object):
         #passed in objects
@@ -51,6 +55,7 @@ class WatchlistController():
         return stock_price_change*100 #percentage change of stock price over past 24 h
         
     def calculate_percentage_change(self):
+        '''calculates percentage change of each stock symbol in user object'''
         self.stockinfo = self.get_stock_info_yahoo_api_object()
         for stocksymbol in list(self.stockinfo):
             percentage_change = self.calculate_stocks_percentage_change(stocksymbol)
@@ -88,6 +93,7 @@ class WatchlistController():
         return self.best_stocks, self.worst_stocks
 
     def create_watchlist_GUI(self):
+        '''creates the watchlist GUI'''
         stockInfo = self.calculate_percentage_change()
         stocksTrendingUp,stocksTrendingDown = self.calculate_watchlist_stock_trend(stockInfo)
         

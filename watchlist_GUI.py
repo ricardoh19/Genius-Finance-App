@@ -5,11 +5,14 @@ import yahoo_api
 import watchlist_controller
 import stock_controller
 
+# this class controls the graphical user interface of the watchlist GUI. Its methods include 
+# createMainFrame, StockTrendFrame, selectItem, viewInformation, closeWindow.
 class WatchlistGUI():
     def __init__(self, master, userObject, stocksTrendingUp,
                  stocksTrendingDown, description, stockInfo):
         self.master = master
         self.master.title("Watchlist")
+        self.userObject = userObject
         self.WatchlistControllerObject = watchlist_controller.WatchlistController(userObject)
         self.stocksTrendingDown = stocksTrendingDown # list
         self.stocksTrendingUp = stocksTrendingUp # list
@@ -36,10 +39,10 @@ class WatchlistGUI():
         
     
     '''
-    Intent: creates the users stocks frame for the portfolio GUI
+    Intent: creates the stock table frame for the watchlist GUI
     * Preconditions: master is connected to TKinter.
     * Postconditions:
-    * Post0. user's stocks frame is created
+    * Post0. stock table frame is displayed.
     * Raises:
     '''
     def StockTrendFrame(self, userObject):
@@ -70,15 +73,24 @@ class WatchlistGUI():
         self.tree.tag_configure('down', background='red')
         #scrollbar
         self.scrollbar = Scrollbar(self.master)
-        #self.scrollbar.pack(side = RIGHT, fill = BOTH)
 
-
+    '''
+    Intent: gets the item that is selected by user.
+    * Preconditions: master is connected to TKinter.
+    * Postconditions: 
+    * Post0. view information button is displayed. text that is selected is connected to self.tree.
+    '''
     def selectItem(self, a):
         curItem = self.tree.focus()
         stockSymbol = self.tree.item(curItem)['text']
         self.viewInformationButton = Button(self.master, text="View Information", command=lambda:self.viewInformation(stockSymbol)).grid(row = 4,column=1,sticky="sw",padx=120)
 
-
+    '''
+    Intent: handles the view information button. stock controller is called to handle view information.
+    * Preconditions: master is connected to TKinter.
+    * Postconditions:
+    * Post0. view information is called by stock controller.
+    '''
     def viewInformation(self, stockSymbol):
         self.stockController = stock_controller.StockController(stockSymbol, self.userObject)
         self.stockController.handle_viewInformation_event(stockSymbol, self.master)
