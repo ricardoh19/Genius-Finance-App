@@ -43,7 +43,6 @@ class WatchlistGUI():
     * Preconditions: master is connected to TKinter.
     * Postconditions:
     * Post0. stock table frame is displayed.
-    * Raises:
     '''
     def StockTrendFrame(self, userObject):
         self.tree = ttk.Treeview(self.master, column=("Stock_Symbol", "percentage_change","description"), show='headings', height=5)
@@ -62,7 +61,7 @@ class WatchlistGUI():
             except KeyError:
                 self.tree.insert('', 'end', text=i, values=(i, f"{round(self.stockInfo[i]['PercentageChange'], 1)}%", 'Stock is trending up.'),tags = ('up'))
 
-         # insert stocks trending DOWN
+        # insert stocks trending DOWN
         for i in self.stocksTrendingDown:
             try:
                 self.tree.insert('', 'end', text=i, values=(i, f"{round(self.stockInfo[i]['PercentageChange'], 1)}%", "Stock is trending down."),tags = ('down'))
