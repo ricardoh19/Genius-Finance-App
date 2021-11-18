@@ -5,7 +5,7 @@ import dashboard_controller
 import loginlogout_controller
 import portfolio_controller
 
-#  this class controls the graphical user interface of the dashboard window. Its methods include 
+# this class controls the graphical user interface of the dashboard window. Its methods include 
 # createSearchbarFrame, createWatchlistPortfolioFrame,
 # handleWatchlistEvent, handlePortfolioEvent, handleSearchbarEvent, closeWindow.
 class DashboardGUI():
@@ -54,15 +54,15 @@ class DashboardGUI():
         self.watchListPortfolioFrame = Frame(self.master, width = 450, height = 200,borderwidth=2, relief="sunken").grid(row = 2,column=1)
         self.watchlistLabel = Button( self.watchListPortfolioFrame, text="Watchlist",command=lambda:self.handleWatchlistEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge")
         self.watchlistLabel.grid(row = 2,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="w")
-        self.portoflioLabel = Button( self.watchListPortfolioFrame, text="Portoflio", command=lambda:self.handlePortfolioEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge")
+        self.portoflioLabel = Button( self.watchListPortfolioFrame, text="Portfolio", command=lambda:self.handlePortfolioEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge")
         self.portoflioLabel.grid(row=2, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="e")
 
 
     '''
     Intent: handles the logic for the user clicking the watchlist button.
     * Preconditions: master is connected to TKinter.
-    * Postconditions:
-    * Post0. 
+    * Postconditions: 
+    * Post0. create_watchlist_controller() is called by dashboard controller.
     '''
     def handleWatchlistEvent(self):
         self.dashboardControllerObject.create_watchlist_controller()
@@ -72,10 +72,9 @@ class DashboardGUI():
     Intent: handles the logic for the user clicking portfolio button.
     * Preconditions: master is connected to TKinter.
     * Postconditions:
-    * Post0. 
+    * Post0. create_portfolio_controller() is called by dashboard controller.
     '''
     def handlePortfolioEvent(self):
-        """Calls Dashboard Controller to create portfolio"""
         self.dashboardControllerObject.create_portfolio_controller(self.master)
 
 
@@ -83,12 +82,9 @@ class DashboardGUI():
     Intent: handles the logic for the user clicking Search button after enterting information into search bar.
     * Preconditions: master is connected to TKinter.
     * Postconditions:
-    * Post0. 
+    * Post0. search_by_stock_symbol is called by dashboard controller
     '''
     def handleSearchbarEvent(self, stockSymbol):
-        """Gets stock_symbol selected and passes it on 
-        to dashboard controller for processing."""
-        stock_symbol = "" #ToDo
         #call Dashboard controller function to process search bar stock_symbol
         self.dashboardControllerObject.searchStockSymbol(stockSymbol, self.master)
 
@@ -96,8 +92,10 @@ class DashboardGUI():
     '''
     Intent: handles the logic for the user clicking logout button.
     * Preconditions: 
-    * Postconditions:
-    * Post0. 
+    * Postconditions: 
+    * Post0. changes are pushed to database, dashboard window is closed and login window is opened.
+    * Post1. Changes are not pushed to database beacause connection to database could not be estbalished.
+    
     '''
     def handleLogoutEvent(self):
         self.dashboardControllerObject.logOutPushChanges()
