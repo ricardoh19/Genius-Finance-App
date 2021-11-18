@@ -258,26 +258,6 @@ class LoginLogoutControllers():
         dashboardController = dashboard_controller.DashboardController(userObject)
         dashboardController.createDashboardGUI()
         
-
-    
-    '''
-    Intent: Creates Dashboard GUI.
-    * Preconditions: 
-    * Tkinter is imported and working
-    * dashboardGUI exists
-    * Postconditions:
-    * Post0. dashboard GUI is created
-    * Post1. dashboard GUI is not created because of an error finding dashboardGUI()
-    '''
-    '''
-    def createDashboardGUI(self,username):
-        userObject = self.createUserObject(username)
-        root = Tk()
-        root.geometry("675x600")
-        dashboardGUIObject = dashboardGUI.DashboardGUI(root,userObject)
-        root.mainloop()
-        
-    '''
     
     
     '''
@@ -391,7 +371,7 @@ class LoginLogoutControllers():
     * Preconditions: 
     * 
     * Postconditions:
-    * Post0.
+    * Post0. Changes are pushed to database.
     '''
     def logout_push_changes_to_database(self):
         """Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
