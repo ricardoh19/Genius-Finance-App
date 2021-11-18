@@ -6,6 +6,10 @@ import popupGUI
 import yahoo_api
 from tkinter import *
 
+# this class controls the controller of the portfolio window. Its methods include 
+# calculate_portfolio_value, calculate_percentage_change, call_user_object_to_remove_stock, 
+# create_stock_controller_object, get_stock_price_yahoo_api_object, create_portfolio_GUI,
+# CreateWatchListController, create_popup_GUI
 class PortfolioController():
     def __init__(self, user_object):
         #passed in objects
@@ -30,7 +34,6 @@ class PortfolioController():
         """Needs to be run after get_stock_price_yahoo_api_object.
         Gets the stock amount owned from user object and takes that times the current stock price."""
         self.portfolio_value = 0 
-        
         stock_symbol_list = self.userObject.return_users_stock_symbols()
         
         #self.stockData = self.get_stock_data_API(stock_symbol)

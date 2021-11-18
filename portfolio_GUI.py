@@ -5,6 +5,7 @@ import yahoo_api
 import stock_controller
 import dashboard_controller
 import portfolio_controller
+import watchlist_controller
 
 
 class PortfolioGUI():
@@ -35,7 +36,7 @@ class PortfolioGUI():
         self.createMyStocksFrame(userObject)
         self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow()).grid(row = 4,column=1,sticky="se")
         
-        self.WatchlistButton = Button(self.master,text="Go to Watchlist", command=lambda:self.openWatchlist()).grid(row = 4,column=1,sticky="sw")
+        #self.WatchlistButton = Button(self.master,text="Go to Watchlist", command=lambda:self.openWatchlist()).grid(row = 4,column=1,sticky="sw")
         
     
     '''
@@ -76,7 +77,7 @@ class PortfolioGUI():
        
         #scrollbar
         self.scrollbar = Scrollbar(self.master)
-        #self.scrollbar.pack(side = RIGHT, fill = BOTH)
+        
 
     def selectItem(self, a):
         curItem = self.tree.focus()
@@ -136,8 +137,9 @@ class PortfolioGUI():
     * Post0. allows user to go to watchlist gui from portfolio window
     '''  
     def openWatchlist(self):
-        pass
-    
+        self.watchlistController = watchlist_controller.WatchlistController(self.userObject)
+        self.watchlistController.create_watchlist_GUI()
+        self.closeWindow()
 
 
 
