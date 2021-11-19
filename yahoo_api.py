@@ -225,7 +225,7 @@ class YahooAPI():
         'X-RapidAPI-Key': api_key
         }
         #post request with parameter stock_symbol to the API endpoint
-        conn.request("GET", f"/stock/v2/get-chart?interval=15m&symbol={stock_symbol}&range=1d&region=US", headers=headers)
+        conn.request("GET", f"/stock/v2/get-chart?interval=25m&symbol={stock_symbol}&range=1d&region=US", headers=headers)
         res = conn.getresponse()
         #get status code of the response
         status = res.status # 200 for is found #302 not found

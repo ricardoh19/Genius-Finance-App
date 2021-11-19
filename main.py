@@ -8,7 +8,7 @@ def set_env_variables():
     os.environ["X_RapidAPI_Key"]= 'd943eab528msh01a1fdad73971cdp15b8abjsnbfae5e1c791a'
     os.environ["GENIUS_FINC_DB_NAME"]= "GeniusFinanceDB"
     os.environ['SQLUser']='root'
-    os.environ['SQLPassword']= 'July2001'
+    os.environ['SQLPassword']= 'Veritas!10'
     os.environ['SQLHost'] = "localhost"
     os.environ['DB_NAME'] ='GeniusFinanceDB'
 

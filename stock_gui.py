@@ -33,7 +33,7 @@ class StockGUI():
 
     
         self.stock_graph_values = stock_graph_values
-        self.newsLink = newslink
+        self.newslink = newslink
         self.createMainFrame()
 
     '''
@@ -112,7 +112,7 @@ class StockGUI():
     
   
     def handleNewsLink(self):
-        website = self.newsLink
+        website = str(self.newslink)
 
         if website == "Error could not retrieve a newslink.":
             message = f"Could not retrieve a newslink related to {self.stockSymbol}."

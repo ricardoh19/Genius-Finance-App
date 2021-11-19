@@ -57,7 +57,7 @@ class LoginGUI():
         self.buttons= Frame(self.master, width = 350, height = 150, borderwidth=2, relief="sunken", background='LightBlue1').grid(row = 2,column=1,pady=6)
         self.logInButton = Button(self.buttons, text="Log In", command=lambda: self.handleLoginEvent(), background='lightgreen').grid(row = 2,column=1,padx=30,pady=25,ipadx=2,ipady=2, sticky="nw")
         self.RegisterButton = Button(self.buttons, text="Register",command=lambda: self.createSignUpGUI(), background='lightgreen').grid(row = 2,column=1,padx=30,pady=25,ipadx=2,ipady=2, sticky="ne")
-        self.ForgotButton = Button(self.buttons, text="Forgot Password",command=lambda: self.createForgetPassword(), background='yellow').grid(row = 2,column=1,padx=30,pady=25,ipadx=2,ipady=2, sticky="s")
+        self.ForgotButton = Button(self.buttons, text="Forgot Password",command=lambda: self.createForgetPassword(), background='hotpink').grid(row = 2,column=1,padx=30,pady=25,ipadx=2,ipady=2, sticky="s")
     
 
     '''
