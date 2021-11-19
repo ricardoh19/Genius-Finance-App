@@ -9,10 +9,11 @@ import portfolio_controller
 # createSearchbarFrame, createWatchlistPortfolioFrame,
 # handleWatchlistEvent, handlePortfolioEvent, handleSearchbarEvent, closeWindow.
 class DashboardGUI():
-    def __init__(self, master,userObject):
+    def __init__(self, master, userObject):
         self.dashboardControllerObject = dashboard_controller.DashboardController(userObject)
         self.loginlogout_ControllerObject = loginlogout_controller.LoginLogoutControllers()
         self.master = master
+        self.userObject = userObject
         self.master.title("Dashboard")
         self.createMainFrame()
 
@@ -98,7 +99,11 @@ class DashboardGUI():
     
     '''
     def handleLogoutEvent(self):
-        self.dashboardControllerObject.logOutPushChanges()
+        username = self.userObject.current_user_data[1]
+        print(self.userObject)
+        self.dashboardControllerObject.logOutPushChanges(username, self.userObject)
+
+
         self.closeWindow()
         self.loginlogout_ControllerObject.createLoginGUI()
         
