@@ -379,8 +379,12 @@ class LoginLogoutControllers():
         userObject = self.createUserObject(username)
         userId = userObject.current_user_data[0]
         
+        # compares user objects, adds stock if they are different
         for i in finalUserObject.current_user_stocks:
             if i not in userObject.current_user_stocks:
                 self.databaseManagerObject.insertDatabaseStockData(i, userId, finalUserObject.current_user_stocks[i]['stockowned'])
        
-        
+       # compares user objects, removes stock if they are different
+        for i in userObject.current_user_stocks:
+            if i not in finalUserObject.current_user_stocks:
+                self.databaseManagerObject.deleteDatabaseStockData(i)
