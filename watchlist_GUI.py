@@ -38,6 +38,16 @@ class WatchlistGUI():
         
         
     
+    def fixed_map(self,option):
+        # Returns the style map for 'option' with any styles starting with
+        # ("!disabled", "!selected", ...) filtered out
+
+        # style.map() returns an empty list for missing options, so this should
+        # be future-safe
+        style = ttk.Style()
+        return [elm for elm in style.map("Treeview", query_opt=option)
+            if elm[:2] != ("!disabled", "!selected")]
+
     '''
     Intent: creates the stock table frame for the watchlist GUI
     * Preconditions: master is connected to TKinter.
@@ -45,6 +55,11 @@ class WatchlistGUI():
     * Post0. stock table frame is displayed.
     '''
     def StockTrendFrame(self, userObject):
+        style = ttk.Style()
+        style.map("Treeview", 
+        foreground=self.fixed_map("foreground"),
+        background=self.fixed_map("background"))
+
         self.tree = ttk.Treeview(self.master, column=("Stock_Symbol", "percentage_change","description"), show='headings', height=5)
         self.tree.grid(row = 2,column=1)
         self.tree.heading('Stock_Symbol', text='Stock Symbol')
