@@ -21,7 +21,7 @@ class StockGUI():
         self.dashboard_controllerObject = dashboard_controller.DashboardController(userObject)
         self.master = master
         self.master.title("Stock")
-        
+        self.master.configure(background= "LightYellow")
         self.userObject = userObject
         self.stockSymbol = stock_symbol
         self.stockData = stockData
@@ -98,16 +98,16 @@ class StockGUI():
         In this case don't display the graph. 
         Just display an error message were the graph should be or something like that.
         """
-        #TO-DO: put chart image inside of the frame 
-        print('hi')
-        self.create_chart_image()
-        image = Image.open("stockprice_chart.png")
-        resize_image = image.resize((400, 300))
-        img = ImageTk.PhotoImage(resize_image)
-    
-        panel = Label(self.master, image = img, width=400, height=300)
-        panel.image = img
-        panel.grid(row = 3,column=1)
+
+        if self.stock_graph_values !=0:
+            self.create_chart_image()
+            image = Image.open("stockprice_chart.png")
+            resize_image = image.resize((400, 300))
+            img = ImageTk.PhotoImage(resize_image)
+        
+            panel = Label(self.master, image = img, width=400, height=300)
+            panel.image = img
+            panel.grid(row = 3,column=1)
         
     
   

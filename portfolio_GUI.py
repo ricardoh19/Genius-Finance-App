@@ -11,7 +11,9 @@ import watchlist_controller
 class PortfolioGUI():
     def __init__(self, master, stocksymbol_price_change_dict, portfolio_value, userObject):
         self.master = master
+        self.master.configure(background= "LightYellow")
         self.master.title("Portfolio")
+        
         self.userObject = userObject
         self.portfolioControllerObject = portfolio_controller.PortfolioController(userObject)
         self.portfolio_value = portfolio_value
@@ -29,12 +31,12 @@ class PortfolioGUI():
     '''
     def createMainFrame(self,userObject): 
         # logo on top left side
-        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
-        self.portfolioTitle = Label(self.master, text="My Stocks",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid").grid(row=1,column=1, pady=5, padx=5, sticky="sw")
-        self.portfolioValueTitle = Label(self.master, text=f"Portfolio Value: {self.portfolio_value}",font='Helvetica 12',height = 2, width = 25,borderwidth=2, relief="solid").grid(row=1,column=1, pady=5, padx=5, sticky="se")
+        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid", background="LightBlue1").grid(row=0,column=0, pady=5, padx=5)
+        self.portfolioTitle = Label(self.master, text="My Stocks",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid", background="LightBlue1").grid(row=1,column=1, pady=5, padx=5, sticky="sw")
+        self.portfolioValueTitle = Label(self.master, text=f"Portfolio Value: {self.portfolio_value}",font='Helvetica 12',height = 2, width = 25,borderwidth=2, relief="solid", background="LightBlue1").grid(row=1,column=1, pady=5, padx=5, sticky="se")
         
         self.createMyStocksFrame(userObject)
-        self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow()).grid(row = 4,column=1,sticky="se")
+        self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow(), background="red").grid(row = 4,column=1,sticky="se")
         
         #self.WatchlistButton = Button(self.master,text="Go to Watchlist", command=lambda:self.openWatchlist()).grid(row = 4,column=1,sticky="sw")
         

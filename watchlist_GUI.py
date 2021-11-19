@@ -12,6 +12,7 @@ class WatchlistGUI():
                  stocksTrendingDown, description, stockInfo):
         self.master = master
         self.master.title("Watchlist")
+        self.master.configure(background= "LightYellow")
         self.userObject = userObject
 
         self.stocksTrendingDown = stocksTrendingDown # list
@@ -31,10 +32,10 @@ class WatchlistGUI():
     '''
     def createMainFrame(self,userObject): 
         # logo on top left side
-        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
-        self.portfolioTitle = Label(self.master, text="Stocks to Watch",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid").grid(row=1,column=1, pady=5, padx=5, sticky="s")
+        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid", background="LightBlue1").grid(row=0,column=0, pady=5, padx=5)
+        self.portfolioTitle = Label(self.master, text="Stocks to Watch",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid", background="LightBlue1").grid(row=1,column=1, pady=5, padx=5, sticky="s")
         self.StockTrendFrame(userObject)
-        self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow()).grid(row = 4,column=1,sticky="se")
+        self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow(), background="red").grid(row = 4,column=1,sticky="se")
         
         
     

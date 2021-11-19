@@ -5,10 +5,10 @@ import os
 def set_env_variables():
     #export variables to environment for yahoo finance
     os.environ["X_RapidAPI_Host"]= "yh-finance.p.rapidapi.com"
-    os.environ["X_RapidAPI_Key"]= '8a0078eb09mshe392d2a22c70852p124c55jsn28f16bd77fb6'
+    os.environ["X_RapidAPI_Key"]= 'd943eab528msh01a1fdad73971cdp15b8abjsnbfae5e1c791a'
     os.environ["GENIUS_FINC_DB_NAME"]= "GeniusFinanceDB"
     os.environ['SQLUser']='root'
-    os.environ['SQLPassword']= 'Veritas!10'
+    os.environ['SQLPassword']= 'July2001'
     os.environ['SQLHost'] = "localhost"
     os.environ['DB_NAME'] ='GeniusFinanceDB'
 

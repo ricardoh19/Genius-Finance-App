@@ -285,10 +285,14 @@ class YahooAPI():
         print("Getting stock price over past 24h for graphing purposes.")
         if not self.check_stock_exists(stock_symbol):
             return 0
-        self.get_chart(stock_symbol)
-        print(f"Graphing data of {stock_symbol}:")
-        print(f">>> timeseries {self.graph_stock[0]}\n")
-        print(f">>> stockprice {self.graph_stock[1]}\n")
+        try:
+            self.get_chart(stock_symbol)
+            print(f"Graphing data of {stock_symbol}:")
+            print(f">>> timeseries {self.graph_stock[0]}\n")
+            print(f">>> stockprice {self.graph_stock[1]}\n")            
+        except KeyError:
+            self.graph_stock = 0
+
         return self.graph_stock #2D list with 2 dict timestamp and stockprice
 
     def check_stock_exists(self, stock_symbol):
