@@ -32,6 +32,7 @@ class StockGUI():
 
         self.stock_graph_values = stock_graph_values
         self.newsLink = newslink
+        
         self.createMainFrame()
 
     '''
@@ -66,8 +67,8 @@ class StockGUI():
         self.bottom_frame.grid(row = 4,column=1)
         self.closeButton = Button(self.bottom_frame,text="Close", command=lambda:self.closeWindow(), background="red")
         self.closeButton.grid(row = 0,column=2,sticky="se")
-        self.newsLink = Button(self.bottom_frame,text="Link to News article/articles", command=lambda:self.handleNewsLink(), background='LightBlue1')
-        self.newsLink.grid(row = 0,column=1,sticky="s")
+        self.newsLinkButton = Button(self.bottom_frame,text="Link to News article/articles", command=lambda:self.handleNewsLink(), background='LightBlue1')
+        self.newsLinkButton.grid(row = 0,column=1,sticky="s")
         self.addToPortfolio = Button(self.bottom_frame,text="Add to Portfolio",command=lambda:self.handleAddToPortfolio(), background="lightgreen")
         self.addToPortfolio.grid(row = 0,column=0,sticky="sw")
 
@@ -111,14 +112,12 @@ class StockGUI():
     Intent: Uses the news link attribute to open a news link in user's browser. 
     '''  
     def handleNewsLink(self):
-        website = self.newsLink
-
-        if website == "Error could not retrieve a newslink.":
+        if self.newsLink == "Error could not retrieve a newslink.":
             message = f"Could not retrieve a newslink related to {self.stockSymbol}."
             self.popUpGUIObject = PopUpGUI(message)
             self.popUpGUIObject.createPopUp()
         
-        webbrowser.open(website)
+        webbrowser.open(self.newsLink)
 
     '''
     Intent: adds the stock to user class and diasbles the add to portfolio button.
