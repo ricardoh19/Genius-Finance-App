@@ -7,6 +7,7 @@ import webbrowser
 from datetime import datetime
 from PIL import ImageTk,Image 
 import matplotlib.pyplot as plt
+from popupGUI import PopUpGUI
 
 
 
@@ -111,11 +112,11 @@ class StockGUI():
     
   
     def handleNewsLink(self):
-        website = self.stock_controllerObject.get_newslink_Yahoo_API(self.stockSymbol)
+        website = self.newsLink
 
         if website == "Error could not retrieve a newslink.":
             message = f"Could not retrieve a newslink related to {self.stockSymbol}."
-            self.popUpGUIObject = popupGUI.PopUpGUI(message)
+            self.popUpGUIObject = PopUpGUI(message)
             self.popUpGUIObject.createPopUp()
         
         webbrowser.open(website)
