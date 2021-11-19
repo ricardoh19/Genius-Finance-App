@@ -221,6 +221,16 @@ class DB():
         cursor.execute(query,data)
         cnx.commit()
 
+
+    '''
+    Intent: deletes data into Stock table
+    '''
+    def deleteDatabaseStockData(self, stockName):
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
+        query = (f"DELETE FROM Stock WHERE stockName = '{stockName}'")
+        cursor.execute(query)
+        cnx.commit()
+
     '''
     Intent: Updates data into User table
     * Preconditions: 
