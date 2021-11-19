@@ -109,8 +109,7 @@ class WatchlistController():
         print(f"Stock info: {stockInfo}")
 
         
-        if len(stocksTrendingUp) == 0 and len(stocksTrendingUp) == 0:
-            return 
+        
 
         root = Tk()
         root.geometry("750x600")
