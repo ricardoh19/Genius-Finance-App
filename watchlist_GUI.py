@@ -2,7 +2,7 @@ from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 import yahoo_api
-import watchlist_controller
+
 import stock_controller
 
 # this class controls the graphical user interface of the watchlist GUI. Its methods include 
@@ -13,7 +13,7 @@ class WatchlistGUI():
         self.master = master
         self.master.title("Watchlist")
         self.userObject = userObject
-        self.WatchlistControllerObject = watchlist_controller.WatchlistController(userObject)
+
         self.stocksTrendingDown = stocksTrendingDown # list
         self.stocksTrendingUp = stocksTrendingUp # list
         self.description = description
