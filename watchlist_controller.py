@@ -78,13 +78,19 @@ class WatchlistController():
         all_stocks = sorted(all_stocks, key=lambda x: x[1])
         print(all_stocks)
         #divide stocks into best and worst stocks.
-        if len(all_stocks)> 6: 
-            self.best_stocks = [x[0] for x in all_stocks[0:3]]
-            self.worst_stocks = [x[0] for x in all_stocks[-3:]]
-        elif len(all_stocks) > 0:
-            middle = int(len(all_stocks)/2)
-            self.best_stocks = [x[0] for x in all_stocks[0:middle]]
-            self.worst_stocks = [x[0] for x in all_stocks[middle:]]            
+        if len(all_stocks)> 0:
+            self.best_stocks = [x[0] for x in all_stocks if x[1] >=0]    
+            self.worst_stocks = [x[0] for x in all_stocks if x[1] <=0]  
+            print(self.best_stocks)
+            print(self.worst_stocks)
+            
+            
+        #     self.best_stocks = [x[0] for x in all_stocks[0:3]]
+        #     self.worst_stocks = [x[0] for x in all_stocks[-3:]]
+        # elif len(all_stocks) > 0:
+        #     middle = int(len(all_stocks)/2)
+        #     self.best_stocks = [x[0] for x in all_stocks[0:middle]]
+        #     self.worst_stocks = [x[0] for x in all_stocks[middle:]]            
         else: # if there are no stocks in portfolio error message
            print("Error no stocks in Portfolio.")
            self.popup_GUI_object = popupGUI.PopUpGUI("Error no stocks in Portfolio.")
