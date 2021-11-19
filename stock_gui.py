@@ -99,7 +99,7 @@ class StockGUI():
         """
         #TO-DO: put chart image inside of the frame 
         print('hi')
-        #self.create_chart_image()
+        self.create_chart_image()
         image = Image.open("stockprice_chart.png")
         resize_image = image.resize((400, 300))
         img = ImageTk.PhotoImage(resize_image)
