@@ -129,6 +129,7 @@ class StockGUI():
     '''    
     def handleAddToPortfolio(self):
         self.stock_controllerObject.add_stock_in_user_class()
+        self.addToPortfolio["state"] = "disabled"
 
     '''
     Intent: 
