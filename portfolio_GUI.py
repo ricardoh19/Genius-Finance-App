@@ -75,8 +75,7 @@ class PortfolioGUI():
                 self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
                 self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, 'n/a'))
        
-        #scrollbar
-        self.scrollbar = Scrollbar(self.master)
+       
         
 
     def selectItem(self, a):
