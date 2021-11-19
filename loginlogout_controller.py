@@ -369,9 +369,10 @@ class LoginLogoutControllers():
     '''
     Intent: Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
     * Preconditions: 
-    * 
+    * username and finalUserObejct exists
+    * self.createUserObejct creates the initial user object
     * Postconditions:
-    * Post0. Changes are pushed to database.
+    * Post0. If there are changes in the user's current stocks are pushed to database.
     '''
     def logout_push_changes_to_database(self,username, finalUserObject):
         """Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
