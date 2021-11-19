@@ -267,5 +267,4 @@ class DB():
         cursor.execute(query)
         cnx.commit()
         
-    def handleStockPushData(self):
-        pass
+    
