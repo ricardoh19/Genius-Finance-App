@@ -14,7 +14,6 @@ from popupGUI import PopUpGUI
 # this class controls the graphical user interface of the stock window. 
 #Its methods include createMainFrame, createStockSummaryFrame, createGraphFrame,
 # handleNewsLink, handleAddToPortfolio, handleUpdateSharesOwned, convert_timestamp, create_chart_image, closeWindow.
-
 class StockGUI():
     def __init__(self, master, stock_symbol, stockData, stock_graph_values, newslink, userObject):
         self.stock_controllerObject = stock_controller.StockController(stock_symbol, userObject)
@@ -31,7 +30,6 @@ class StockGUI():
         self.epsRating = self.stockData[self.stockSymbol]['trailingEPS']
         self.debtToEquity = self.stockData[self.stockSymbol]['DebtToEquityRatio']
 
-    
         self.stock_graph_values = stock_graph_values
         self.newsLink = newslink
         self.createMainFrame()
@@ -98,7 +96,6 @@ class StockGUI():
         In this case don't display the graph. 
         Just display an error message were the graph should be or something like that.
         """
-
         if self.stock_graph_values !=0:
             self.create_chart_image()
             image = Image.open("stockprice_chart.png")
@@ -110,7 +107,9 @@ class StockGUI():
             panel.grid(row = 3,column=1)
         
     
-  
+    '''
+    Intent: Uses the news link attribute to open a news link in user's browser. 
+    '''  
     def handleNewsLink(self):
         website = self.newsLink
 
@@ -122,20 +121,15 @@ class StockGUI():
         webbrowser.open(website)
 
     '''
-    Intent: 
-    * Preconditions: 
-    * Postconditions:
-    * Post0. 
+    Intent: adds the stock to user class and diasbles the add to portfolio button.
+    Precondition: stockSymbol is passed through StockGUI class.
     '''    
     def handleAddToPortfolio(self):
         self.stock_controllerObject.add_stock_in_user_class()
         self.addToPortfolio["state"] = "disabled"
 
     '''
-    Intent: 
-    * Preconditions: 
-    * Postconditions:
-    * Post0. 
+    Intent: updates the user's shares owned of the stock.
     '''    
     def handleUpdateSharesOwned(self, stockOwned):
         # use stock owned parameter
@@ -165,6 +159,7 @@ class StockGUI():
             dt_objects.append(dt_object.hour +dt_object.minute/60)
         print(dt_objects)
         return dt_objects
+    
     
     def create_chart_image(self):
         """"Turns the given data into an image and saves that image"""
