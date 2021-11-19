@@ -23,13 +23,13 @@ class ForgetPasswordGUI():
     '''
     def createMainFrame(self): 
         # logo on top left side
-        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
+        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid", background='LightBlue1').grid(row=0,column=0, pady=5, padx=5)
         self.createForgotPasswordUsernamePasswordFrame()
         self.createSecurityQuestionFrame()
-        self.requirements = Label(self.master, text="Password should be atleast 10 characters, ", font='Helvetica 12 bold').grid(row = 0,column=1)
-        self.requirement2 = Label(self.master, text="have one uppercase letter, and one special symbol(!, #, $, ^, *)", font='Helvetica 12 bold').grid(row = 0,column=1,sticky='s')
-        self.exitButton = Button(self.master,text="Close",command=lambda: self.handleCloseEvent()).grid(row = 4,column=1,sticky="se")
-        self.ResetPasswordButton = Button(self.master,text="Reset Password",command=lambda: self.handleForgotPasswordEvent()).grid(row = 4,column=1)
+        self.requirements = Label(self.master, text="Password should be atleast 10 characters, ", font='Helvetica 12 bold', background="LightYellow").grid(row = 0,column=1)
+        self.requirement2 = Label(self.master, text="have one uppercase letter, and one special symbol(!, #, $, ^, *)", font='Helvetica 12 bold', background="LightYellow").grid(row = 0,column=1,sticky='s')
+        self.exitButton = Button(self.master,text="Close",command=lambda: self.handleCloseEvent(), background='red').grid(row = 4,column=1,sticky="se")
+        self.ResetPasswordButton = Button(self.master,text="Reset Password",command=lambda: self.handleForgotPasswordEvent(), background='lightgreen').grid(row = 4,column=1)
 
     '''
     Intent: creates frame with  reset password, Username, and Password entries for the forgot Password GUI
@@ -39,10 +39,10 @@ class ForgetPasswordGUI():
     '''
     def createForgotPasswordUsernamePasswordFrame(self):
         # top credentials frame
-        self.forgotPasswordcredentials = Frame(self.master, width = 450, height = 170,borderwidth=2, relief="sunken").grid(row = 1,column=1)
-        self.usernameLabel = Label( self.forgotPasswordcredentials, text="Enter a Username",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="nw")
-        self.passwordLabel = Label( self.forgotPasswordcredentials, text="Enter a Password",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row=1, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="w")
-        self.reenterPasswordLabel = Label( self.forgotPasswordcredentials, text="Reenter the Password",font='Helvetica 13 bold',borderwidth=1, relief="ridge").grid(row=1, column=1,padx=25,pady=25, ipadx=3,ipady=5,sticky="sw")
+        self.forgotPasswordcredentials = Frame(self.master, width = 450, height = 170,borderwidth=2, relief="sunken", background='LightBlue1').grid(row = 1,column=1)
+        self.usernameLabel = Label( self.forgotPasswordcredentials, text="Enter a Username",font='Helvetica 13 bold',borderwidth=1, relief="ridge", background='white').grid(row = 1,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="nw")
+        self.passwordLabel = Label( self.forgotPasswordcredentials, text="Enter a Password",font='Helvetica 13 bold',borderwidth=1, relief="ridge", background='white').grid(row=1, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="w")
+        self.reenterPasswordLabel = Label( self.forgotPasswordcredentials, text="Reenter the Password",font='Helvetica 13 bold',borderwidth=1, relief="ridge", background='white').grid(row=1, column=1,padx=25,pady=25, ipadx=3,ipady=5,sticky="sw")
         self.usernameEntry = Entry(self.forgotPasswordcredentials)
         self.usernameEntry.grid(row = 1,column=1,padx=25,pady=15,ipadx=2,ipady=2, sticky="ne")
         self.passwordEntry = Entry(self.forgotPasswordcredentials,show="*")
@@ -58,8 +58,8 @@ class ForgetPasswordGUI():
     '''
     def createSecurityQuestionFrame(self):
         # security question frame
-        self.buttons= Frame(self.master, width = 450, height = 150, borderwidth=2, relief="sunken").grid(row = 2,column=1,padx=20)
-        self.securityQuestionLabel = Label( self.forgotPasswordcredentials, text="Security Question: What is your  favorite food?",font='Helvetica 13 bold',borderwidth=3, relief="ridge").grid(row=2, column=1,padx=15,pady=15, ipadx=1,ipady=1,stick="n")
+        self.buttons= Frame(self.master, width = 450, height = 150, borderwidth=2, relief="sunken", background='LightBlue1').grid(row = 2,column=1,padx=20)
+        self.securityQuestionLabel = Label( self.forgotPasswordcredentials, text="Security Question: What is your  favorite food?",font='Helvetica 13 bold',borderwidth=3, relief="ridge", background='white').grid(row=2, column=1,padx=15,pady=15, ipadx=1,ipady=1,stick="n")
         self.securityQuestionEntry = Entry(self.forgotPasswordcredentials)
         self.securityQuestionEntry.grid(row = 2,column=1,padx=8,pady=15,ipadx=2,ipady=2)
         
