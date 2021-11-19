@@ -13,6 +13,8 @@ class SignUpGUI():
     def __init__(self, master):
         # will update new methods and attribute in class diagram
         self.signUpMaster = master
+        
+        self.master.configure(background= "LightYellow")
         self.loginlogoutControllerObject = loginlogout_controller.LoginLogoutControllers()
         self.signUpMaster.title("Sign Up")
         self.createMainFrame()

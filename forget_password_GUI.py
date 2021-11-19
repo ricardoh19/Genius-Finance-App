@@ -10,6 +10,7 @@ class ForgetPasswordGUI():
     def __init__(self, master):
         self.loginlogoutControllerObject = loginlogout_controller.LoginLogoutControllers()
         self.master = master
+        self.master.configure(background= "LightYellow")
         self.master.title("Forgot Password")
         self.createMainFrame()
         

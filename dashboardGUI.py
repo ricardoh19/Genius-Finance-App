@@ -13,6 +13,7 @@ class DashboardGUI():
         self.dashboardControllerObject = dashboard_controller.DashboardController(userObject)
         self.loginlogout_ControllerObject = loginlogout_controller.LoginLogoutControllers()
         self.master = master
+        self.master.configure(background= "LightYellow")
         self.master.title("Dashboard")
         self.createMainFrame()
 
@@ -24,10 +25,10 @@ class DashboardGUI():
     * Post0. main frame for dashboard is created
     '''
     def createMainFrame(self):
-        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid").grid(row=0,column=0, pady=5, padx=5)
+        self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid", background='LightBlue1').grid(row=0,column=0, pady=5, padx=5)
         self.createWatchlistPortfolioFrame()
         self.createSearchbarFrame()
-        self.exitButton = Button(self.master,text="Log Out", command=lambda:self.handleLogoutEvent()).grid(row = 4,column=1,sticky="se")
+        self.exitButton = Button(self.master,text="Log Out", command=lambda:self.handleLogoutEvent(), background='red').grid(row = 4,column=1,sticky="se")
 
     
     '''
@@ -37,10 +38,10 @@ class DashboardGUI():
     * Post0. search bar label and entry box is created.
     '''
     def createSearchbarFrame(self):
-        self.searchLabel = Label(self.master, text="Search for stock (SYMBOL): ",font='Helvetica 12').grid(row = 0,column=1, sticky='sw')
+        self.searchLabel = Label(self.master, text="Search for stock (SYMBOL): ",font='Helvetica 12', background='white').grid(row = 0,column=1, sticky='sw')
         self.inputtxt = Entry(self.master)
         self.inputtxt.grid(row = 0,column=1,sticky="se")
-        self.enter = Button(self.master,text="Enter", command=lambda:self.handleSearchbarEvent(self.inputtxt.get()))
+        self.enter = Button(self.master,text="Enter", command=lambda:self.handleSearchbarEvent(self.inputtxt.get()), background='lightgreen')
         self.enter.grid(row = 1,column=1,sticky="ne")
 
 
@@ -51,10 +52,10 @@ class DashboardGUI():
     * Post0. frame that contains the watchlist and portfolio is created
     '''
     def createWatchlistPortfolioFrame(self):
-        self.watchListPortfolioFrame = Frame(self.master, width = 450, height = 200,borderwidth=2, relief="sunken").grid(row = 2,column=1)
-        self.watchlistLabel = Button( self.watchListPortfolioFrame, text="Watchlist",command=lambda:self.handleWatchlistEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge")
+        self.watchListPortfolioFrame = Frame(self.master, width = 450, height = 200,borderwidth=2, relief="sunken", background='LightBlue1').grid(row = 2,column=1)
+        self.watchlistLabel = Button( self.watchListPortfolioFrame, text="Watchlist",command=lambda:self.handleWatchlistEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge", background='white')
         self.watchlistLabel.grid(row = 2,column=1,padx=30,pady=25,ipadx=5,ipady=5, sticky="w")
-        self.portoflioLabel = Button( self.watchListPortfolioFrame, text="Portfolio", command=lambda:self.handlePortfolioEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge")
+        self.portoflioLabel = Button( self.watchListPortfolioFrame, text="Portfolio", command=lambda:self.handlePortfolioEvent(), font='Helvetica 13 bold',borderwidth=1, relief="ridge", background='white')
         self.portoflioLabel.grid(row=2, column=1,padx=30,pady=25, ipadx=5,ipady=5,sticky="e")
 
 

@@ -12,6 +12,7 @@ class WatchlistGUI():
                  stocksTrendingDown, description, stockInfo):
         self.master = master
         self.master.title("Watchlist")
+        self.master.configure(background= "LightYellow")
         self.userObject = userObject
 
         self.stocksTrendingDown = stocksTrendingDown # list

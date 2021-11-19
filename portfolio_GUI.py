@@ -11,7 +11,9 @@ import watchlist_controller
 class PortfolioGUI():
     def __init__(self, master, stocksymbol_price_change_dict, portfolio_value, userObject):
         self.master = master
+        self.master.configure(background= "LightYellow")
         self.master.title("Portfolio")
+        
         self.userObject = userObject
         self.portfolioControllerObject = portfolio_controller.PortfolioController(userObject)
         self.portfolio_value = portfolio_value
