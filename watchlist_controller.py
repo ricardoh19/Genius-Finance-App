@@ -107,7 +107,10 @@ class WatchlistController():
         print(f"stocks trending up: {stocksTrendingUp}")
         print(f"stocks trending up: {stocksTrendingDown}")
         print(f"Stock info: {stockInfo}")
+
         
+        
+
         root = Tk()
         root.geometry("750x600")
         self.portfolioGUI = watchlist_GUI.WatchlistGUI(root, self.user_object,stocksTrendingUp, 

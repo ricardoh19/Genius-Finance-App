@@ -38,7 +38,7 @@ class WatchlistGUI():
         self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow(), background="red").grid(row = 4,column=1,sticky="se")
         
         
-    
+    ''' intends to fix bug that doesn't allow for colors to be shown in Tree view for Windows'''
     def fixed_map(self,option):
         # Returns the style map for 'option' with any styles starting with
         # ("!disabled", "!selected", ...) filtered out

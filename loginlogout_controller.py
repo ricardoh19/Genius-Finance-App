@@ -253,9 +253,9 @@ class LoginLogoutControllers():
     * Post0. dashboard controller class is created.
     '''
     def createDashboardController(self,username):
-        userObject = self.createUserObject(username)
+        self.userObject = self.createUserObject(username)
 
-        dashboardController = dashboard_controller.DashboardController(userObject)
+        dashboardController = dashboard_controller.DashboardController(self.userObject)
         dashboardController.createDashboardGUI()
         
     
@@ -369,12 +369,23 @@ class LoginLogoutControllers():
     '''
     Intent: Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
     * Preconditions: 
-    * 
+    * username and finalUserObejct exists
+    * self.createUserObejct creates the initial user object
     * Postconditions:
-    * Post0. Changes are pushed to database.
+    * Post0. If there are changes in the user's current stocks are pushed to database.
     '''
-    def logout_push_changes_to_database(self):
+    def logout_push_changes_to_database(self,username, finalUserObject):
         """Check what has to be changed userobject vs self.current_user_data self.current_user_stocks.
-        Whatever has to be change it (insert if doesnt exist stockid or user id -1, update else."""
-        pass
-    
+        Whatever has to be change it (insert if doesnt exist stockid or user id equal -1, update else."""
+        userObject = self.createUserObject(username)
+        userId = userObject.current_user_data[0]
+        
+        # compares user objects, adds stock if they are different
+        for i in finalUserObject.current_user_stocks:
+            if i not in userObject.current_user_stocks:
+                self.databaseManagerObject.insertDatabaseStockData(i, userId, finalUserObject.current_user_stocks[i]['stockowned'])
+       
+       # compares user objects, removes stock if they are different
+        for i in userObject.current_user_stocks:
+            if i not in finalUserObject.current_user_stocks:
+                self.databaseManagerObject.deleteDatabaseStockData(i)

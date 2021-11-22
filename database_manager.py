@@ -221,6 +221,25 @@ class DB():
         cursor.execute(query,data)
         cnx.commit()
 
+
+   
+    '''
+    Intent: Deletes data from Stock table
+    * Preconditions: 
+    * DB_Name is equal to 'GeniusFinanceDB'.
+    * Table that is being deleted from is "Stock" and already exists.
+    * cursor is connected to correct database (GeniusFinanceDB)
+    * Postconditions:
+    * PostO. stockName and stockOwnedAmount is inserted into the database if connection to database is successful.
+    * Post1. Data is not deleted from the database if connection to database fails.
+    * Post2. Data is not deleted from the database if a parameter or all parameters are equal to None.
+    '''
+    def deleteDatabaseStockData(self, stockName):
+        cursor, cnx = self.connect_to_db(db=self.DB_NAME)
+        query = (f"DELETE FROM Stock WHERE stockName = '{stockName}'")
+        cursor.execute(query)
+        cnx.commit()
+
     '''
     Intent: Updates data into User table
     * Preconditions: 
@@ -267,5 +286,4 @@ class DB():
         cursor.execute(query)
         cnx.commit()
         
-    def handleStockPushData(self):
-        pass
+    

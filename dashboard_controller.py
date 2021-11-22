@@ -21,11 +21,11 @@ class DashboardController():
         #created during initialization object
         self.yahoo_api_object = yahoo_api.YahooAPI() # is created
     
-    def logOutPushChanges(self):
+    def logOutPushChanges(self, username, finalUserObject):
         """In Dashboard GUI logout button is pressed.
         The controller passes the control back to login/logout controller.
         Login logout controller function is called which pushes the changes to the database"""
-        self.loginlogout_controller.logout_push_changes_to_database()
+        self.loginlogout_controller.logout_push_changes_to_database(username,finalUserObject)
         
     def create_portfolio_controller(self, dashboardGUI):
         """if portfolio controller object does not exist create it.

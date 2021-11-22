@@ -14,7 +14,6 @@ from popupGUI import PopUpGUI
 # this class controls the graphical user interface of the stock window. 
 #Its methods include createMainFrame, createStockSummaryFrame, createGraphFrame,
 # handleNewsLink, handleAddToPortfolio, handleUpdateSharesOwned, convert_timestamp, create_chart_image, closeWindow.
-
 class StockGUI():
     def __init__(self, master, stock_symbol, stockData, stock_graph_values, newslink, userObject):
         self.stock_controllerObject = stock_controller.StockController(stock_symbol, userObject)
@@ -31,9 +30,13 @@ class StockGUI():
         self.epsRating = self.stockData[self.stockSymbol]['trailingEPS']
         self.debtToEquity = self.stockData[self.stockSymbol]['DebtToEquityRatio']
 
-    
         self.stock_graph_values = stock_graph_values
+<<<<<<< HEAD
         self.newslink = newslink
+=======
+        self.newsLink = newslink
+        
+>>>>>>> 68ca95f4f7fd8d93a3e31014a8d156866bde964b
         self.createMainFrame()
 
     '''
@@ -68,8 +71,8 @@ class StockGUI():
         self.bottom_frame.grid(row = 4,column=1)
         self.closeButton = Button(self.bottom_frame,text="Close", command=lambda:self.closeWindow(), background="red")
         self.closeButton.grid(row = 0,column=2,sticky="se")
-        self.newsLink = Button(self.bottom_frame,text="Link to News article/articles", command=lambda:self.handleNewsLink(), background='LightBlue1')
-        self.newsLink.grid(row = 0,column=1,sticky="s")
+        self.newsLinkButton = Button(self.bottom_frame,text="Link to News article/articles", command=lambda:self.handleNewsLink(), background='LightBlue1')
+        self.newsLinkButton.grid(row = 0,column=1,sticky="s")
         self.addToPortfolio = Button(self.bottom_frame,text="Add to Portfolio",command=lambda:self.handleAddToPortfolio(), background="lightgreen")
         self.addToPortfolio.grid(row = 0,column=0,sticky="sw")
 
@@ -98,7 +101,6 @@ class StockGUI():
         In this case don't display the graph. 
         Just display an error message were the graph should be or something like that.
         """
-
         if self.stock_graph_values !=0:
             self.create_chart_image()
             image = Image.open("stockprice_chart.png")
@@ -110,32 +112,33 @@ class StockGUI():
             panel.grid(row = 3,column=1)
         
     
-  
+    '''
+    Intent: Uses the news link attribute to open a news link in user's browser. 
+    '''  
     def handleNewsLink(self):
+<<<<<<< HEAD
         website = str(self.newslink)
 
         if website == "Error could not retrieve a newslink.":
+=======
+        if self.newsLink == "Error could not retrieve a newslink.":
+>>>>>>> 68ca95f4f7fd8d93a3e31014a8d156866bde964b
             message = f"Could not retrieve a newslink related to {self.stockSymbol}."
             self.popUpGUIObject = PopUpGUI(message)
             self.popUpGUIObject.createPopUp()
         
-        webbrowser.open(website)
+        webbrowser.open(self.newsLink)
 
     '''
-    Intent: 
-    * Preconditions: 
-    * Postconditions:
-    * Post0. 
+    Intent: adds the stock to user class and diasbles the add to portfolio button.
+    Precondition: stockSymbol is passed through StockGUI class.
     '''    
     def handleAddToPortfolio(self):
         self.stock_controllerObject.add_stock_in_user_class()
         self.addToPortfolio["state"] = "disabled"
 
     '''
-    Intent: 
-    * Preconditions: 
-    * Postconditions:
-    * Post0. 
+    Intent: updates the user's shares owned of the stock.
     '''    
     def handleUpdateSharesOwned(self, stockOwned):
         # use stock owned parameter
@@ -165,6 +168,7 @@ class StockGUI():
             dt_objects.append(dt_object.hour +dt_object.minute/60)
         print(dt_objects)
         return dt_objects
+    
     
     def create_chart_image(self):
         """"Turns the given data into an image and saves that image"""
