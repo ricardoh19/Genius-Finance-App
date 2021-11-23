@@ -80,4 +80,8 @@ class DashboardController():
         self.dashboardGUIObject = DashboardGUI(root, self.userObject)
         root.mainloop()
 
+    def openLoginGUI(self):
+        """This function creates the Dashboard GUI Object"""
+        self.loginlogout_controller.createLoginGUI()
+
 
