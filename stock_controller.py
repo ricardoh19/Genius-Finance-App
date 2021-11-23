@@ -1,5 +1,6 @@
 import stock_gui
 import yahoo_api
+import dashboard_controller
 import popupGUI
 from tkinter import *
 
@@ -13,7 +14,7 @@ class StockController():
         self.yahoo_api_object = yahoo_api.YahooAPI()
         self.user_object = user_object
         self.stock_symbol=stock_symbol
-        
+        self.dashboardController = dashboard_controller.DashboardController(user_object)
         #pull data on this stock from API.
         #self.StockData = self.get_stock_data_API()
         #self.stock_graph_values = self.get_stock_graph_values_from_yahoo_finance #2D list with 2 dict timestamp and stockprice
@@ -74,7 +75,7 @@ class StockController():
         
     def open_dashboard(self):
         """Hands controller back to dashboard controller."""
-        self.DashboardController.create_dashboard_GUI()
+        self.dashboardController.createDashboardGUI()
 
     def create_stock_GUI(self,stock_symbol, stockData,stock_graph_values, newslink ,userObject):
         """creates the stock GUI"""

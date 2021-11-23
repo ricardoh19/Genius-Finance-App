@@ -17,7 +17,6 @@ from popupGUI import PopUpGUI
 class StockGUI():
     def __init__(self, master, stock_symbol, stockData, stock_graph_values, newslink, userObject):
         self.stock_controllerObject = stock_controller.StockController(stock_symbol, userObject)
-        self.dashboard_controllerObject = dashboard_controller.DashboardController(userObject)
         self.master = master
         self.master.title("Stock")
         self.master.configure(background= "LightYellow")
@@ -31,12 +30,7 @@ class StockGUI():
         self.debtToEquity = self.stockData[self.stockSymbol]['DebtToEquityRatio']
 
         self.stock_graph_values = stock_graph_values
-<<<<<<< HEAD
         self.newslink = newslink
-=======
-        self.newsLink = newslink
-        
->>>>>>> 68ca95f4f7fd8d93a3e31014a8d156866bde964b
         self.createMainFrame()
 
     '''
@@ -116,18 +110,14 @@ class StockGUI():
     Intent: Uses the news link attribute to open a news link in user's browser. 
     '''  
     def handleNewsLink(self):
-<<<<<<< HEAD
         website = str(self.newslink)
 
         if website == "Error could not retrieve a newslink.":
-=======
-        if self.newsLink == "Error could not retrieve a newslink.":
->>>>>>> 68ca95f4f7fd8d93a3e31014a8d156866bde964b
             message = f"Could not retrieve a newslink related to {self.stockSymbol}."
             self.popUpGUIObject = PopUpGUI(message)
             self.popUpGUIObject.createPopUp()
         
-        webbrowser.open(self.newsLink)
+        webbrowser.open(self.newslink)
 
     '''
     Intent: adds the stock to user class and diasbles the add to portfolio button.
@@ -153,7 +143,7 @@ class StockGUI():
     '''    
     def closeWindow(self):
         self.master.destroy()
-        self.dashboard_controllerObject.createDashboardGUI()
+        self.stock_controllerObject.open_dashboard()
  
     def convert_timestamp(self, timestamp_list):
         """Takes in list of timestamps and converts each timestamp into a datetime object."""
