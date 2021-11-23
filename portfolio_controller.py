@@ -1,4 +1,4 @@
-import watchlist_controller
+from watchlist_controller import WatchlistController
 import portfolio_GUI 
 import dashboard_controller
 import stock_controller
@@ -84,7 +84,7 @@ class PortfolioController():
             stockprice = stockinfo[key]["stockPrice"]
             self.stocksymbol_price_change_dict[key] = \
                 {"stockprice":stockprice, "percentage_change": percentage_change} #updates self.StockPriceDict
-    
+            #DICT: {"TSLA": {"stockprice":200, "percentage_change":-3.2%}}
         
     def create_portfolio_GUI(self,userObject):
         """Creates Portfolio GUI """

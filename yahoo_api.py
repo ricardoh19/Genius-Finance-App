@@ -18,8 +18,7 @@ class YahooAPI():
     Methods called from outside are below, they use the API call functions as helper functions.
     """
     def __init__(self):
-        """Initialize stockprice graph_stock and newslink"""
-        self.stockprice = 0 #int float current stockprice
+        """Initialize graph_stock and newslink"""
         self.graph_stock = [[], []] #2D list list1: 40 float x values and list2: 40 float y values #x values are float timestamps and y values are float stockprices"
         self.newslink = "" #string holding newslink
 
