@@ -100,9 +100,7 @@ class DashboardGUI():
     '''
     def handleLogoutEvent(self):
         username = self.userObject.current_user_data[1]
-        print(self.userObject)
         self.dashboardControllerObject.logOutPushChanges(username, self.userObject)
-
 
         self.closeWindow()
         self.dashboardControllerObject.openLoginGUI()
