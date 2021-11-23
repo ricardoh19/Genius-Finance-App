@@ -1,9 +1,8 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
-import yahoo_api
 
-import stock_controller
+
 
 # this class controls the graphical user interface of the watchlist GUI. Its methods include 
 # createMainFrame, StockTrendFrame, selectItem, viewInformation, closeWindow.
@@ -66,7 +65,6 @@ class WatchlistGUI():
         self.tree.heading('Stock_Symbol', text='Stock Symbol')
         self.tree.heading('percentage_change', text='Percentage Change')
         self.tree.heading('description', text='Description')
-        self.yahoo_api_object = yahoo_api.YahooAPI()
 
         curItem = self.tree.focus()
 
