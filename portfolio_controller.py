@@ -1,4 +1,4 @@
-import watchlist_controller
+from watchlist_controller import WatchlistController
 import portfolio_GUI 
 import dashboard_controller
 import stock_controller
@@ -80,6 +80,12 @@ class PortfolioController():
         #extract just the stockprice associated with the stock and get percentage change on stock over past 24h
         return stockinfo
         
+        for key in stockinfo:
+            percentage_change = self.calculate_percentage_change(stockinfo[key]) #retrieves percentage change over past 24h
+            stockprice = stockinfo[key]["stockPrice"]
+            self.stocksymbol_price_change_dict[key] = \
+                {"stockprice":stockprice, "percentage_change": percentage_change} #updates self.StockPriceDict
+            #DICT: {"TSLA": {"stockprice":200, "percentage_change":-3.2%}}
         
     def create_portfolio_GUI(self,userObject):
         """Creates Portfolio GUI """
@@ -110,5 +116,5 @@ class PortfolioController():
         self.dashboardController.createDashboardGUI()
 
     def openWatchlist(self):
-        self.watchlistController = watchlist_controller.WatchlistController(self.userObject)
+        self.watchlistController = WatchlistController(self.userObject)
         self.watchlistController.create_watchlist_GUI()
