@@ -11,7 +11,6 @@ import portfolio_controller
 class DashboardGUI():
     def __init__(self, master, userObject):
         self.dashboardControllerObject = dashboard_controller.DashboardController(userObject)
-        self.loginlogout_ControllerObject = loginlogout_controller.LoginLogoutControllers()
         self.master = master
         self.userObject = userObject
         self.master.configure(background= "LightYellow")
@@ -106,7 +105,7 @@ class DashboardGUI():
 
 
         self.closeWindow()
-        self.loginlogout_ControllerObject.createLoginGUI()
+        self.dashboardControllerObject.openLoginGUI()
         
     
 

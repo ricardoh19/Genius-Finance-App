@@ -17,7 +17,6 @@ from popupGUI import PopUpGUI
 class StockGUI():
     def __init__(self, master, stock_symbol, stockData, stock_graph_values, newslink, userObject):
         self.stock_controllerObject = stock_controller.StockController(stock_symbol, userObject)
-        self.dashboard_controllerObject = dashboard_controller.DashboardController(userObject)
         self.master = master
         self.master.title("Stock")
         self.master.configure(background= "LightYellow")
@@ -118,7 +117,7 @@ class StockGUI():
             self.popUpGUIObject = PopUpGUI(message)
             self.popUpGUIObject.createPopUp()
         
-        webbrowser.open(self.newsLink)
+        webbrowser.open(self.newslink)
 
     '''
     Intent: adds the stock to user class and diasbles the add to portfolio button.
@@ -144,7 +143,7 @@ class StockGUI():
     '''    
     def closeWindow(self):
         self.master.destroy()
-        self.dashboard_controllerObject.createDashboardGUI()
+        self.stock_controllerObject.open_dashboard()
  
     def convert_timestamp(self, timestamp_list):
         """Takes in list of timestamps and converts each timestamp into a datetime object."""
