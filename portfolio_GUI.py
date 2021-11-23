@@ -17,8 +17,9 @@ class PortfolioGUI():
         self.userObject = userObject
         self.portfolioControllerObject = portfolio_controller.PortfolioController(userObject)
         self.portfolio_value = portfolio_value
-        self.createMainFrame(self.userObject)
         self.stocksymbol_price_change_dict = stocksymbol_price_change_dict
+        self.createMainFrame(self.userObject)
+        
         self.yahoo_api_object = yahoo_api.YahooAPI()
         
 
@@ -38,7 +39,6 @@ class PortfolioGUI():
         self.createMyStocksFrame(userObject)
         self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow(), background="red").grid(row = 4,column=1,sticky="se")
         
-        #self.WatchlistButton = Button(self.master,text="Go to Watchlist", command=lambda:self.openWatchlist()).grid(row = 4,column=1,sticky="sw")
         
     
     '''
@@ -60,24 +60,17 @@ class PortfolioGUI():
     
         self.tree.bind('<ButtonRelease-1>', self.selectItem)
         curItem = self.tree.focus()
-
-
-        stockSymbol = 'example'
-        self.stockController = stock_controller.StockController(stockSymbol, userObject)
-
-       
         
         for i in userObject.current_user_stocks:
-            self.stockData = self.stockController.get_stock_data_API(i)
             try:
-                self.stockPrice = self.stockData[i]['stockPrice']
+                self.stockPrice = self.stocksymbol_price_change_dict[i]['stockPrice']
                 self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
                 self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, self.stockPrice))
             except KeyError:
                 self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
                 self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, 'n/a'))
-       
-       
+        
+
         
 
     def selectItem(self, a):
@@ -95,8 +88,7 @@ class PortfolioGUI():
     * Post0. 
     '''    
     def viewInformation(self, stockSymbol):
-        self.stockController = stock_controller.StockController(stockSymbol, self.userObject)
-        self.stockController.handle_viewInformation_event(stockSymbol, self.master)
+        self.portfolioControllerObject.viewInformation(stockSymbol, self.master)
     
     '''
     Intent: close the portfolio window .
@@ -106,11 +98,10 @@ class PortfolioGUI():
     '''    
     def closeWindow(self):
         self.master.destroy()
-        self.dashboardController = dashboard_controller.DashboardController(self.userObject)
-        self.dashboardController.createDashboardGUI()
+        self.portfolioControllerObject.openDashboardGUI()
 
-    def handlePortfolioValue(self):
-        self.portfolioControllerObject.calculate_portfolio_value()
+
+    
 
     '''
     Intent: remove stock from list of stocks in portfolio window .
@@ -119,18 +110,19 @@ class PortfolioGUI():
     * Post0. removes stock from portfolio window
     '''            
     def removeStock(self, userObject, stockSymbol):
-        del userObject.current_user_stocks[stockSymbol]
+        self.portfolioControllerObject.call_user_object_to_remove_stock(stockSymbol)
         self.tree.delete(*self.tree.get_children())
+
         for i in userObject.current_user_stocks:
-            self.stockData = self.stockController.get_stock_data_API(i)
             try:
-                self.stockPrice = self.stockData[i]['stockPrice']
+                self.stockPrice = self.stocksymbol_price_change_dict[i]['stockPrice']
                 self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
                 self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, self.stockPrice))
             except KeyError:
                 self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
                 self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, 'n/a'))
-    
+        
+
     '''
     Intent: creates a button on the frame that allows user to go to watchlist gui
     * Preconditions: master is connected to TKinter.
@@ -138,8 +130,7 @@ class PortfolioGUI():
     * Post0. allows user to go to watchlist gui from portfolio window
     '''  
     def openWatchlist(self):
-        self.watchlistController = watchlist_controller.WatchlistController(self.userObject)
-        self.watchlistController.create_watchlist_GUI()
+        self.portfolioControllerObject.openWatchlist()
         self.closeWindow()
 
 

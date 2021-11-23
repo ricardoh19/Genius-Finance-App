@@ -18,7 +18,7 @@ class PortfolioController():
         self.yahooAPIObject = yahoo_api.YahooAPI()
         stockSymbol = None
         self.stockController = stock_controller.StockController(stockSymbol, self.userObject)
-        self.popUpGUIObject = popupGUI.PopUpGUI("None")
+        
         #to be created objects
         #self.watchlistControllerObject = watchlist_controller.WatchlistController(self.user_object)
         self.portfolioGUI = None
@@ -78,18 +78,13 @@ class PortfolioController():
         stockinfo = self.yahooAPIObject.get_stocks_info(stock_symbol_list)
         
         #extract just the stockprice associated with the stock and get percentage change on stock over past 24h
+        return stockinfo
         
-        for key in stockinfo:
-            percentage_change = self.calculate_percentage_change(stockinfo[key]) #retrieves percentage change over past 24h
-            stockprice = stockinfo[key]["stockPrice"]
-            self.stocksymbol_price_change_dict[key] = \
-                {"stockprice":stockprice, "percentage_change": percentage_change} #updates self.StockPriceDict
-    
         
     def create_portfolio_GUI(self,userObject):
         """Creates Portfolio GUI """
         #get updated stockprice for each stock that will be displayed in GUI
-        #self.get_stock_price_yahoo_api_object()
+        self.stocksymbol_price_change_dict = self.get_stock_price_yahoo_api_object()
         self.portfolio_value = self.calculate_portfolio_value()
         root = Tk()
         root.geometry("750x600")
@@ -104,4 +99,16 @@ class PortfolioController():
 
     def create_popup_GUI(self, message):
         """creates a pop-up GUI with given error message."""
+        self.popUpGUIObject = popupGUI.PopUpGUI("None")
         self.popup_GUI_object.create_pop_up(message)
+
+    def viewInformation(self, stockSymbol, portfolioGUI):
+        self.stockController.handle_viewInformation_event(stockSymbol, portfolioGUI)
+
+    def openDashboardGUI(self):
+        self.dashboardController = dashboard_controller.DashboardController(self.userObject)
+        self.dashboardController.createDashboardGUI()
+
+    def openWatchlist(self):
+        self.watchlistController = watchlist_controller.WatchlistController(self.userObject)
+        self.watchlistController.create_watchlist_GUI()
