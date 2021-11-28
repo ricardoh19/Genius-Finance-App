@@ -1,10 +1,9 @@
-import logging 
-import database_manager
+
 from utils import convert_to_type
 class User():
     """User class holds login details of user as well as stock associated with the user."""
     def __init__(self, current_user_data, current_user_stocks= None):
-        self.databaseManager = database_manager.DB()
+
         self.current_user_data=current_user_data
         self.check_current_user_data() #checks current user data input is correct type
         #list: id:int, username:str, password:str, securityquestionanswer:str
@@ -19,6 +18,8 @@ class User():
         return f"User Data: {self.current_user_data} \nUser Stock Info: {self.current_user_stocks}\n"
     
     def check_current_user_data(self):
+        """Ensures that information is of correct type and changes type if necessary
+        """
         id = self.current_user_data[0]
         username = self.current_user_data[1]
         password = self.current_user_data[2]
@@ -38,7 +39,7 @@ class User():
                 stockowned = stockinfo[3]
                 # Function in utils.py
                 # Checks if the variable is of the wanted type if not tries to convert it. 
-                #Throws error message if it can't convert it
+                # Throws error message if it can't convert it
                 convert_to_type(variable_name= "stocksymbol", variable_type= str, variable_value =  stocksymbol)
                 convert_to_type(variable_name= "stockid", variable_type= int, variable_value = stockid)
                 convert_to_type(variable_name= "stockowned", variable_type= int, variable_value = stockowned)

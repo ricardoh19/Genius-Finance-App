@@ -9,6 +9,10 @@ from tkinter import *
 # calculate_percentage_change, , calculate_watchlist_stock_trend, create_watchlist_GUI.
 
 class WatchlistController():
+    """The Watchlist Controller handles the event processing in the Watchlist GUI. 
+    Additionally, it prepares the information that should be displayed in the GUI which includes the 
+    up and downtrending stocks that the user owns. 
+    The Watchlist Controller calls the Yahoo API object to get data on the users stocks in order to calculate their trend."""
     def __init__(self, user_object):
         #passed in objects
         self.user_object = user_object
@@ -18,12 +22,9 @@ class WatchlistController():
 
         #to be calculated by calling methods in the class: 
         self.stockinfo = self.get_stock_info_yahoo_api_object() #get all stockinfo from Yahoo API    
-        #self.StockPercentageChange = self.calculate_percentage_change()
-        self.best_stocks = []
-        self.worst_stocks = []  
+        #self.StockPercentageChange = self.calculate_percentage_change() 
         #self.calculate_watchlist_stock_trend()      
-        #string: description
-        self.description = "description"
+
         
 
 
@@ -31,12 +32,12 @@ class WatchlistController():
         """Get stockinfo dict from Yahoo API. key = stocksymbol, value = current stock price"""
         # Returns this:
         #   stockinfo[stock_symbol] = {
-                #     "currentRatio": current_ratio,
-                #     "trailingEPS": trailing_EPS,
-                #     "PERatio":trailing_PE,
-                #     "DebtToEquityRatio": debt_to_equity_ratio,
-                #     "stockPrice": stockprice
-                # } 
+        #             "currentRatio": current_ratio,
+        #             "trailingEPS": trailing_EPS,
+        #             "PERatio":trailing_PE,
+        #             "DebtToEquityRatio": debt_to_equity_ratio,
+        #             "stockPrice": stockprice
+        #         } 
         #retrieve list of all users stocksymbols that will be put in the portfolio
         stock_symbol_list = self.user_object.return_users_stock_symbols()      
         #get the stockinfo on each symbol >> here we need price
@@ -64,8 +65,8 @@ class WatchlistController():
 
     def calculate_watchlist_stock_trend(self, stockinfo):
         """This function sorts the stocks according the percentage change.
-        The best 3 stocks are added to best 3 stocks, the worst three in the worst 3 stocks.
-        If there are less than 6 stocks they are divided into best and worst in the middle.
+        If the percentage change is above or equal to zero will be returned as best stocks.
+        The stock with percentage change below 0 will be considered as worst stocks and will be returned as such.
         If there are no stocks in the portfolio displays an error message in pop up gui."""
         self.best_stocks = []
         self.worst_stocks = []
@@ -114,7 +115,7 @@ class WatchlistController():
 
         root = Tk()
         root.geometry("750x600")
-        self.portfolioGUI = watchlist_GUI.WatchlistGUI(root, self.user_object,stocksTrendingUp, 
+        self.watchlistGUI = watchlist_GUI.WatchlistGUI(root, self.user_object,stocksTrendingUp, 
         stocksTrendingDown, description, stockInfo )
         root.mainloop()
     

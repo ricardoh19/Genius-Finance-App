@@ -41,7 +41,8 @@ class StockController():
             self.create_popup_GUI(message)
 
     def handle_viewInformation_event(self, stock_symbol, portfolioGUI):
-        """creates a stock GUI of stock symbol that is selected."""
+        """creates a stock GUI of the stock symbol by pulling relevant information if stock exists. 
+        Else it creates a popup error message.."""
         #check if stock exists
         if self.yahoo_api_object.check_stock_exists(stock_symbol):
             portfolioGUI.destroy()
@@ -114,8 +115,3 @@ class StockController():
         """creates a pop-up GUI with given error message."""
         self.popUpGUIObject = popupGUI.PopUpGUI(message)
         self.popUpGUIObject.createPopUp()   
-
-    def controll_to_dashboard(self):
-        """Return controller back to Dashboard controller.
-        Dashboard GUI is displayed."""
-        self.DashboardController.create_dashboard_GUI()

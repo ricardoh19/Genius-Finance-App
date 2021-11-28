@@ -1,11 +1,10 @@
 from stock_controller import StockController
 import yahoo_api 
 from tkinter import *
-import loginlogout_controller,dashboardGUI
+import loginlogout_controller
 from portfolio_controller import PortfolioController
 from watchlist_controller import WatchlistController
 from dashboardGUI import DashboardGUI
-import user
 from popupGUI import PopUpGUI
 
 class DashboardController():
@@ -81,7 +80,7 @@ class DashboardController():
         root.mainloop()
 
     def openLoginGUI(self):
-        """This function creates the Dashboard GUI Object"""
+        """This function calls login logout controller function that creates the Login GUI Object"""
         self.loginlogout_controller.createLoginGUI()
 
 
