@@ -64,13 +64,9 @@ class PortfolioController():
         if not successful: #if we programmed right this should never be exceuted
             self.create_popup_GUI("Your stock could not be deleted.")
             
-    def create_stock_controller_object(self, stocksymbol):
-        """Creates Stock Controller Object based on given stocksymbol"""
-        #self.StockController = StockController((stocksymbol,self.user_object, self.DashboardControllerObject, self.PopUpGUIObject, self.YahooAPIObject))
-
 
     def get_stock_price_yahoo_api_object(self):
-        """Get stockinfo dict from Yahoo API. key = stocksymbol, value = current stock price"""
+        """Get stockinfo dict from Yahoo API."""
         #retrieve list of all users stocksymbols that will be put in the portfolio
         stock_symbol_list = self.userObject.return_users_stock_symbols()
         
@@ -109,12 +105,15 @@ class PortfolioController():
         self.popup_GUI_object.create_pop_up(message)
 
     def viewInformation(self, stockSymbol, portfolioGUI):
+        """Calls handle view information event in stock controller class"""
         self.stockController.handle_viewInformation_event(stockSymbol, portfolioGUI)
 
     def openDashboardGUI(self):
+        """Calls dashboard controller to create dashboard controller and GUI"""
         self.dashboardController = dashboard_controller.DashboardController(self.userObject)
         self.dashboardController.createDashboardGUI()
 
     def openWatchlist(self):
+        """Calls dashboard controller to create watchlist controller and GUI"""
         self.watchlistController = WatchlistController(self.userObject)
         self.watchlistController.create_watchlist_GUI()
