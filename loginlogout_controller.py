@@ -21,8 +21,8 @@ class LoginLogoutControllers():
         #initializes and pulls data from DB
         self.databaseManagerObject = DB()
         # get this data from DB Manager
-        self.DatabaseUserData = None #2d list list: #list: id:int, username:str, password:str, securityquestionanswer:str
-        self.DatabaseStockData = None#list of dict: key = stocksymbol :str, values: stockid:int. stockowned:int (number of stock owned)
+        self.databaseUserData = None #2d list list: #list: id:int, username:str, password:str, securityquestionanswer:str
+        self.databaseStockData = None#list of dict: key = stocksymbol :str, values: stockid:int. stockowned:int (number of stock owned)
         self.currentUserData = None #list: id:int, username:str, password:str, securityquestionanswer:str
         self.currentUserStocks = None #dict: key = stocksymbol:str, values: stockid:int. stockowned:int (number of stock owned)
         self.userObject = None
