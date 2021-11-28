@@ -81,14 +81,6 @@ class SignUpGUI():
         self.signUpMaster.destroy()
         self.loginlogoutControllerObject.createLoginGUI()
 
-    '''
-    Intent: close the sign up window .
-    * Preconditions: master is connected to TKinter.
-    * Postconditions:
-    * Post0. closes the sign up window
-    '''
-    def closeWindow(self):
-        self.signUpMaster.destroy()
 
     '''
     Intent: handles the sign up event for sign up GUI
