@@ -9,6 +9,7 @@
 + Python Version: 3.10.0
 + Uses Yahoo API yh-finance.p.rapidapi.com
 + Uses http client
++ Download MySQL following the instructions here: https://www.mysql.com/de/downloads/
 
 #### If you get matplotlib error: This worked for me on Windows 10 (using the Anaconda prompt):
 > pip uninstall matplotlib <p>
@@ -24,6 +25,12 @@
 + The API is limited to 500 free calls
 + To get a new key go to https://rapidapi.com/apidojo/api/yh-finance/
 + Create an account and click test endpoint and select the free trial version (basic plan)
+
+## Configuring the MySQL server:
++ configurations are made in main.py in set_env_variables()
++ The MySQL password should be set to the users password that they set up when downloading MySQL for their machine.
++ By default the MySQL user is root and the MySQL host is localhost.
++ YOu may also change the database name in the same location
 
 ## Test cases 
 + Test cases are downloaded with the rest of the code.
