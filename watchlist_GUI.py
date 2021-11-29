@@ -91,7 +91,7 @@ class WatchlistGUI():
   
     
     '''
-    Intent: close the portfolio window .
+    Intent: close the watchlist window.
     * Preconditions: master is connected to TKinter.
     * Postconditions:
     * Post0. closes the portfolio window

@@ -32,7 +32,7 @@ class DashboardGUI():
 
     
     '''
-    Intent: Creates the search bar frame for the login GUI
+    Intent: Creates the search bar frame for the dashboard GUI
     * Preconditions: master is connected to TKinter.
     * Postconditions:
     * Post0. search bar label and entry box is created.

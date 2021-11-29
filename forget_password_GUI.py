@@ -86,14 +86,6 @@ class ForgetPasswordGUI():
         self.master.destroy()
         self.loginlogoutControllerObject.createLoginGUI()
 
-    '''
-    Intent: close the forgot password window .
-    * Preconditions: master is connected to TKinter.
-    * Postconditions:
-    * Post0. closes the forgot password window
-    '''
-    def closeWindow(self):
-        self.signUpMaster.destroy()
 
     
 

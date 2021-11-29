@@ -27,7 +27,7 @@ class LoginLogoutControllers():
         self.currentUserStocks = None #dict: key = stocksymbol:str, values: stockid:int. stockowned:int (number of stock owned)
         self.userObject = None
         self.sign_up_gui_object = None
-        self.LoginGUIObject = None
+        self.loginGUIObject = None
         #Load data from db
         self.getSnapshotOfDatabase()
         #self.setCurrentUserData()# needs username as parameter
@@ -44,7 +44,7 @@ class LoginLogoutControllers():
     def createLoginGUI(self):
         root = Tk()
         root.geometry("515x490")
-        self.LoginGUIObject = loginGUI.LoginGUI(root)
+        self.loginGUIObject = loginGUI.LoginGUI(root)
         root.mainloop()
         
     
