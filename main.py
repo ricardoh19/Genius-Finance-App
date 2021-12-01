@@ -8,16 +8,12 @@ def set_env_variables():
     os.environ["X_RapidAPI_Key"]= 'e4aa3ef749msh8d1181ee3d067f7p1e8b82jsn029f5f35d857'
     os.environ["GENIUS_FINC_DB_NAME"]= "GeniusFinanceDB"
     os.environ['SQLUser']='root'
-    os.environ['SQLPassword']= 'Veritas!10'
+    os.environ['SQLPassword']= 'Rhern_19'
     os.environ['SQLHost'] = "localhost"
     os.environ['DB_NAME'] ='GeniusFinanceDB'
 
 def main():
-    #contains what is happening when APP is started
     set_env_variables()
-    #logging.basicConfig(filename='geniusfinclogs.log', encoding='utf-8', level=print, force=True)    
-    #create DB manager
-    #db_manager_object = DB()
     
     root = Tk()
     root.geometry("515x490")
