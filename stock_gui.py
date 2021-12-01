@@ -80,7 +80,7 @@ class StockGUI():
     def createStockSummaryFrame(self):
         self.stock = Frame(self.master, width = 400, height = 170,borderwidth=2, relief="sunken", background='LightBlue1')
         self.stock.grid(row = 2,column=1)
-        self.stock_value = Label( self.stock, text="Stock Price: " + str(self.stockPrice), font='Helvetica 13 bold',borderwidth=1, relief="ridge", background="white")
+        self.stock_value = Label( self.stock, text="Stock Price: $" + str(self.stockPrice), font='Helvetica 13 bold',borderwidth=1, relief="ridge", background="white")
         self.stock_value.grid(row = 0,column=0,padx=30,pady=25,ipadx=5,ipady=5, sticky="nw")
         self.current_ratio = Label( self.stock, text="Current Ratio: " + str(self.currentRatio), font='Helvetica 13 bold',borderwidth=1, relief="ridge", background="white")
         self.current_ratio.grid(row = 1,column=0,padx=30,pady=25,ipadx=5,ipady=5, sticky="ne")
