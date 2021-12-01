@@ -60,8 +60,7 @@ class StockController():
     def get_stock_graph_values_from_yahoo_finance(self, stockSymbol):
         """Retrieves values for the stock graph. If call fails opens pop-up gui"""
         self.stock_graph_values = self.yahoo_api_object.get_stock_graph_values(stockSymbol)
-        if self.stock_graph_values == 0:
-            self.create_popup_GUI("Could not get Stock's graph values from Yahoo Finance.")
+        
         return self.stock_graph_values
         
     def get_stock_data_API(self, stockSymbol):

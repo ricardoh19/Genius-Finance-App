@@ -104,6 +104,8 @@ class StockGUI():
             panel = Label(self.master, image = img, width=400, height=300)
             panel.image = img
             panel.grid(row = 3,column=1)
+        else:
+            noGraph = Label(self.master,text="No Graph Available",font='Helvetica 15').grid(row = 3,column=1)
         
     
     '''
