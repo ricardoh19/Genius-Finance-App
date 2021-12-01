@@ -34,7 +34,7 @@ class PortfolioGUI():
         # logo on top left side
         self.logo = Label(self.master, text="Genius Finance",font='Helvetica 12',height = 6, width = 13,borderwidth=2, relief="solid", background="LightBlue1").grid(row=0,column=0, pady=5, padx=5)
         self.portfolioTitle = Label(self.master, text="My Stocks",font='Helvetica 12',height = 2, width = 13,borderwidth=2, relief="solid", background="LightBlue1").grid(row=1,column=1, pady=5, padx=5, sticky="sw")
-        self.portfolioValueTitle = Label(self.master, text=f"Portfolio Value: {self.portfolio_value}",font='Helvetica 12',height = 2, width = 25,borderwidth=2, relief="solid", background="LightBlue1").grid(row=1,column=1, pady=5, padx=5, sticky="se")
+        self.portfolioValueTitle = Label(self.master, text=f"Portfolio Value: ${self.portfolio_value}",font='Helvetica 12',height = 2, width = 25,borderwidth=2, relief="solid", background="LightBlue1").grid(row=1,column=1, pady=5, padx=5, sticky="se")
         
         self.createMyStocksFrame(userObject)
         self.exitButton = Button(self.master,text="Exit", command=lambda:self.closeWindow(), background="red").grid(row = 4,column=1,sticky="se")
@@ -65,7 +65,7 @@ class PortfolioGUI():
             try:
                 self.stockPrice = self.stocksymbol_price_change_dict[i]['stockPrice']
                 self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
-                self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, self.stockPrice))
+                self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, f"${self.stockPrice}"))
             except KeyError:
                 self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
                 self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, 'n/a'))
@@ -117,7 +117,7 @@ class PortfolioGUI():
             try:
                 self.stockPrice = self.stocksymbol_price_change_dict[i]['stockPrice']
                 self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
-                self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, self.stockPrice))
+                self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, f"${self.stockPrice}"))
             except KeyError:
                 self.sharesOwned = userObject.current_user_stocks[i]['stockowned']
                 self.tree.insert('', 'end', text=i, values=(i, self.sharesOwned, 'n/a'))
